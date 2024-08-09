@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          "Services",
+                          "firebase",
                           style: TextStyle(
                               fontSize: 21, fontWeight: FontWeight.bold),
                         ),
