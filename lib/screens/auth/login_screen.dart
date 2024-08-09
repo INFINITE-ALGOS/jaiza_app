@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:law_education_app/screens/client_screens/main_screen.dart';
+import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 
 import 'forget_password_screen.dart';
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 50,),
                   CustomClickRoundedButton(text: "Log In",
                     onPress: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>bottom_nav()));
 
                     },),
                   SizedBox(height: 20,),

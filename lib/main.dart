@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:law_education_app/screens/client_screens/main_screen.dart';
+import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 
 void main() {
   runApp(const MyApp());

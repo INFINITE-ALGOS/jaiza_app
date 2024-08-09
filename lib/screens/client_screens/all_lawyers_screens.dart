@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
 
 import '../../conts.dart';
 class AllLawyersScreens extends StatefulWidget {
@@ -59,25 +60,31 @@ class _AllLawyersScreensState extends State<AllLawyersScreens> {
                 gridDelegate:
                     SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 10,),
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20, top: 15),
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Placeholder(
-                            fallbackHeight: screenHeight * 0.10,
-                            fallbackWidth: screenWidth * 0.1,
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.02,
-                          ),
-                          Text(
-                            "Criminal",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                        ],
+                  return InkWell(
+                    onTap: ()
+                    {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LawyerProfile()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20,right: 20, top: 15),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Placeholder(
+                              fallbackHeight: screenHeight * 0.10,
+                              fallbackWidth: screenWidth * 0.1,
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.02,
+                            ),
+                            Text(
+                              "Name",
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
