@@ -63,7 +63,6 @@ class _SearchScreenState extends State<SearchScreen> {
               thickness: 2,
             ),
             SizedBox(height: 20),
-
             Expanded(
               child: ListView.builder(
                 itemCount: locations.length,

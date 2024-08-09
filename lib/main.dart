@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/main_screen.dart';
+import 'package:law_education_app/screens/auth/signup_screen.dart';
+import 'package:law_education_app/screens/client_screens/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: whiteColor),
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: SignUpScreen(),
     );
   }
 }

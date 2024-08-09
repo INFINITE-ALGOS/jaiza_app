@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:law_education_app/screens/client_screens/all_lawyers_screens.dart';
+import 'package:law_education_app/screens/client_screens/all_services_screen.dart';
+import 'package:law_education_app/screens/client_screens/all_toplawyers_screen.dart';
 
-import '../conts.dart';
+import '../../conts.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -109,10 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 21, fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
-                        Text(
-                          "View all >>",
-                          style: TextStyle(
-                              color: blueColor, fontWeight: FontWeight.w600),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AllServicesScreen()));
+                          },
+                          child: Text(
+                            "View all >>",
+                            style: TextStyle(
+                                color: blueColor, fontWeight: FontWeight.w600),
+                          ),
                         )
                       ],
                     ),
@@ -120,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: screenHeight * 0.2,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 6,
+                          itemCount: 10,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:
@@ -164,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: screenHeight * 0.03,
             ),
-            //OTHER SERVICES SCREEN
+            //LAWEYSRS SCREEN
             Padding(
               padding: EdgeInsets.only(
                   top: screenHeight * 0.005, right: 20, left: 20),
@@ -174,15 +182,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       children: [
                         Text(
-                          "Services",
+                          "Lawyers",
                           style: TextStyle(
                               fontSize: 21, fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
-                        Text(
-                          "View all >>",
-                          style: TextStyle(
-                              color: blueColor, fontWeight: FontWeight.w600),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AllLawyersScreens()));
+                          },
+                          child: Text(
+                            "View all >>",
+                            style: TextStyle(
+                                color: blueColor, fontWeight: FontWeight.w600),
+                          ),
                         )
                       ],
                     ),
@@ -190,11 +203,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: screenHeight * 0.25,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 6,
+                          itemCount: 10,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding:
-                              const EdgeInsets.only(right: 15, top: 15),
+                              const EdgeInsets.only(right: 25, top: 15),
                               child: Container(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -202,30 +215,85 @@ class _HomeScreenState extends State<HomeScreen> {
                                   CrossAxisAlignment.start,
                                   children: [
                                     Placeholder(
-                                      fallbackHeight: screenHeight * 0.14,
-                                      fallbackWidth: screenWidth * 0.4,
+                                      fallbackHeight: screenHeight * 0.12,
+                                      fallbackWidth: screenWidth * 0.2,
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
+                                    SizedBox(height: screenHeight*0.02,),
                                         Text(
-                                          "Services",
+                                          "Criminal",
                                           style: TextStyle(
                                               fontWeight: FontWeight.w600),
                                         ),
-                                        Text(
-                                          "Description",
-                                          style: TextStyle(color: greyColor),
-                                        ),
-                                        Text(
-                                          "Price",
-                                          style: TextStyle(color: greyColor),
-                                        ),
-                                      ],
-                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              height: screenHeight * 0.01,
+              color: lightGreyColor,
+            ),
+            // TOP LAWYERS
+            SizedBox(
+              height: screenHeight * 0.03,
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.005, right: 20, left: 20),
+              child: Container(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Top Lawyers",
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AllTopLawyersScreens()));
+                          },
+                          child: Text(
+                            "View all >>",
+                            style: TextStyle(
+                                color: blueColor, fontWeight: FontWeight.w600),
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: screenHeight * 0.25,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                              const EdgeInsets.only(right: 25, top: 15),
+                              child: Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Placeholder(
+                                      fallbackHeight: screenHeight * 0.12,
+                                      fallbackWidth: screenWidth * 0.2,
+                                    ),
+                                    SizedBox(height: screenHeight*0.02,),
+                                    Text(
+                                      "Name",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ],
                                 ),
                               ),
