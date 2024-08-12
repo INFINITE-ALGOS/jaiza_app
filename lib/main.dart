@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/screens/auth/login_screen.dart';
+import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: whiteColor),
       debugShowCheckedModeBanner: false,
-      home: SignUpScreen(),
+      home: BottomNavigationLawyer(),
     );
   }
 }

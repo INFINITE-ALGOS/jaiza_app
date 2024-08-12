@@ -36,16 +36,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   otp_text_field: ^1.1.3
-<<<<<<< Updated upstream
   animated_bottom_navigation_bar: ^1.3.3
-=======
-  firebase_auth:
-  firebase_core:
+  firebase_auth: ^4.6.0
+  firebase_core: ^2.12.1
   google_sign_in:
-  firebase_cloud_firestore:
-  flutter_keyboard_visibility:
-  flutter_easyloading: 
->>>>>>> Stashed changes
+  cloud_firestore: ^4.8.0
+  flutter_keyboard_visibility: ^5.4.0
+  flutter_easyloading: ^3.0.5
+
 
 
 

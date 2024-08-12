@@ -7,17 +7,22 @@ import 'package:law_education_app/screens/client_screens/create_job_screen.dart'
 import 'package:law_education_app/screens/client_screens/drawer.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/jobs_screen.dart';
 import 'package:law_education_app/screens/client_screens/profile_screen.dart';
-import 'package:law_education_app/screens/client_screens/search_screen.dart';
-import 'package:law_education_app/screens/client_screens/home_screen.dart'; // Adjust the import path as needed
+import 'package:law_education_app/screens/lawyer_screens/drawer.dart';
+import 'package:law_education_app/screens/lawyer_screens/profile_screen.dart';
 
-class bottomNavigationbarClient extends StatefulWidget {
-  const bottomNavigationbarClient({super.key});
+
+import 'chat_screen.dart';
+import 'home_screen.dart';
+import 'jobs_status/jobs_screen.dart'; // Adjust the import path as needed
+
+class BottomNavigationLawyer extends StatefulWidget {
+  const BottomNavigationLawyer({super.key});
 
   @override
-  State<bottomNavigationbarClient> createState() => _bottomNavigationbarClientState();
+  State<BottomNavigationLawyer> createState() => _BottomNavigationLawyerState();
 }
 
-class _bottomNavigationbarClientState extends State<bottomNavigationbarClient> {
+class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
   double screenHeight = 0;
   double screenWidth = 0;
   int selectedIndex = 0;
@@ -29,10 +34,10 @@ class _bottomNavigationbarClientState extends State<bottomNavigationbarClient> {
   ];
 
   List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    ChatScreen(),
-    JobsStatusScreen(),
-    ProfileScreen(),
+    HomeScreenLawyer(),
+    ChatScreenLawyer (),
+    JobsStatusScreenLawyer(),
+    ProfileScreenLawyer(),
   ];
 
   final List<String> labelText =
@@ -55,7 +60,7 @@ class _bottomNavigationbarClientState extends State<bottomNavigationbarClient> {
     screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        drawer: CustomDrawer(),
+        drawer: CustomDrawerLawyer(),
         appBar: AppBar(
           backgroundColor: Color(0xFF2196f3),
         ),

@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 50,),
                   CustomClickRoundedButton(text: "Log In",
                     onPress: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>bottom_nav()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>bottomNavigationbarClient()));
 
                     },),
                   SizedBox(height: 20,),
