@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/screens/auth/login_screen.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 
@@ -17,8 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: whiteColor),
       debugShowCheckedModeBanner: false,
-      home: SignUpScreen(),
-    );
+      home: LogInScreen(),
+      builder: EasyLoading.init(),     );
   }
 }
 

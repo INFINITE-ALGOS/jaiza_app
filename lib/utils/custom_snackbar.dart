@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+class CustomSnackbar{
 
-class CustomSnackbar {
-  static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
-
-  static void showError({required String title, required String message}) {
+  static void showError({required BuildContext context, required String title, required String message}) {
     _showSnackbar(
+      context,
       title,
       message,
-      backgroundColor: Colors.black12,
-      colorText: Colors.red,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
     );
   }
 
-  static void showSuccess({required String title, required String message}) {
+  static void showSuccess({required BuildContext context, required String title, required String message}) {
     _showSnackbar(
+      context,
       title,
       message,
-      backgroundColor: Colors.black12,
-      colorText: Colors.green,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
     );
   }
 
   static void _showSnackbar(
+      BuildContext context,
       String title,
       String message, {
         required Color backgroundColor,
@@ -34,6 +35,7 @@ class CustomSnackbar {
         style: TextStyle(color: colorText),
       ),
     );
-    scaffoldMessengerKey.currentState?.showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
 }

@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/screens/auth/login_screen.dart';
 class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  void logoutAction(){
+  final FirebaseAuth _auth=FirebaseAuth.instance;
+  void logoutAction()async{
     showModalBottomSheet(context: context, builder: (BuildContext context){
       return Container(
         padding: const EdgeInsets.all(16.0),
@@ -33,8 +36,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ElevatedButton(
 
-                  onPressed: (){
-                    Navigator.of(context).pop();
+                  onPressed: () async {
+                  await  _auth.signOut();
+                  Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) => LogInScreen()),
+                        (Route<dynamic> route) => false,);
                   },
                   child: Text('Logout',style: TextStyle(color: whiteColor)),
                   style: ElevatedButton.styleFrom(

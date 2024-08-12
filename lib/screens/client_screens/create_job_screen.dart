@@ -13,6 +13,7 @@ class CreateJobScreen extends StatefulWidget {
 class _CreateJobScreenState extends State<CreateJobScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
+  final List<String >categoryList=["Family","Criminal","Personal Injury","RealEstate","Business","Immigration"];
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -35,13 +36,13 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: 10,
+                itemCount: categoryList.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateServiceDetailScreen()));},
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateServiceDetailScreen(categoryName: categoryList[index],)));},
                     child: ListTile(
                       leading: CircleAvatar(),
-                      title: Text("Category Name"),
+                      title: Text(categoryList[index]),
                       trailing: Icon(CupertinoIcons.forward),
                     ),
                   );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:law_education_app/controllers/signup_with_email_controller.dart';
+import 'package:law_education_app/utils/manage_keyboard.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 
 import '../../conts.dart';
@@ -74,6 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: CustomClickRoundedButton(text: "Sign Up", onPress: () {
+                        KeyboardUtil().hideKeyboard(context);
                         widget.signupWithEmailController.signUpWithEmailMethod(context: context, userName: nameController.text.trim(), userEmail: emailController.text.trim(), userPassword: psswordController.text.trim());
                       },),
                     ),
@@ -83,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),),
+                            builder: (context) => LogInScreen(),),
                         );
                       },
                       child: Container(
