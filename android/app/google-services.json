@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393793136670",
+    "project_id": "laweducationapp",
+    "storage_bucket": "laweducationapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393793136670:android:55eea96a350a9d5823e60f",
+        "android_client_info": {
+          "package_name": "com.danish.law_education_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfa6k9MaXpUSwogalu4-xhFJK-5iycMF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

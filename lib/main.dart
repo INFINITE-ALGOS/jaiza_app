@@ -1,9 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
