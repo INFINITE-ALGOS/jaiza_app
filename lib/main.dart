@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/auth/login_screen.dart';
-import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

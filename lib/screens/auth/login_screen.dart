@@ -69,6 +69,13 @@ class _LogInScreenState extends State<LogInScreen> {
                         ),
                       ),
                       SizedBox(height: 20,),
+                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                    ),
+                  ),
+                  SizedBox(height: 50,),
+                  CustomClickRoundedButton(text: "Log In",
+                    onPress: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>bottomNavigationbarClient()));
 
                     //  CustomTextField(title: "Name",fieldTitle: "Please Enter Your Name",controller: nameController,),
                       CustomTextField(title:"Email" ,fieldTitle: "Please Enter Your Email",controller: emailController,),
