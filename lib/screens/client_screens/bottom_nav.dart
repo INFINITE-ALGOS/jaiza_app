@@ -10,14 +10,14 @@ import 'package:law_education_app/screens/client_screens/profile_screen.dart';
 import 'package:law_education_app/screens/client_screens/search_screen.dart';
 import 'package:law_education_app/screens/client_screens/home_screen.dart'; // Adjust the import path as needed
 
-class bottomNavigationbarClient extends StatefulWidget {
-  const bottomNavigationbarClient({super.key});
+class BottomNavigationbarClient extends StatefulWidget {
+  const BottomNavigationbarClient({super.key});
 
   @override
-  State<bottomNavigationbarClient> createState() => _bottomNavigationbarClientState();
+  State<BottomNavigationbarClient> createState() => _BottomNavigationbarClientState();
 }
 
-class _bottomNavigationbarClientState extends State<bottomNavigationbarClient> {
+class _BottomNavigationbarClientState extends State<BottomNavigationbarClient> {
   double screenHeight = 0;
   double screenWidth = 0;
   int selectedIndex = 0;
@@ -32,7 +32,7 @@ class _bottomNavigationbarClientState extends State<bottomNavigationbarClient> {
     HomeScreen(),
     ChatScreen(),
     JobsStatusScreen(),
-    ProfileScreen(),
+    ProfileScreenClient(),
   ];
 
   final List<String> labelText =

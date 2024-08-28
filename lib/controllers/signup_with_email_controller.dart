@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart'; // Import for BuildContext
-import 'package:law_education_app/models/user_model.dart';
+import 'package:flutter/material.dart';
+import 'package:law_education_app/models/client_model.dart';
+import 'package:law_education_app/models/lawyer_model.dart';
+import 'package:law_education_app/screens/auth/login_screen.dart';
 import 'package:law_education_app/utils/custom_snackbar.dart';
+import '../screens/client_screens/bottom_nav.dart';
+import '../screens/lawyer_screens/bottom_navigation_bar.dart';
 
 class SignupWithEmailController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,40 +17,77 @@ class SignupWithEmailController {
     required String userName,
     required String userEmail,
     required String userPassword,
+    required String selectedRole,
+    required String userType
   }) async {
-    try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: userEmail,
-        password: userPassword,
-      );
-      _auth.signInWithEmailAndPassword(email: userEmail, password: userPassword);
+    if(userType=='client'){
+      try {
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: userEmail,
+          password: userPassword,
+        );
+       await userCredential.user!.sendEmailVerification();
 
-      User user = userCredential.user!;
+        User user = userCredential.user!;
 
-      UserModel userModel = UserModel(
-        uId: user.uid,
-        username: userName,
-        email: userEmail,
-        phone: '',
-        isActive: true,
-        createdOn: DateTime.now(),
-        isVerified: false,
-        userType: 'client',
-      );
+       ClientModel clientModel=ClientModel(name: userName,
+           email: userEmail,
+           phone: "",
+           isActive: true,
+           createdOn: DateTime.now(),
+           rating: '',
+           type: selectedRole,
+           isVerified: false,
+           url: '');
 
-      await _firestore.collection("users").doc(user.uid).set(userModel.toMap());
+        await _firestore.collection("users").doc(user.uid).set(clientModel.toMap());
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+      } on FirebaseException catch (e) {
+        CustomSnackbar.showError(
+          title: "Error",
+          message: e.message ?? "An unexpected error occurred.",
+        );
+      } catch (e) {
+        CustomSnackbar.showError(
+          title: "Error",
+          message: e.toString(),
+        );
+      }
+    }
+    else if(userType=='lawyer'){
+      try {
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: userEmail,
+          password: userPassword,
+        );
+        await userCredential.user!.sendEmailVerification();
 
-      // Optionally show success message or handle post-registration logic
-    } on FirebaseException catch (e) {
-      CustomSnackbar.showError(
-        title: "Error",
-        message: e.message ?? "An unexpected error occurred.",
-      );
-    } catch (e) {
-      CustomSnackbar.showError(
-        title: "Error",
-        message: e.toString(),
-      );
+        User user = userCredential.user!;
+
+        LawyerModel lawyerModel=LawyerModel(name: userName,
+            email: userEmail,
+            phone: "",
+            isActive: true,
+            type: selectedRole,
+            createdOn: DateTime.now(),
+            rating: '',
+            isVerified: false,
+            url: '');
+
+        await _firestore.collection("users").doc(user.uid).set(lawyerModel.toMap());
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+
+      } on FirebaseException catch (e) {
+        CustomSnackbar.showError(
+          title: "Error",
+          message: e.message ?? "An unexpected error occurred.",
+        );
+      } catch (e) {
+        CustomSnackbar.showError(
+          title: "Error",
+          message: e.toString(),
+        );
+      }
     }
   }
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/controllers/login_controller.dart';
+import 'package:law_education_app/controllers/myprofile_controller.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 
+import '../lawyer_screens/bottom_navigation_bar.dart';
 import 'forget_password_screen.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _obscureText = !_obscureText;
     });
   }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
@@ -78,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10,right: 10),
                     child: TextField(
+                      controller: passwordController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -99,10 +106,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 50,),
                   CustomClickRoundedButton(text: "Log In",
-                    onPress: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>bottomNavigationbarClient()));
-
-                    },),
+                    onPress: ()async{
+                    LoginController loginController = LoginController();
+                    await loginController.loginAndNavigate(emailController.text ,passwordController.text, context);
+                  },),
                   SizedBox(height: 20,),
                   InkWell(
                     onTap: ()

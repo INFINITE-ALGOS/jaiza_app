@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/controllers/myprofile_controller.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:provider/provider.dart';
+import '../../controllers/user_provider.dart';
+import '../../utils/image_picker.dart';
+import 'edit_profile_screen.dart';
 
 class ProfileScreenLawyer extends StatefulWidget {
   @override
@@ -7,136 +12,154 @@ class ProfileScreenLawyer extends StatefulWidget {
 }
 
 class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
-  void logoutAction(){
-    showModalBottomSheet(context: context, builder: (BuildContext context){
-      return Container(
-        padding: const EdgeInsets.all(16.0),
-        height: MediaQuery.of(context).size.height*0.35,
+  late MyProfileController _profileController;
+  Map<String, dynamic>? _profileData;
+
+  @override
+  void initState() {
+    super.initState();
+    _profileController = MyProfileController();
+    _fetchProfileData();
+  }
+
+  Future<void> _fetchProfileData() async {
+    _profileData = await _profileController.getProfileData();
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+    final profileImage = _profileData?['url'] ?? 'https://www.pngitem.com/pimgs/m/421-4212266_transparent-default-avatar-png-default-avatar-images-png.png';
+    print("image Url ncnabkak ${profileImage}");
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text("Log out",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),)
-            ,SizedBox(height: 20,),
-            Text(
-              'Are you sure you want to logout?',
-              style: TextStyle(fontSize: 15.0),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel',style: TextStyle(color: whiteColor),),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: blueColor,
+            Container(
+              color: Colors.grey,
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    alignment: Alignment.bottomRight,
+                    children: [
+                      CircleAvatar(
+                      radius: 45,
+                      backgroundImage: NetworkImage(profileImage),
+                     ),
+                     InkWell(
+                       onTap: ()
+                       {
+                         ImageUploadService.pickImage(context);
+                       },
+                       child: CircleAvatar(
+                         radius: 14,
+                         backgroundColor: blueColor,
+                         child: Icon(Icons.add_sharp,size: 15,color: Colors.white,),
+                       ),
+                     )
+                    ]
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    _profileData?['email'] ?? 'Email not available',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ],
               ),
             ),
-            ElevatedButton(
-
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-              child: Text('Logout',style: TextStyle(color: whiteColor)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: blueColor,
+            Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(40),
+                  topLeft: Radius.circular(40),
+                ),
+                border: Border.all(color: Colors.grey.shade300, width: 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 30),
+                    Text(
+                      'Other Information',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                        ),
+                      ),
+                      child: Text(
+                        "Name: ${_profileData?['name'] ?? ""}",
+                        style: TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                        ),
+                      ),
+                      child: Text(
+                        'Phone: ${_profileData?['phone'] ?? ""}',
+                        style: TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                        ),
+                      ),
+                      child: Text(
+                        'Rating: ${_profileData?['rating'] ?? ""}',
+                        style: TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(),
+                            ),
+                          );
+                          // Refresh profile data after returning from EditProfileScreen
+                          _fetchProfileData();
+                        },
+                        child: Text('Edit Info'),
+                        style: ElevatedButton.styleFrom(
+                          //primary: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
-
-      );
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    var mediaQuery = MediaQuery.of(context);
-    var screenHeight = mediaQuery.size.height;
-    var screenWidth = mediaQuery.size.width;
-    var profileImageSize = screenHeight * 0.15;
-
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-          child: Column(
-            children: [
-              SizedBox(height: screenHeight * 0.05),
-              CircleAvatar(
-                radius: profileImageSize / 2,
-                backgroundImage: NetworkImage(
-                    'https://via.placeholder.com/150'), // Placeholder image URL
-              ),
-              SizedBox(height: screenHeight * 0.02),
-              Text(
-                'Your Name',
-                style: TextStyle(
-                  fontSize: screenHeight * 0.03,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.01),
-              Text(
-                'yourgmail@gmail.com',
-                style: TextStyle(
-                  fontSize: screenHeight * 0.02,
-                  color: Colors.grey,
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.02),
-              Container(
-                width: screenWidth*0.5,
-                height: screenHeight*0.05,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: blueColor,width: 2)
-                ),
-                child: Center(child:Text("Edit Profile",style: TextStyle(color: blueColor,fontWeight: FontWeight.w600),
-                ),),),
-              SizedBox(height: screenHeight * 0.04),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.person_add, 'Register as a Partner'),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.book, 'My Booking'),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.help, 'Help Center'),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.share, 'Share & Earn'),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.star, 'Rate us'),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.question_answer, 'FAQ\'s'),
-              buildProfileOption(
-                  screenHeight, screenWidth, Icons.privacy_tip, 'Privacy Policy'),
-              GestureDetector(
-                onTap: logoutAction,
-                child: buildProfileOption(
-                    screenHeight, screenWidth, Icons.logout, 'Logout'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildProfileOption(double screenHeight, double screenWidth, IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-      child: Column(
-        children: [
-          Row(
-              children: [ Icon(icon, size: screenHeight * 0.04, color: blackColor),
-                Text(
-                  title,
-                  style: TextStyle(fontSize: screenHeight * 0.02),
-                ),
-                Spacer(),
-                Icon(Icons.arrow_forward_ios, size: screenHeight * 0.03),
-              ]),
-
-          Divider()
-        ],
       ),
     );
   }
