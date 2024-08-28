@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../controllers/user_provider.dart';
 import '../../conts.dart';
 import 'login_screen.dart';
-
+import 'package:flutter/material.dart';
 class SignUpScreen extends StatefulWidget {
   final SignupWithEmailController signupWithEmailController = SignupWithEmailController();
   SignUpScreen({super.key});

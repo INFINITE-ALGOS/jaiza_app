@@ -22,7 +22,7 @@ class LawyerModel{
     required this.rating,
     required this.isVerified,
     required this.type,
-    required this.url,
+    required this.url, required int experience,
 
 
   });
@@ -56,7 +56,8 @@ class LawyerModel{
         createdOn: json['createdOn'].toString(),
         isVerified: json['isVerified'],
         type: json["type"],
-        url: json["url"]
+        url: json["url"],
+        experience: json["experience"]
 
 
 

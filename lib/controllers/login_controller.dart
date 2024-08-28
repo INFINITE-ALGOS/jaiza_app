@@ -53,7 +53,7 @@ class LoginController {
       String? userType = await getUserType(user.uid);
       _firestore.collection("users").doc(user.uid).update({"isVerified":true});
       if (userType == 'client') {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0,)));
       } else if (userType == 'lawyer') {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer()));
       } else {

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/login_controller.dart';
-import 'package:law_education_app/controllers/myprofile_controller.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
-
-import '../lawyer_screens/bottom_navigation_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:law_education_app/widgets/custom_rounded_button.dart';
 import '../../controllers/signin_with_email_controller.dart';
 import 'forget_password_screen.dart';
+
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
@@ -112,16 +107,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 50,),
                   CustomClickRoundedButton(text: "Log In",
                     onPress: ()async{
-                    LoginController loginController = LoginController();
+                      LoginController loginController = LoginController();
                     await loginController.loginAndNavigate(emailController.text ,passwordController.text, context);
                   },),
                   SizedBox(height: 20,),
-                  const SizedBox(height: 50,),
-                  CustomClickRoundedButton(text: AppLocalizations.of(context)!.login,
-                    onPress: ()async{
-                      LoginController loginController = LoginController();
-                      await loginController.loginAndNavigate(emailController.text ,passwordController.text, context);
-                    },),
                   const SizedBox(height: 20,),
                   InkWell(
                     onTap: ()

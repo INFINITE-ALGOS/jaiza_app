@@ -49,7 +49,7 @@ class UserProvider extends ChangeNotifier
         if(_role=="client")
         {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => BottomNavigationbarClient()));
+              MaterialPageRoute(builder: (context) => BottomNavigationbarClient(selectedIndex: 0,)));
         }
         else if(_role=="lawyer")
         {
