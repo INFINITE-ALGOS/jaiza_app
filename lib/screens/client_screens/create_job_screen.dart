@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:law_education_app/screens/client_screens/create_service_detail_screen.dart';
+import 'package:law_education_app/provider/get_categories_provider.dart';
+import 'package:law_education_app/screens/client_screens/create_job_detail_screen.dart';
+import 'package:provider/provider.dart';
 
-import '../../conts.dart';
 class CreateJobScreen extends StatefulWidget {
   const CreateJobScreen({super.key});
 
@@ -13,11 +14,12 @@ class CreateJobScreen extends StatefulWidget {
 class _CreateJobScreenState extends State<CreateJobScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
-  final List<String >categoryList=["Family","Criminal","Personal Injury","RealEstate","Business","Immigration"];
+ // final List<String >categoryList=[];
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+    final categoryProvider=Provider.of<CategoriesProvider>(context);
     return SafeArea(child: Scaffold(
       body: Column(
         children: [
@@ -26,9 +28,9 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
             child: Row(
               children: [
                 GestureDetector(
-                    child: Icon(CupertinoIcons.clear)),
+                    child: const Icon(CupertinoIcons.clear)),
                 SizedBox(width: screenWidth*0.05,),
-                Text("Which Service do you want?",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),)
+                const Text("Which Service do you want?",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),)
               ],
             ),
 
@@ -36,14 +38,14 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                itemCount: categoryList.length,
+                itemCount: categoryProvider.categoriesList.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateServiceDetailScreen(categoryName: categoryList[index],)));},
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateJobDetailScreen(categoryName: categoryProvider.categoriesList[index],)));},
                     child: ListTile(
-                      leading: CircleAvatar(),
-                      title: Text(categoryList[index]),
-                      trailing: Icon(CupertinoIcons.forward),
+                      leading: const CircleAvatar(),
+                      title: Text(categoryProvider.categoriesList[index]),
+                      trailing: const Icon(CupertinoIcons.forward),
                     ),
                   );
                 }),

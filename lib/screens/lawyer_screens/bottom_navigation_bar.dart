@@ -1,19 +1,16 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/client_screens/chat_screen.dart';
-import 'package:law_education_app/screens/client_screens/create_job_screen.dart';
-import 'package:law_education_app/screens/client_screens/drawer.dart';
-import 'package:law_education_app/screens/client_screens/jobs_status/jobs_screen.dart';
-import 'package:law_education_app/screens/client_screens/profile_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:law_education_app/provider/language_provider.dart';
+import 'package:law_education_app/screens/lawyer_screens/create_service_screen.dart';
 import 'package:law_education_app/screens/lawyer_screens/drawer.dart';
-import 'package:law_education_app/screens/lawyer_screens/profile_screen.dart';
 
-
+import '../../provider/get_categories_provider.dart';
 import 'chat_screen.dart';
 import 'home_screen.dart';
-import 'jobs_status/jobs_screen.dart'; // Adjust the import path as needed
+import 'jobs_status/jobs_screen.dart';
+import 'profile_screen.dart';
 
 class BottomNavigationLawyer extends StatefulWidget {
   const BottomNavigationLawyer({super.key});
@@ -23,9 +20,8 @@ class BottomNavigationLawyer extends StatefulWidget {
 }
 
 class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
-  double screenHeight = 0;
-  double screenWidth = 0;
   int selectedIndex = 0;
+
   final List<IconData> iconList = [
     Icons.home_outlined,
     Icons.chat_bubble_outline,
@@ -33,15 +29,14 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
     Icons.person_2_outlined,
   ];
 
-  List<Widget> _widgetOptions = <Widget>[
-    HomeScreenLawyer(),
-    ChatScreenLawyer (),
-    JobsStatusScreenLawyer(),
+  final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreenLawyer(),
+    const ChatScreenLawyer(),
+    const JobsStatusScreenLawyer(),
     ProfileScreenLawyer(),
   ];
 
-  final List<String> labelText =
-  [
+  final List<String> labelText = [
     'Home',
     'Chat',
     'Jobs',
@@ -53,16 +48,39 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
       selectedIndex = index;
     });
   }
-
+@override
+void didChangeDependencies() {
+  Provider.of<CategoriesProvider>(context).getCategories();
+  // TODO: implement didChangeDependencies
+  super.didChangeDependencies();
+}
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-        drawer: CustomDrawerLawyer(),
+        drawer: const CustomDrawerLawyer(),
         appBar: AppBar(
-          backgroundColor: Color(0xFF2196f3),
+          title: Text(AppLocalizations.of(context)!.hello_lawyer),
+          backgroundColor: Colors.blue,
+          actions: [
+            PopupMenuButton<Locale>(
+              onSelected: (Locale locale) {
+                Provider.of<LanguageProvider>(context, listen: false)
+                    .setLocale(locale);
+              },
+              icon: const Icon(Icons.language),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
+                const PopupMenuItem<Locale>(
+                  value: Locale('en'),
+                  child: Text('English'),
+                ),
+                const PopupMenuItem<Locale>(
+                  value: Locale('ur'),
+                  child: Text('اردو'),
+                ),
+              ],
+            ),
+          ],
         ),
         body: _widgetOptions[selectedIndex],
         floatingActionButton: FloatingActionButton(
@@ -70,13 +88,14 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CreateJobScreen(),),
+                builder: (context) => const CreateServiceScreen(),
+              ),
             );
           },
-          child: Icon(Icons.add),
-          backgroundColor: blueColor,
+          child: const Icon(Icons.add),
+          backgroundColor: Colors.blue,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30), // Adjust radius here
+            borderRadius: BorderRadius.circular(30),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -106,10 +125,9 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 32,
           rightCornerRadius: 32,
-          onTap: (index) => setState(() => selectedIndex = index),
+          onTap: _onItemTapped,
         ),
       ),
     );
   }
 }
-

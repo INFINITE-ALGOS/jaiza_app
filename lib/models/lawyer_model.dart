@@ -1,51 +1,54 @@
-// ignore_for_file: file_names
-
-class UserModel {
-  final String uId;
-  final String username;
+class LawyerModel{
+  final String name;
   final String email;
   final String phone;
-  final String userType;
+  final String rating;
   final bool isActive;
   final dynamic createdOn;
   final bool isVerified;
-
-  UserModel({
-    required this.uId,
-    required this.username,
+  final String type;
+  final int experience;
+  LawyerModel({
+    required this.name,
     required this.email,
+    required this.experience,
     required this.phone,
     required this.isActive,
     required this.createdOn,
+    required this.rating,
     required this.isVerified,
-    required this.userType
+    required this.type,
   });
-
   // Serialize the UserModel instance to a JSON map
   Map<String, dynamic> toMap() {
     return {
-      'uId': uId,
-      'username': username,
+      'name': name,
       'email': email,
       'phone': phone,
+      'experience':experience,
       'isActive': isActive,
       'createdOn': createdOn,
+      'rating':rating,
       "isVerified":isVerified,
-      'userType':userType
+      "type": type,
     };
   }
-
   // Create a UserModel instance from a JSON map
-  factory UserModel.fromMap(Map<String, dynamic> json) {
-    return UserModel(
-        uId: json['uId'],
-        username: json['username'],
+  factory LawyerModel.fromMap(Map<String, dynamic> json) {
+    return LawyerModel(
+        name: json['name'],
         email: json['email'],
         phone: json['phone'],
-       userType: json['userType'],
+        rating: json['rating'],
         isActive: json['isActive'],
         createdOn: json['createdOn'].toString(),
-        isVerified: json['isVerified']
+        isVerified: json['isVerified'],
+        type: json["type"],
+      experience: json['experience']
     );
   }
 }
+
+
+
+

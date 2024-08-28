@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 
+import '../auth/login_screen.dart';
+
 class ProfileScreenLawyer extends StatefulWidget {
+  const ProfileScreenLawyer({super.key});
+
   @override
   State<ProfileScreenLawyer> createState() => _ProfileScreenLawyerState();
 }
@@ -15,19 +20,19 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Text("Log out",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),)
-            ,SizedBox(height: 20,),
-            Text(
+            const Center(child: Text("Log out",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),)
+            ,const SizedBox(height: 20,),
+            const Text(
               'Are you sure you want to logout?',
               style: TextStyle(fontSize: 15.0),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: (){
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel',style: TextStyle(color: whiteColor),),
+              child: const Text('Cancel',style: TextStyle(color: whiteColor),),
               style: ElevatedButton.styleFrom(
                 backgroundColor: blueColor,
               ),
@@ -35,9 +40,11 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
             ElevatedButton(
 
               onPressed: (){
-                Navigator.of(context).pop();
-              },
-              child: Text('Logout',style: TextStyle(color: whiteColor)),
+                FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      (Route<dynamic> route) => false,);              },
+              child: const Text('Logout',style: TextStyle(color: whiteColor)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: blueColor,
               ),
@@ -64,7 +71,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
               SizedBox(height: screenHeight * 0.05),
               CircleAvatar(
                 radius: profileImageSize / 2,
-                backgroundImage: NetworkImage(
+                backgroundImage: const NetworkImage(
                     'https://via.placeholder.com/150'), // Placeholder image URL
               ),
               SizedBox(height: screenHeight * 0.02),
@@ -91,7 +98,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(color: blueColor,width: 2)
                 ),
-                child: Center(child:Text("Edit Profile",style: TextStyle(color: blueColor,fontWeight: FontWeight.w600),
+                child: const Center(child:Text("Edit Profile",style: TextStyle(color: blueColor,fontWeight: FontWeight.w600),
                 ),),),
               SizedBox(height: screenHeight * 0.04),
               buildProfileOption(
@@ -131,11 +138,11 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                   title,
                   style: TextStyle(fontSize: screenHeight * 0.02),
                 ),
-                Spacer(),
+                const Spacer(),
                 Icon(Icons.arrow_forward_ios, size: screenHeight * 0.03),
               ]),
 
-          Divider()
+          const Divider()
         ],
       ),
     );

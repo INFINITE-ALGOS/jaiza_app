@@ -10,16 +10,31 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  intl:
+  intl_translation:
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences:
+  provider:
+  file_picker:
+  pdfx:
+  firebase_storage:
   cupertino_icons: ^1.0.6
   otp_text_field: ^1.1.3
   animated_bottom_navigation_bar: ^1.3.3
   firebase_auth: ^4.6.0
   firebase_core: ^2.12.1
   google_sign_in:
+  http:
+  firebase_app_check:
+  flutter_pdfview:
+  dio:
+  url_launcher:
+  path_provider:
   cloud_firestore: ^4.8.0
   flutter_keyboard_visibility: ^5.4.0
   flutter_easyloading: ^3.0.5
+  build_runner:
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +43,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true

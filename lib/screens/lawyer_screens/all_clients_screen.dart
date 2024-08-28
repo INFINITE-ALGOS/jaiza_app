@@ -29,7 +29,7 @@ class _AllClientsScreenState extends State<AllClientsScreen> {
                 child: Container(
                   width: screenWidth,
                   height: screenHeight * 0.075,
-                  margin: EdgeInsets.symmetric(vertical: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
                       color: lightGreyColor,
                       borderRadius: BorderRadius.circular(15)),
@@ -37,11 +37,11 @@ class _AllClientsScreenState extends State<AllClientsScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           CupertinoIcons.search,
                           color: greyColor,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Text(
@@ -58,12 +58,12 @@ class _AllClientsScreenState extends State<AllClientsScreen> {
                 child: GridView.builder(
                     itemCount: 10,
                     gridDelegate:
-                    SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 10,),
+                    const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 10,),
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: ()
                         {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LawyerProfile()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const LawyerProfile()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20,right: 20, top: 15),
@@ -79,7 +79,7 @@ class _AllClientsScreenState extends State<AllClientsScreen> {
                                 SizedBox(
                                   height: screenHeight * 0.02,
                                 ),
-                                Text(
+                                const Text(
                                   "client Name",
                                   style: TextStyle(fontWeight: FontWeight.w600),
                                 ),

@@ -32,9 +32,9 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
           children: [
             InkWell(
                 onTap: (){Navigator.pop(context);},
-                child: Icon(CupertinoIcons.back)),
+                child: const Icon(CupertinoIcons.back)),
             SizedBox(width: screenWidth*0.05,),
-            Text("Add A New Service",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),)
+            const Text("Sell A New Service",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),)
           ],
         ),
         elevation: 0,
@@ -44,10 +44,10 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
-        
+
             children: [
               ListTile(
-                leading: CircleAvatar(),
+                leading: const CircleAvatar(),
                 title: Text(widget.categoryName),
               ),
               SizedBox(height: screenHeight*0.05,),
@@ -57,17 +57,17 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Service Title",style: TextStyle(fontWeight: FontWeight.w600),),
-        
+                    const Text("Service Title",style: TextStyle(fontWeight: FontWeight.w600),),
+
                     Container(
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),border: Border.all(color: blackColor)),
                       child: TextFormField(
                         controller: titleController,
-                        decoration: InputDecoration(
-                          hintText: "Enter Title",
-                          border:InputBorder.none
+                        decoration: const InputDecoration(
+                            hintText: "Enter Title",
+                            border:InputBorder.none
                         ),
                       ),
                     )
@@ -75,24 +75,24 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
                 ),
               ),
               SizedBox(height: screenHeight*0.05,),
-        
+
               // DESCRIPTION
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Description",style: TextStyle(fontWeight: FontWeight.w600),),
-        
+                    const Text("Description",style: TextStyle(fontWeight: FontWeight.w600),),
+
                     Container(
                       height: screenHeight*0.2,
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),border: Border.all(color: blackColor)),
                       child: TextFormField(
                         controller: descriptionController,
                         maxLines: null,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Enter Description",
                             border:InputBorder.none
                         ),
@@ -102,22 +102,22 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
                 ),
               ),
               SizedBox(height: screenHeight*0.05,),
-        
+
               //LOCATION
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Location",style: TextStyle(fontWeight: FontWeight.w600),),
-        
+                    const Text("Location",style: TextStyle(fontWeight: FontWeight.w600),),
+
                     Container(
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),border: Border.all(color: blackColor)),
                       child: TextFormField(
                         controller: locationController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Enter Location",
                             border:InputBorder.none
                         ),
@@ -127,22 +127,22 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
                 ),
               ),
               SizedBox(height: screenHeight*0.05,),
-        
+
               // PRICE
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("Price",style: TextStyle(fontWeight: FontWeight.w600),),
-        
+                    const Text("Price",style: TextStyle(fontWeight: FontWeight.w600),),
+
                     Container(
-                      margin: EdgeInsets.only(top: 12),
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),border: Border.all(color: blackColor)),
                       child: TextFormField(
                         controller: priceController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Enter Price",
                             border:InputBorder.none
                         ),
@@ -155,7 +155,7 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
 
               ElevatedButton(onPressed: (){
                 CreateServiceController().createServiceMethod(title: titleController.text.trim(), description: descriptionController.text.trim(), price: priceController.text.trim(), location: locationController.text.trim(), category: widget.categoryName, context: context);
-              }, child: Text("Done"))
+              }, child: const Text("Done"))
             ],
           ),
         ),

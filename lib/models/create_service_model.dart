@@ -2,22 +2,22 @@
 
 class CreateServiceModel {
   final String serviceId;
-  final String clientId;
+  final String lawyerId;
   final String title;
   final String description;
   final String price;
-  final String serviceStatus;
+  final String status;
   final String location;
   final dynamic createdOn;
   final String category;
 
   CreateServiceModel({
     required this.serviceId,
-    required this.clientId,
+    required this.lawyerId,
     required this.title,
     required this.description,
     required this.price,
-    required this.serviceStatus,
+    required this.status,
     required this.createdOn,
     required this.location,
     required this.category
@@ -27,11 +27,11 @@ class CreateServiceModel {
   Map<String, dynamic> toMap() {
     return {
       'serviceId': serviceId,
-      'clientId': clientId,
+      'lawyerId': lawyerId,
       'title': title,
       'description': description,
       'price': price,
-      'serviceStatus': serviceStatus,
+      'status': status,
       'createdOn': createdOn,
       'location':location,
       'category':category
@@ -41,15 +41,15 @@ class CreateServiceModel {
   // Create a CreateServiceModel instance from a JSON map
   factory CreateServiceModel.fromMap(Map<String, dynamic> json) {
     return CreateServiceModel(
-      serviceId: json['serviceId'],
-      clientId: json['clientId'],
-      title: json['title'],
-      description: json['description'],
-      price: json['price'],
-      serviceStatus: json['serviceStatus'],
-      createdOn: json['createdOn'],
-      location: json['location'],
-      category: json['category']
+        serviceId: json['serviceId'],
+        lawyerId: json['lawyerId'],
+        title: json['title'],
+        description: json['description'],
+        price: json['price'],
+        status: json['status'],
+        createdOn: json['createdOn'],
+        location: json['location'],
+        category: json['category']
     );
   }
 }

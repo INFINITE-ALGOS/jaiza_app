@@ -8,44 +8,44 @@ class _LawyerProfileState extends State<LawyerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFe6f2fe),
+      backgroundColor: const Color(0xFFe6f2fe),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Row(
             children: [
               Container(
                 alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(left: 20),
-                child: CircleAvatar(
+                padding: const EdgeInsets.only(left: 20),
+                child: const CircleAvatar(
                   radius: 20,
                 ),
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.55),
               Container(
-                child: Icon(
+                child: const Icon(
                   Icons.notifications_none,
                   size: 30,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               Container(
-                child: Icon(
+                child: const Icon(
                   Icons.messenger_outline,
                   size: 30,
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             height: MediaQuery.of(context).size.height * 0.06,
             width: MediaQuery.of(context).size.width * 0.87,
             decoration: BoxDecoration(
@@ -57,7 +57,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
             ),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                   child: TextField(
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -67,21 +67,21 @@ class _LawyerProfileState extends State<LawyerProfile> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {},
                 ),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
             children: [
               Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 20),
-                child: Text(
+                padding: const EdgeInsets.only(left: 20),
+                child: const Text(
                   "Criminal Lawyers",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               Container(
@@ -99,7 +99,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                   color: Colors.blue, // Background color of the container
                   borderRadius: BorderRadius.circular(25), // Make it circular
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     '25+', // Text inside the container
                     style: TextStyle(
@@ -112,11 +112,11 @@ class _LawyerProfileState extends State<LawyerProfile> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             height: MediaQuery.of(context).size.height * 0.25,
             width: MediaQuery.of(context).size.width * 0.9,
             decoration: BoxDecoration(
@@ -137,8 +137,8 @@ class _LawyerProfileState extends State<LawyerProfile> {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        padding: EdgeInsets.only(left: 20,top: 20),
-                        child: Text(
+                        padding: const EdgeInsets.only(left: 20,top: 20),
+                        child: const Text(
                           "Rikita Sharma",
                           style: TextStyle(
                               fontSize: 15,
@@ -147,10 +147,10 @@ class _LawyerProfileState extends State<LawyerProfile> {
                       ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 20,
                         ),
-                        child: Text(
+                        child: const Text(
                           "Criminal Lawyer",
                           style: TextStyle(
                               fontSize: 13,
@@ -165,7 +165,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                   ),
                   Container(
                       alignment: Alignment.topRight,
-                      padding: EdgeInsets.only(left: 10, top: 15),
+                      padding: const EdgeInsets.only(left: 10, top: 15),
                       child: Container(
                         height: 40,
                         width: 100,
@@ -174,7 +174,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                           Colors.blue, // Background color of the container
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             "Book",
                             style: TextStyle(
@@ -188,7 +188,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
@@ -204,7 +204,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                         color: Colors.blue, // Background color of the container
                         borderRadius: BorderRadius.circular(25), // Make it circular
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           '25+', // Text inside the container
                           style: TextStyle(
@@ -217,8 +217,8 @@ class _LawyerProfileState extends State<LawyerProfile> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 30),
-                    child: Text('Cases',style: TextStyle(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: const Text('Cases',style: TextStyle(
                       color: Colors.blue,
                     ),),
                   )
@@ -235,7 +235,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                         color: Colors.blue, // Background color of the container
                         borderRadius: BorderRadius.circular(25), // Make it circular
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           '12+', // Text inside the container
                           style: TextStyle(
@@ -248,8 +248,8 @@ class _LawyerProfileState extends State<LawyerProfile> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 30),
-                    child: Text('Experience',style: TextStyle(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: const Text('Experience',style: TextStyle(
                       color: Colors.blue,
                     ),),
                   )
@@ -266,7 +266,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                         color: Colors.blue, // Background color of the container
                         borderRadius: BorderRadius.circular(25), // Make it circular
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           '7.6', // Text inside the container
                           style: TextStyle(
@@ -279,8 +279,8 @@ class _LawyerProfileState extends State<LawyerProfile> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 30),
-                    child: Text('Rating',style: TextStyle(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: const Text('Rating',style: TextStyle(
                       color: Colors.blue,
                     ),),
                   )
@@ -288,13 +288,13 @@ class _LawyerProfileState extends State<LawyerProfile> {
               ),
             ],
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Row(
             children: [
-              SizedBox(width: 30,),
+              const SizedBox(width: 30,),
               Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(left: 20, top: 20),
+                  padding: const EdgeInsets.only(left: 20, top: 20),
                   child: Container(
                     height: 40,
                     width: 100,
@@ -303,7 +303,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                       Colors.blue, // Background color of the container
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "About",
                         style: TextStyle(
@@ -313,10 +313,10 @@ class _LawyerProfileState extends State<LawyerProfile> {
                       ),
                     ),
                   )),
-              SizedBox(width: 30,),
+              const SizedBox(width: 30,),
               Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 10, top: 20),
+                  padding: const EdgeInsets.only(left: 10, top: 20),
                   child: Container(
                     height: 40,
                     width: 100,
@@ -325,7 +325,7 @@ class _LawyerProfileState extends State<LawyerProfile> {
                       Colors.white, // Background color of the container
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Portfolio",
                         style: TextStyle(
