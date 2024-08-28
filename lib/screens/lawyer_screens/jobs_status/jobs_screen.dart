@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/lawyer_screens/jobs_status/success_job_screen.dart';
-import 'active_job_screen.dart';
-import 'complete_job_screen.dart';
+import 'package:law_education_app/screens/lawyer_screens/jobs_status/pending_service_screen.dart';
+import 'active_service_screen.dart';
+import 'rejected_service_screen.dart';
 
 class JobsStatusScreenLawyer extends StatefulWidget {
   const JobsStatusScreenLawyer({super.key});
@@ -13,11 +13,11 @@ class JobsStatusScreenLawyer extends StatefulWidget {
 class _JobsStatusScreenLawyerState extends State<JobsStatusScreenLawyer> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
-    ActiveScreenLawyer(),
-    SuccessJobScreenLawyer(),
-    CompleteJobScreenLawyer(),
+    ActiveServiceScreenLawyer(),
+    PendingServiceScreenLawyer(),
+    RejectedServiceScreenLawyer(),
   ];
-  final List<String> _labels = ['Active', 'Success', 'Cancelled'];
+  final List<String> _labels = ['Active', 'Pending', 'Cancelled'];
   void _onContainerTap(int index) {
     setState(() {
       _selectedIndex = index;

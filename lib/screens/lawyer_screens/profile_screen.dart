@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/myprofile_controller.dart';
 import 'package:law_education_app/conts.dart';
@@ -6,7 +7,11 @@ import '../../controllers/user_provider.dart';
 import '../../utils/image_picker.dart';
 import 'edit_profile_screen.dart';
 
+import '../auth/login_screen.dart';
+
 class ProfileScreenLawyer extends StatefulWidget {
+  const ProfileScreenLawyer({super.key});
+
   @override
   State<ProfileScreenLawyer> createState() => _ProfileScreenLawyerState();
 }
@@ -156,6 +161,33 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                     ),
                   ],
                 ),
+            const Center(child: Text("Log out",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),)
+            ,const SizedBox(height: 20,),
+            const Text(
+              'Are you sure you want to logout?',
+              style: TextStyle(fontSize: 15.0),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel',style: TextStyle(color: whiteColor),),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: blueColor,
+              ),
+            ),
+            ElevatedButton(
+
+              onPressed: (){
+                FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      (Route<dynamic> route) => false,);              },
+              child: const Text('Logout',style: TextStyle(color: whiteColor)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: blueColor,
               ),
             ),
           ],

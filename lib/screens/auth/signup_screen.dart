@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:law_education_app/controllers/signup_with_email_controller.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
@@ -34,6 +33,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
    // final userProvider = Provider.of<UserProvider>(context, listen: false);
+  String selectedRole = 'client';
+  @override
+  Widget build(BuildContext context) {
+    // final userProvider = Provider.of<UserProvider>(context, listen: false);
     return KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
       return Scaffold(
         backgroundColor: Colors.grey,
@@ -50,6 +53,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.8,
                 decoration: BoxDecoration(
+                color: Colors.grey,
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: double.infinity,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(40),
@@ -60,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Container(
@@ -69,6 +80,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(
                           "Sign Up",
                           style: TextStyle(
+                          AppLocalizations.of(context)!.sign_up,
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 25),
                         ),
                       ),
@@ -89,12 +102,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     CustomTextField(
                       title: "Password",
                       fieldTitle: "Please Enter Your Password",
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextField(
+                      title: AppLocalizations.of(context)!.name,
+                      fieldTitle: AppLocalizations.of(context)!.please_enter_name,
+                      controller: nameController,
+                    ),
+                    CustomTextField(
+                      title: AppLocalizations.of(context)!.email,
+                      fieldTitle: AppLocalizations.of(context)!.please_enter_email,
+                      controller: emailController,
+                    ),
+                    CustomTextField(
+                      title: AppLocalizations.of(context)!.password,
+                      fieldTitle: AppLocalizations.of(context)!.please_enter_password,
                       controller: psswordController,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(width: 30,),
+                        const SizedBox(width: 30,),
                         Expanded(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -117,6 +147,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             )
                          ),
                         SizedBox(width: 30,),
+                                  value: "client",
+                                  groupValue: selectedRole,
+                                  activeColor: blueColor,
+                                  onChanged: (value)
+                                  {
+                                    setState(() {
+                                      selectedRole=value!;
+                                    });
+                                  },
+                                ),
+                                Text(AppLocalizations.of(context)!.client)
+                              ],
+                            )
+                        ),
+                        const SizedBox(width: 30,),
                         Expanded(
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -135,6 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Container(
                                   child: Text("Lawyer"),
                                 )
+                                Text(AppLocalizations.of(context)!.lawyer)
                               ],
                             )
                         ),
@@ -157,6 +203,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     SizedBox(
+                        text:AppLocalizations.of(context)!.sign_up,
+                        onPress: () {
+                          widget.signupWithEmailController
+                              .signUpWithEmailMethod(
+                              context: context,
+                              userType: selectedRole,
+                              userName: nameController.text.trim(),
+                              userEmail: emailController.text.trim(),
+                              userPassword: psswordController.text.trim(),
+                              selectedRole: selectedRole);
+                        },
+                      ),
+                    ),
+                    const SizedBox(
                       height: 20,
                     ),
                     InkWell(
@@ -165,6 +225,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => LoginScreen(),
+                            builder: (context) => const LoginScreen(),
                           ),
                         );
                       },
@@ -173,6 +234,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(
                           "Log In",
                           style: TextStyle(
+                          AppLocalizations.of(context)!.login,
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                               color: Colors.blue),
@@ -200,6 +263,9 @@ class CustomTextField extends StatelessWidget {
       required this.fieldTitle,
       required this.controller});
 
+        required this.title,
+        required this.fieldTitle,
+        required this.controller});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -210,12 +276,19 @@ class CustomTextField extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
+          padding: const EdgeInsets.only(left: 20),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            style: const TextStyle(
                 fontSize: 15, fontWeight: FontWeight.w600, color: Colors.grey),
           ),
         ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 5),
           padding: EdgeInsets.symmetric(horizontal: 10),
+          margin: const EdgeInsets.only(left: 20, right: 20, top: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: blackColor)),
@@ -226,9 +299,14 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
         SizedBox(
+            InputDecoration(hintText: fieldTitle, border: InputBorder.none),
+          ),
+        ),
+        const SizedBox(
           height: 20,
         ),
       ],
     );
   }
+}
 }

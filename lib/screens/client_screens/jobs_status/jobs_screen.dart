@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/client_screens/jobs_status/complete_job_screen.dart';
-import 'package:law_education_app/screens/client_screens/jobs_status/success_job_screen.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/completed_job_screen.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/cancelled_job_screen.dart';
 
-import 'active_job_screen.dart';
+import 'active_jobs/active_job_screen.dart';
 
 class JobsStatusScreen extends StatefulWidget {
-  const JobsStatusScreen({super.key});
+   const JobsStatusScreen({super.key});
   @override
   State<JobsStatusScreen> createState() => _JobsStatusScreenState();
 }
 
 class _JobsStatusScreenState extends State<JobsStatusScreen> {
-  int _selectedIndex = 0;
+  int selected_index=0;
   final List<Widget> _screens = [
-    ActiveScreen(),
-    SuccessJobScreen(),
-    CompleteJobScreen(),
+    const ActiveJobsScreen(),
+    const CompletedJobsScreen(),
+    CancelledJobsScreen(),
   ];
-  final List<String> _labels = ['Active', 'Success', 'Cancelled'];
+  final List<String> _labels = ['Active', 'Completed', 'Cancelled'];
   void _onContainerTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      selected_index = index;
     });
   }
 
@@ -30,14 +30,14 @@ class _JobsStatusScreenState extends State<JobsStatusScreen> {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 15),
+            margin: const EdgeInsets.symmetric(horizontal: 15),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Color(0xFFf1f1f2),
+                color: const Color(0xFFf1f1f2),
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(12),
@@ -53,7 +53,7 @@ class _JobsStatusScreenState extends State<JobsStatusScreen> {
           ),
           Expanded(
             child: IndexedStack(
-              index: _selectedIndex,
+              index: selected_index,
               children: _screens,
             ),
           ),
@@ -63,14 +63,14 @@ class _JobsStatusScreenState extends State<JobsStatusScreen> {
   }
 
   Widget _buildContainer(String text, int index) {
-    bool isActive = _selectedIndex == index;
+    bool isActive = selected_index == index;
     return GestureDetector(
       onTap: () => _onContainerTap(index),
       child: Container(
         height: MediaQuery.of(context).size.height * 0.075,
         width: MediaQuery.of(context).size.width * 0.47,
         decoration: BoxDecoration(
-          color: isActive ? blueColor : Color(0xFFf1f1f2),
+          color: isActive ? blueColor : const Color(0xFFf1f1f2),
           border: Border.all(
             color: Colors.transparent,
             width: 2,

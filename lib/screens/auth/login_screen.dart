@@ -6,6 +6,11 @@ import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 
 import '../lawyer_screens/bottom_navigation_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:law_education_app/screens/auth/signup_screen.dart';
+import 'package:law_education_app/widgets/custom_rounded_button.dart';
+import '../../controllers/signin_with_email_controller.dart';
 import 'forget_password_screen.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Container(
               height: MediaQuery.of(context).size.height*0.8,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(40),
@@ -45,17 +50,17 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 40,),
+                  const SizedBox(height: 40,),
                   Container(
                     alignment: Alignment.topLeft,
-                    padding: EdgeInsets.only(left: 20),
-                    child: Text("Log In",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Text(AppLocalizations.of(context)!.login,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Container(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
-                    child: Text("E-mail",style: TextStyle(fontSize: 17,color: Colors.grey),),
+                    child: Text(AppLocalizations.of(context)!.email,style: const TextStyle(fontSize: 17,color: Colors.grey),),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -65,20 +70,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Enter E-mail here',
+                        hintText: AppLocalizations.of(context)!.please_enter_email,
                         fillColor: Colors.white,
                         filled: true,
                       ),
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                      style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
                     ),
                   ),
-                  SizedBox(height: 5,),
+                  const SizedBox(height: 5,),
                   Container(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Password",
-                      style: TextStyle(fontSize: 17, color: Colors.grey),
+                      AppLocalizations.of(context)!.password,
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                   ),
                   Padding(
@@ -90,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'Enter Password here',
+                        hintText: AppLocalizations.of(context)!.please_enter_password,
                         fillColor: Colors.white,
                         filled: true,
                         suffixIcon: IconButton(
@@ -101,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: _togglePasswordVisibility,
                         ),
                       ),
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                      style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
                     ),
                   ),
                   SizedBox(height: 50,),
@@ -111,18 +116,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     await loginController.loginAndNavigate(emailController.text ,passwordController.text, context);
                   },),
                   SizedBox(height: 20,),
+                  const SizedBox(height: 50,),
+                  CustomClickRoundedButton(text: AppLocalizations.of(context)!.login,
+                    onPress: ()async{
+                      LoginController loginController = LoginController();
+                      await loginController.loginAndNavigate(emailController.text ,passwordController.text, context);
+                    },),
+                  const SizedBox(height: 20,),
                   InkWell(
                     onTap: ()
                     {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ForgetPasswordScreen(),),
+                          builder: (context) => const ForgetPasswordScreen(),),
                       );
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      child: Text("Forget Password?",style: TextStyle(
+                      child: Text(AppLocalizations.of(context)!.forget_password,style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.grey
@@ -141,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      child: Text("Sign Up",style: TextStyle(
+                      child: Text(AppLocalizations.of(context)!.sign_up,style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.blue

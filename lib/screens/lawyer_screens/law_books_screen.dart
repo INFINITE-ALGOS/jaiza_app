@@ -27,7 +27,7 @@ class _LawBooksLawyerState extends State<LawBooksLawyer> {
               child: Container(
                 width: screenWidth,
                 height: screenHeight * 0.075,
-                margin: EdgeInsets.symmetric(vertical: 15),
+                margin: const EdgeInsets.symmetric(vertical: 15),
                 decoration: BoxDecoration(
                     color: lightGreyColor,
                     borderRadius: BorderRadius.circular(15)),
@@ -35,11 +35,11 @@ class _LawBooksLawyerState extends State<LawBooksLawyer> {
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         CupertinoIcons.search,
                         color: greyColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Text(
@@ -53,7 +53,7 @@ class _LawBooksLawyerState extends State<LawBooksLawyer> {
               ),
             ),
             Expanded(
-              child: GridView.builder(itemCount: 10,gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemBuilder: (BuildContext context,index){
+              child: GridView.builder(itemCount: 10,gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemBuilder: (BuildContext context,index){
                 return Padding(
                   padding:
                   const EdgeInsets.only(top: 15, right: 15),
@@ -70,12 +70,12 @@ class _LawBooksLawyerState extends State<LawBooksLawyer> {
                               border: Border.all(
                                   color: lightGreyColor,
                                   width: 1)),
-                          child: Center(
+                          child: const Center(
                             child: Icon(
                                 Icons.miscellaneous_services),
                           ),
                         ),
-                        Text(
+                        const Text(
                           "Law books",
                           style: TextStyle(
                               fontWeight: FontWeight.w600),

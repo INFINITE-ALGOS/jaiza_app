@@ -13,13 +13,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
     return Drawer(
       child: ListView(
         children: [
-          UserAccountsDrawerHeader(
+          const UserAccountsDrawerHeader(
             accountName: Padding(
-              padding: const EdgeInsets.only(top: 30,left: 10),
+              padding: EdgeInsets.only(top: 30,left: 10),
               child: Text("Name"),
             ),
             accountEmail: Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(left: 10),
               child: Text("person@gmail.com"),
             ),
             decoration: BoxDecoration(
@@ -30,54 +30,54 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.account_box),
-            title: Text("Profile"),
+            leading: const Icon(Icons.account_box),
+            title: const Text("Profile"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.play_circle),
-            title: Text("Add Free Subcription"),
+            leading: const Icon(Icons.play_circle),
+            title: const Text("Add Free Subcription"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.info),
-            title: Text("App Info"),
+            leading: const Icon(Icons.info),
+            title: const Text("App Info"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text("Notifications"),
+            leading: const Icon(Icons.notifications),
+            title: const Text("Notifications"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Settings"),
+            leading: const Icon(Icons.settings),
+            title: const Text("Settings"),
             onTap: (){},
           ),
-          Divider(),
+          const Divider(),
           ListTile(
-            leading: Icon(Icons.star_rate_outlined),
-            title: Text("Rate Our App"),
-            onTap: (){},
-          ),
-          ListTile(
-            leading: Icon(Icons.health_and_safety),
-            title: Text("Terms of use & privacy statement"),
+            leading: const Icon(Icons.star_rate_outlined),
+            title: const Text("Rate Our App"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.search),
-            title: Text("About"),
+            leading: const Icon(Icons.health_and_safety),
+            title: const Text("Terms of use & privacy statement"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.message),
-            title: Text("Contact us"),
+            leading: const Icon(Icons.search),
+            title: const Text("About"),
             onTap: (){},
           ),
           ListTile(
-            leading: Icon(Icons.delete),
-            title: Text("Delete Account"),
+            leading: const Icon(Icons.message),
+            title: const Text("Contact us"),
+            onTap: (){},
+          ),
+          ListTile(
+            leading: const Icon(Icons.delete),
+            title: const Text("Delete Account"),
             onTap: (){},
           ),
         ],
