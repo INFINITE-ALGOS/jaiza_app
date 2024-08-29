@@ -15,13 +15,8 @@ class BottomNavigationbarClient extends StatefulWidget {
    BottomNavigationbarClient({super.key,required this.selectedIndex});
 
   @override
-  State<BottomNavigationbarClient> acreateState() => _BottomNavigationbarClientState();
+  State<BottomNavigationbarClient> createState() => _BottomNavigationbarClientState();
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
 }
 
 class _BottomNavigationbarClientState extends State<BottomNavigationbarClient> {

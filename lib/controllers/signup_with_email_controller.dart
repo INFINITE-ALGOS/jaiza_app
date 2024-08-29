@@ -65,7 +65,7 @@ class SignupWithEmailController {
             type: selectedRole,
             createdOn: DateTime.now(),
             rating: '0.0',
-            experience: 0,
+            experience: 'No experience',
             isVerified: false, url: '');
         await _firestore.collection("users").doc(user.uid).set(lawyerModel.toMap());
         Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));

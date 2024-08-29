@@ -145,7 +145,7 @@ class OfferCard extends StatelessWidget {
               InkWell(
                 onTap: (){
                   FirebaseFirestore.instance.collection('offers').doc(offer['offerId']).update({'status':"accepted"});
-                  FirebaseFirestore.instance.collection('jobs').doc(offer['jobId']).update({'jobStatus':"active"});
+                  FirebaseFirestore.instance.collection('jobs').doc(offer['jobId']).update({'status':"active"});
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) =>BottomNavigationbarClient(selectedIndex: 3)), // New screen to navigate to

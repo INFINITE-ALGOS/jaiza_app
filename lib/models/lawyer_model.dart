@@ -10,11 +10,13 @@ class LawyerModel{
   final bool isVerified;
   final String type;
   final String url;
+  final String experience;
 
 
 
   LawyerModel({
     required this.name,
+    required this.experience,
     required this.email,
     required this.phone,
     required this.isActive,
@@ -22,14 +24,14 @@ class LawyerModel{
     required this.rating,
     required this.isVerified,
     required this.type,
-    required this.url, required int experience,
-
+    required this.url,
 
   });
 
   // Serialize the UserModel instance to a JSON map
   Map<String, dynamic> toMap() {
     return {
+      'experience':experience,
       'name': name,
       'email': email,
       'phone': phone,
@@ -58,8 +60,6 @@ class LawyerModel{
         type: json["type"],
         url: json["url"],
         experience: json["experience"]
-
-
 
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/screens/client_screens/profile_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -32,7 +33,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ListTile(
             leading: const Icon(Icons.account_box),
             title: const Text("Profile"),
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreenClient()));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.play_circle),

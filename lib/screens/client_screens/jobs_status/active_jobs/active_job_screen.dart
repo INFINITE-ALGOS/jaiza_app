@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
-import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_job_screen.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_job_detail_screen.dart';
 
 import '../../../../controllers/my_jobs_check_contoller.dart';
 import '../../../../conts.dart';
@@ -109,7 +109,7 @@ class ActiveJobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewActiveJobScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewActiveJobDetailScreen(job: job,offer: offer,)));
       },
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -235,53 +235,58 @@ class SearchingJobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-          width: MediaQuery.sizeOf(context).width,
-          padding: const EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: lightGreyColor,width: 2),
-            borderRadius: BorderRadius.circular(18),
-          ),
-          child:Column(
-            children: [
-              Container(
-                child: Column(
-                  children: [Row(
-                    children: [
-                      Text(job['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
-                      Spacer(),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: blueColor,
-                          borderRadius: BorderRadius.circular(6)
-                        ),
-                        padding: EdgeInsets.all(5),
-                        child: Text('${job['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
-                      )
-                    ],
-                  ),
-                    SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+    return InkWell(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewJobDetailsScreen(job: job, offers: offers)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            padding: const EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: lightGreyColor,width: 2),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child:Column(
+              children: [
+                Container(
+                  child: Column(
+                    children: [Row(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                          //  Icon(Icons.star,color: yellowColor,),
-                            Text(job['duration']?? '',style: TextStyle(),),
-                          ],
-                        ),
-                        Text('PKR ${job['price']?? ''}',style: TextStyle(color: greyColor),)
+                        Text(job['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                        Spacer(),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: blueColor,
+                            borderRadius: BorderRadius.circular(6)
+                          ),
+                          padding: EdgeInsets.all(5),
+                          child: Text('${job['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
+                        )
                       ],
-                    )],
-                ),
-              ),
+                    ),
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-            ],
-          )
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                            //  Icon(Icons.star,color: yellowColor,),
+                              Text(job['duration']?? '',style: TextStyle(),),
+                            ],
+                          ),
+                          Text('PKR ${job['price']?? ''}',style: TextStyle(color: greyColor),)
+                        ],
+                      )],
+                  ),
+                ),
+
+              ],
+            )
+        ),
       ),
     );;
   }

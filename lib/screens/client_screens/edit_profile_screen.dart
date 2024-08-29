@@ -3,7 +3,8 @@ import 'package:law_education_app/controllers/myprofile_controller.dart';
 import 'package:law_education_app/models/client_model.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  Map<String,dynamic> profileData;
+   EditProfileScreen({super.key,required this.profileData});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
