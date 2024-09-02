@@ -24,7 +24,7 @@ class CreateServiceController extends ChangeNotifier{
       await docRef.set(createServiceModel.toMap());
       EasyLoading.dismiss();
       Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => BottomNavigationLawyer()),
+        MaterialPageRoute(builder: (context) => BottomNavigationLawyer(selectedIndex: 0,)),
             (Route<dynamic> route) => false,);
 
     }

@@ -2,33 +2,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
 
 
-class ViewOffersOnMyJobScreen extends StatelessWidget {
-  final Map<String,dynamic>  job;
-  final List<Map<String, dynamic>>? offers;
-  const ViewOffersOnMyJobScreen({super.key, required this.job,required this.offers});
+class ViewPendingRequestsOnMyServiceScreen extends StatelessWidget {
+  final Map<String,dynamic> ? service;
+  final List<Map<String, dynamic>>? pendingRequests;
+  const ViewPendingRequestsOnMyServiceScreen({super.key, required this.service,required this.pendingRequests});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Offers"),
+      appBar: AppBar(title: const Text("Pending Requests"),
       backgroundColor: Colors.transparent,),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: offers!.isNotEmpty? ListView.builder(itemCount:offers!.length ,itemBuilder: (context,index){
-          return OfferCard(offer: offers![index]['offerDetails'], lawyer: offers![index]['lawyerDetails']);
-        }): const Center(child: Text("No Offers Given By Lawyers"),),
+        child: pendingRequests!.isNotEmpty? ListView.builder(itemCount:pendingRequests!.length ,itemBuilder: (context,index){
+          return OfferCard(request: pendingRequests![index]['requestDetails'], client: pendingRequests![index]['clientDetails']);
+        }): const Center(child: Text("No Requests Given By Clients"),),
       ),
     );
   }
 }
 
 class OfferCard extends StatelessWidget {
-  final Map<String, dynamic> offer;
-  final Map<String, dynamic> lawyer;
+  final Map<String, dynamic> request;
+  final Map<String, dynamic> client;
 
-  const OfferCard({super.key, required this.offer, required this.lawyer});
+  const OfferCard({super.key, required this.request, required this.client});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class OfferCard extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                (lawyer['name'] ?? '').toUpperCase(),
+                                (client['name'] ?? '').toUpperCase(),
                                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                               const SizedBox(width: 10),
@@ -81,7 +82,7 @@ class OfferCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            lawyer['location'] ?? 'No Location',
+                            client['location'] ?? 'No Location',
                             style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                           ),
                           const SizedBox(height: 8),
@@ -99,10 +100,10 @@ class OfferCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Text('Rating: ${lawyer['rating']}'),
-                      const SizedBox(width: 20),
-                      Text('Orders Completed: ${lawyer['ordersCompleted'] ?? '0'}'),
-                    ],
+                      Text('Rating: ${client['rating'] ?? "No rating"}'),
+                    //   const SizedBox(width: 20),
+                    //   Text('Orders Completed: ${client['ordersCompleted'] ?? '0'}'),
+                     ],
                   ),
                 ],
               ),
@@ -117,7 +118,7 @@ class OfferCard extends StatelessWidget {
                   style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
-                  text: offer['offerMessage'],
+                  text: request['requestMessage'],
                   style: const TextStyle(color: Colors.black),
                 ),
               ],
@@ -128,11 +129,11 @@ class OfferCard extends StatelessWidget {
             text: TextSpan(
               children: [
                 const TextSpan(
-                  text: "Offer Price: ",
+                  text: "Request Price: ",
                   style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
-                  text: offer['offerAmount'],
+                  text: request['requestAmount'],
                   style: const TextStyle(color: Colors.black),
                 ),
               ],
@@ -144,11 +145,11 @@ class OfferCard extends StatelessWidget {
             children: [
               InkWell(
                 onTap: (){
-                  FirebaseFirestore.instance.collection('offers').doc(offer['offerId']).update({'status':"active"});
-                  FirebaseFirestore.instance.collection('jobs').doc(offer['jobId']).update({'status':"active"});
+                 // FirebaseFirestore.instance.collection('offers').doc(request['offerId']).update({'status':"active"});
+                  FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"active"});
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) =>BottomNavigationbarClient(selectedIndex: 3)), // New screen to navigate to
+                    MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
                         (Route<dynamic> route) => false, // Predicate to determine which routes to remove
                   );
                 },
@@ -166,10 +167,10 @@ class OfferCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  FirebaseFirestore.instance.collection('offers').doc(offer['offerId']).update({'status':"rejected"});
+                  FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"rejected"});
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) =>BottomNavigationbarClient(selectedIndex: 3)), // New screen to navigate to
+                    MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
                         (Route<dynamic> route) => false, // Predicate to determine which routes to remove
                   );
 
@@ -189,7 +190,7 @@ class OfferCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  FirebaseFirestore.instance.collection('offers').doc(offer['offerId']).update({'status':"reproposal"});
+                  FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"reproposal"});
 
                   // Handle Reproposal action
                 },

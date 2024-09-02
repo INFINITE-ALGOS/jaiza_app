@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-class LawyerProfile extends StatefulWidget {
-  const LawyerProfile({super.key});
+class SeeLawyerProfile extends StatefulWidget {
+  const SeeLawyerProfile({super.key});
   @override
-  State<LawyerProfile> createState() => _LawyerProfileState();
+  State<SeeLawyerProfile> createState() => _SeeLawyerProfileState();
 }
-class _LawyerProfileState extends State<LawyerProfile> {
+class _SeeLawyerProfileState extends State<SeeLawyerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

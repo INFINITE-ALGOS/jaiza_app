@@ -63,7 +63,7 @@ class _AllLawyersScreensState extends State<AllLawyersScreens> {
                   return InkWell(
                     onTap: ()
                     {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const LawyerProfile()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const SeeLawyerProfile()));
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20,right: 20, top: 15),

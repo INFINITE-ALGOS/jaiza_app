@@ -1,39 +1,82 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:law_education_app/utils/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class MyServicesCheckController {
-  Future<List<Map<String, dynamic>>> myServicesCheckMethod({required BuildContext context}) async {
+  Future<List<Map<String, dynamic>>> fetchServicesAndRequests(
+      BuildContext context,
+      List<String> serviceStatuses, // Changed to a list of statuses
+      List<String> requestStatus
+      ) async {
     try {
-      final uid = FirebaseAuth.instance.currentUser!.uid;
-      final querySnapshot = await FirebaseFirestore.instance
+      final List<Map<String, dynamic>> servicesWithRequestsAndClient = [];
+      final User currentUser = FirebaseAuth.instance.currentUser!;
+      final uid = currentUser.uid;
+
+      // Fetch jobs for the current user based on multiple job statuses
+      final serviceQuerySnapshot = await FirebaseFirestore.instance
           .collection('services')
           .where("lawyerId", isEqualTo: uid)
-          .where('serviceStatus', isEqualTo: 'active')
+          .where('status', whereIn: serviceStatuses) // Query for multiple statuses
           .get();
 
-      // Check if there are documents and return the data
-      if (querySnapshot.docs.isEmpty) {
-        return []; // Return an empty list if no jobs found
-      }
+      // Iterate through the jobs
+      for (var serviceDoc in serviceQuerySnapshot.docs) {
+        var serviceData = serviceDoc.data() as Map<String, dynamic>;
+        String serviceId = serviceDoc.id; // Get the jobId
 
-      // Convert documents to a list of maps
-      return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-    } on FirebaseException catch (e) {
-      CustomSnackbar.showError(
-        context: context,
-        title: "Error",
-        message: e.toString(),
-      );
-      return []; // Return an empty list in case of an error
+        // Fetch offers for this job
+        final requestsQuerySnapshot = await FirebaseFirestore.instance
+            .collection('requests')
+            .where('lawyerId', isEqualTo: uid)
+            .where('status', whereIn:  requestStatus)
+            .where('serviceId', isEqualTo: serviceId)
+            .get();
+
+        // List to store offers with lawyer details for this job
+        List<Map<String, dynamic>> requestsWithClients = [];
+
+        // Iterate through the offers
+        for (var requestDoc in requestsQuerySnapshot.docs) {
+          var requestData = requestDoc.data() as Map<String, dynamic>;
+          String clientId = requestData['clientId'];
+
+          // Fetch lawyer details
+          DocumentSnapshot clientSnapshot = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(clientId)
+              .get();
+          var clientData = clientSnapshot.data() as Map<String, dynamic>;
+
+          // Combine offer and lawyer details
+          requestsWithClients.add({
+            'requestDetails': requestData,
+            'clientDetails': clientData,
+          });
+        }
+
+        // Add the job with its offers and lawyer details to the list
+        servicesWithRequestsAndClient.add({
+          'serviceDetails': serviceData,
+          'requests': requestsWithClients,
+        });
+      }
+      return servicesWithRequestsAndClient;
     } catch (e) {
       CustomSnackbar.showError(
-        context: context,
-        title: "Error",
-        message: e.toString(),
+          context: context,
+          title: "Error",
+          message: e.toString()
       );
-      return []; // Return an empty list in case of a non-Firebase error
+      return [];
     }
+  }
+
+  Future<void> deleteJob(String jobId) async {
+    await FirebaseFirestore.instance
+        .collection('jobs')
+        .doc(jobId)
+        .delete();
   }
 }

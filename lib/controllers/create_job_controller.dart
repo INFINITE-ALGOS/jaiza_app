@@ -16,7 +16,7 @@ class CreateJobController{
     try{
     DocumentReference docRef = _firestore.collection("jobs").doc();
     String docId = docRef.id;
-    final CreateJobModel createJobModel=CreateJobModel(jobId: docId, clientId: _auth.currentUser!.uid, title: title, description: description, price: price, status: "searching", createdOn: DateTime.now(), category: category,location: location,duration:duration);
+    final CreateJobModel createJobModel=CreateJobModel(jobId: docId, clientId: _auth.currentUser!.uid, title: title, description: description, price: price, status: "pending", createdOn: DateTime.now(), category: category,location: location,duration:duration);
 
     await docRef.set(createJobModel.toMap());
     EasyLoading.dismiss();

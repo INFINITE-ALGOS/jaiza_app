@@ -141,6 +141,7 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12),border: Border.all(color: blackColor)),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: priceController,
                         decoration: const InputDecoration(
                             hintText: "Enter Price",

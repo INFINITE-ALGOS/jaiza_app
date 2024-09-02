@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/get_lawyer_services_controller.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/utils/custom_snackbar.dart';
+import 'package:law_education_app/widgets/custom_rounded_button.dart';
 
 class AllServicesRelatedToCategory extends StatefulWidget {
   final String categoryName;
@@ -13,6 +16,17 @@ class AllServicesRelatedToCategory extends StatefulWidget {
 }
 
 class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCategory> {
+  final TextEditingController requestController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController customDurationController = TextEditingController();
+  String? selectedDuration;
+  List<String> durationOptions = [
+    "1 day",
+    "1 week",
+    "1 month",
+    "1 year",
+    "Custom"
+  ];
   @override
   Widget build(BuildContext context) {
     GetLawyerServicesController getLawyerServicesController = GetLawyerServicesController();
@@ -95,13 +109,35 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                             ],
                           ),
                           const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              _showRequestDialog(context, service);
-                            },
-                            child: const Text('Request Service'),
+                      Center(
+                        child: InkWell(
+                          onTap: ()  {
+                            // Show the request dialog and await its completion
+                             _showRequestDialog(context, service);
+
+                            // Navigate to BottomNavigationbarClient after the dialog is handled
+
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12), // Matches ButtonStyle padding
+                            decoration: BoxDecoration(
+                              color: blueColor, // Replace with your color
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Request Service',
+                                style: TextStyle(
+                                  color: Colors.white, // Matches ButtonStyle foregroundColor
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                           ),
-                        ],
+                        ),
+                      ),
+                     ],
                       ),
                     ),
                   );
@@ -115,54 +151,139 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
   }
 
   void _showRequestDialog(BuildContext context, Map<String, dynamic> service) {
-    final TextEditingController requestController = TextEditingController();
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Request Service for ${service["title"]}'),
-          content: TextField(
-            controller: requestController,
-            decoration: const InputDecoration(hintText: 'Enter your request details'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                final requestDetails = requestController.text;
-                if (requestDetails.isNotEmpty) {
-                  _submitRequest(service, requestDetails);
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Submit'),
-            ),
-          ],
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return SingleChildScrollView(
+              child: AlertDialog(
+                title: Text('Request Service for ${service["title"]}'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: requestController,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter your request details'),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      keyboardType: TextInputType.number,
+                      controller: priceController,
+                      decoration: const InputDecoration(
+                          hintText: 'Enter your offered price'),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Duration",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: DropdownButton<String>(
+                              value: selectedDuration,
+                              items: durationOptions.map((String duration) {
+                                return DropdownMenuItem<String>(
+                                  value: duration,
+                                  child: Text(duration),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedDuration = newValue;
+                                });
+                              },
+                              hint: const Text("Select Duration"),
+                              underline: SizedBox(), // Remove underline
+                            ),
+                          ),
+                          if (selectedDuration == "Custom") ...[
+                            SizedBox(height: 10),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: Colors.black),
+                              ),
+                              child: TextFormField(
+                                controller: customDurationController,
+                                decoration: const InputDecoration(
+                                    hintText: "Enter Custom Duration",
+                                    border: InputBorder.none),
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      String duration = selectedDuration == "Custom"
+                          ? customDurationController.text.trim()
+                          : selectedDuration!;
+                      final requestDetails = requestController.text;
+                      final priceDetails = priceController.text;
+
+                      if (requestDetails.isNotEmpty && priceDetails.isNotEmpty && duration.isNotEmpty) {
+                        _submitRequest(service, requestDetails, priceDetails,duration);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  BottomNavigationbarClient(selectedIndex: 3)),
+                              (Route<dynamic> route) => false,
+                        );
+                      }
+                      else{
+                        CustomSnackbar.showError(context: context, title: "Error sending request", message: "PLease fill all the fields");
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
   }
 
-  void _submitRequest(Map<String, dynamic> service, String requestDetails) async {
+  void _submitRequest(Map<String, dynamic> service, String requestDetails,String priceDetails,String duration) async {
     // Add request to Firestore
     DocumentReference docRef = FirebaseFirestore.instance.collection("requests").doc();
     String docId = docRef.id;
     await docRef.set({
       'requestId':docId,
+      'duration':duration,
       'serviceId': service['serviceId'],
-      'serviceTitle': service['title'],
-      'requestDetails': requestDetails,
+      //'serviceTitle': service['title'],
+      'requestMessage': requestDetails,
       'clientId':FirebaseAuth.instance.currentUser!.uid,
       'lawyerId':service['lawyerId'],
       'requestTimestamp': Timestamp.now(),
       'status':"pending",
-      "type":"service"
+      'requestAmount':priceDetails
+     // "type":"service"
     });
 
     // Show success message

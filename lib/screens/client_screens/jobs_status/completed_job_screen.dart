@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
 
 import '../../../controllers/my_jobs_check_contoller.dart';
 
@@ -44,9 +45,10 @@ class _CompletedJobsScreenState extends State<CompletedJobsScreen> {
                   final jobData = snapshot.data![index];
                   final jobs = jobData['jobDetails'] as Map<String, dynamic>;
                   final offers = jobData['offers'] as List<dynamic>?;
-
                   if (offers == null || offers.isEmpty) {
-                    return const ListTile(title: Text('No offers available'));
+                    return Center(
+                      child: const Text('No offers available'),
+                    );
                   }
 
                   final offer = offers[0] as Map<String, dynamic>;
@@ -73,116 +75,87 @@ class _CompletedJobsScreenState extends State<CompletedJobsScreen> {
 
 class JobCard extends StatelessWidget {
   final Map<String, dynamic> job;
-  final Map<String, dynamic> offer;
+  final Map<String,dynamic> offer;
 
   const JobCard({super.key,
     required this.job,
-    required this.offer,
+    required this.offer
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 8,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Job Details Container
-            Container(
-              width: MediaQuery.sizeOf(context).width,
-              padding: const EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                color: Colors.blue[50],
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blueGrey.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: lightGreyColor,width: 2),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child:Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [Row(
+                    children: [
+                      Text(job['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                      Spacer(),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: blueColor,
+                            borderRadius: BorderRadius.circular(6)
+                        ),
+                        padding: EdgeInsets.all(5),
+                        child: Text('${job['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
+                      )
+                    ],
                   ),
-                ],
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //  Icon(Icons.star,color: yellowColor,),
+                            Text(job['duration']?? '',style: TextStyle(),),
+                          ],
+                        ),
+                        Text('PKR ${offer['offerDetails']['offerAmount']?? ''}',style: TextStyle(color: greyColor),)
+                      ],
+                    )],
+                ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    job['title'] as String? ?? 'No Title',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.blue[900]),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    job['description'] as String? ?? 'No Description',
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Price: ${offer['offerDetails']?['offerAmount'] ?? 'Not Available'}",
-                    style: TextStyle(fontSize: 16, color: Colors.blue[800]),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Duration: ${job['duration'] ?? 'Not Available'}",
-                    style: TextStyle(fontSize: 16, color: Colors.blue[800]),
-                  ),
-                  const SizedBox(height: 10),
-                ],
+              Divider(),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                        children: [Text(offer['lawyerDetails']['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                          SizedBox(height: 10,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.star,color: yellowColor,),
+                              Text(offer['lawyerDetails']['rating']?? '0.0',style: TextStyle(),),
+                            ],
+                          ),
+                        ]                ),
+                    InkWell(
+                        onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
+                        },
+                        child: CircleAvatar())
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            // Lawyer Details Container
-            Container(
-              padding: const EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 3,
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Lawyer: ${offer['lawyerDetails']?['name'] ?? 'Unknown'}",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.blue[900]),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Message: ${offer['offerDetails']?['offerMessage'] ?? 'No Message'}",
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Experience: ${offer['lawyerDetails']?['experience']?.toString() ?? '0.0'} years",
-                    style: TextStyle(fontSize: 16, color: Colors.blue[800]),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Jobs Completed: ${offer['lawyerDetails']?['jobsCompleted']?.toString() ?? '0'}",
-                    style: TextStyle(fontSize: 16, color: Colors.blue[800]),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Action Buttons
-            const Text("Rate the lawyer",style: TextStyle(color: blueColor),)
-          ],
-        ),
+
+            ],
+          )
       ),
     );
   }
-
 }

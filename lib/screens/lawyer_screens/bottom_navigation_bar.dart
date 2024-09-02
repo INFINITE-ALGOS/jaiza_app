@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:law_education_app/screens/lawyer_screens/services_status/jobs_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:law_education_app/provider/language_provider.dart';
 import 'package:law_education_app/screens/lawyer_screens/create_service_screen.dart';
@@ -9,18 +10,17 @@ import 'package:law_education_app/screens/lawyer_screens/drawer.dart';
 import '../../provider/get_categories_provider.dart';
 import 'chat_screen.dart';
 import 'home_screen.dart';
-import 'jobs_status/jobs_screen.dart';
 import 'profile_screen.dart';
 
 class BottomNavigationLawyer extends StatefulWidget {
-  const BottomNavigationLawyer({super.key});
+  int selectedIndex;
+   BottomNavigationLawyer({super.key,required this.selectedIndex});
 
   @override
   State<BottomNavigationLawyer> createState() => _BottomNavigationLawyerState();
 }
 
 class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
-  int selectedIndex = 0;
 
   final List<IconData> iconList = [
     Icons.home_outlined,
@@ -32,20 +32,20 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreenLawyer(),
     const ChatScreenLawyer(),
-    const JobsStatusScreenLawyer(),
-    ProfileScreenLawyer(),
+    const ChatScreenLawyer(),
+    JobsStatusScreenLawyer(),
   ];
 
   final List<String> labelText = [
     'Home',
     'Chat',
     'Jobs',
-    'Profile',
+    'All Services',
   ];
 
   void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
+      widget.selectedIndex = index;
     });
   }
 @override
@@ -82,7 +82,7 @@ void didChangeDependencies() {
             ),
           ],
         ),
-        body: _widgetOptions[selectedIndex],
+        body: _widgetOptions[widget.selectedIndex],
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -120,7 +120,7 @@ void didChangeDependencies() {
               ],
             );
           },
-          activeIndex: selectedIndex,
+          activeIndex: widget.selectedIndex,
           gapLocation: GapLocation.center,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 32,

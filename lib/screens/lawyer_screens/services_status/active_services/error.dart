@@ -5,11 +5,11 @@ import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
 import '../../../../conts.dart';
 
-class ViewActiveJobDetailScreen extends StatelessWidget {
+class ViewActiveRequestOnMyServiceScreen extends StatelessWidget {
   final Map<String, dynamic> job;
   final Map<String, dynamic> offer;
 
-  const ViewActiveJobDetailScreen({super.key, required this.job, required this.offer});
+  const ViewActiveRequestOnMyServiceScreen({super.key, required this.job, required this.offer});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

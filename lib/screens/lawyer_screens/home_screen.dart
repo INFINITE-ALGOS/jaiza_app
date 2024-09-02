@@ -132,100 +132,100 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                         )
                       ],
                     ),
-                    Container(
-                      height: screenHeight * 0.3,
-                      child: Container(
-                        color: whiteColor,
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: FutureBuilder<List<Map<String, dynamic>>>(
-                          future: MyServicesCheckController().myServicesCheckMethod(context: context),
-                          builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const Center(child: CircularProgressIndicator());
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                child: Text(
-                                  'Error: ${snapshot.error}',
-                                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                                ),
-                              );
-                            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                              return const Center(
-                                child: Text(
-                                  'You have not created any service',
-                                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                                ),
-                              );
-                            } else {
-                              final List<Map<String, dynamic>> myServices = snapshot.data!;
-
-                              return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: myServices.length,
-                                itemBuilder: (context, index) {
-                                  final Timestamp timestamp = myServices[index]['createdOn'] as Timestamp;
-                                  final DateTime dateTime = timestamp.toDate();
-                                  final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-
-                                  return Container(
-                                    color: whiteColor,
-                                    width: MediaQuery.of(context).size.width * 0.6,
-                                    margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-                                    child: Card(
-                                      color: whiteColor,
-                                      elevation: 8.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Created on: $formattedDate',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 8.0),
-                                            Text(
-                                              myServices[index]['title'] ?? 'No Title',
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 4.0),
-                                            Text(
-                                              myServices[index]['description'] ?? 'No Description',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.grey[700],
-                                              ),
-                                            ),
-                                            const SizedBox(height: 8.0),
-                                            Text(
-                                              '\$${myServices[index]['price'] ?? '0.00'}',
-                                              style: const TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    )
+                    // Container(
+                    //   height: screenHeight * 0.3,
+                    //   child: Container(
+                    //     color: whiteColor,
+                    //     height: MediaQuery.of(context).size.height * 0.3,
+                    //     child: FutureBuilder<List<Map<String, dynamic>>>(
+                    //       future: MyServicesCheckController().myServicesCheckMethod(context: context),
+                    //       builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                    //         if (snapshot.connectionState == ConnectionState.waiting) {
+                    //           return const Center(child: CircularProgressIndicator());
+                    //         } else if (snapshot.hasError) {
+                    //           return Center(
+                    //             child: Text(
+                    //               'Error: ${snapshot.error}',
+                    //               style: const TextStyle(color: Colors.red, fontSize: 16),
+                    //             ),
+                    //           );
+                    //         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    //           return const Center(
+                    //             child: Text(
+                    //               'You have not created any service',
+                    //               style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                    //             ),
+                    //           );
+                    //         } else {
+                    //           final List<Map<String, dynamic>> myServices = snapshot.data!;
+                    //
+                    //           return ListView.builder(
+                    //             scrollDirection: Axis.horizontal,
+                    //             itemCount: myServices.length,
+                    //             itemBuilder: (context, index) {
+                    //               final Timestamp timestamp = myServices[index]['createdOn'] as Timestamp;
+                    //               final DateTime dateTime = timestamp.toDate();
+                    //               final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+                    //
+                    //               return Container(
+                    //                 color: whiteColor,
+                    //                 width: MediaQuery.of(context).size.width * 0.6,
+                    //                 margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+                    //                 child: Card(
+                    //                   color: whiteColor,
+                    //                   elevation: 8.0,
+                    //                   shape: RoundedRectangleBorder(
+                    //                     borderRadius: BorderRadius.circular(10.0),
+                    //                   ),
+                    //                   child: Padding(
+                    //                     padding: const EdgeInsets.all(16.0),
+                    //                     child: Column(
+                    //                       crossAxisAlignment: CrossAxisAlignment.start,
+                    //                       children: [
+                    //                         Text(
+                    //                           'Created on: $formattedDate',
+                    //                           style: const TextStyle(
+                    //                             fontWeight: FontWeight.bold,
+                    //                             fontSize: 16,
+                    //                           ),
+                    //                         ),
+                    //                         const SizedBox(height: 8.0),
+                    //                         Text(
+                    //                           myServices[index]['title'] ?? 'No Title',
+                    //                           style: const TextStyle(
+                    //                             fontSize: 18,
+                    //                             fontWeight: FontWeight.w600,
+                    //                           ),
+                    //                         ),
+                    //                         const SizedBox(height: 4.0),
+                    //                         Text(
+                    //                           myServices[index]['description'] ?? 'No Description',
+                    //                           style: TextStyle(
+                    //                             fontSize: 14,
+                    //                             color: Colors.grey[700],
+                    //                           ),
+                    //                         ),
+                    //                         const SizedBox(height: 8.0),
+                    //                         Text(
+                    //                           '\$${myServices[index]['price'] ?? '0.00'}',
+                    //                           style: const TextStyle(
+                    //                             fontSize: 16,
+                    //                             color: Colors.green,
+                    //                             fontWeight: FontWeight.bold,
+                    //                           ),
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               );
+                    //             },
+                    //           );
+                    //         }
+                    //       },
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -470,93 +470,93 @@ class _ViewAllMyServiceState extends State<ViewAllMyService> {
       body: Container(
         color: whiteColor,
        // height: MediaQuery.of(context).size.height * 0.3,
-        child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: MyServicesCheckController().myServicesCheckMethod(context: context),
-          builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              );
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(
-                child: Text(
-                  'You have not created any service',
-                  style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                ),
-              );
-            } else {
-              final List<Map<String, dynamic>> myServices = snapshot.data!;
-
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: myServices.length,
-                itemBuilder: (context, index) {
-                  final Timestamp timestamp = myServices[index]['createdOn'] as Timestamp;
-                  final DateTime dateTime = timestamp.toDate();
-                  final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-
-                  return Container(
-                    color: whiteColor,
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-                    child: Card(
-                      color: whiteColor,
-                      elevation: 8.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Created on: $formattedDate',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              myServices[index]['title'] ?? 'No Title',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 4.0),
-                            Text(
-                              myServices[index]['description'] ?? 'No Description',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                            const SizedBox(height: 8.0),
-                            Text(
-                              '\$${myServices[index]['price'] ?? '0.00'}',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-          },
-        ),
+       //  child: FutureBuilder<List<Map<String, dynamic>>>(
+       //    future: MyServicesCheckController().myServicesCheckMethod(context: context),
+       //    builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+       //      if (snapshot.connectionState == ConnectionState.waiting) {
+       //        return const Center(child: CircularProgressIndicator());
+       //      } else if (snapshot.hasError) {
+       //        return Center(
+       //          child: Text(
+       //            'Error: ${snapshot.error}',
+       //            style: const TextStyle(color: Colors.red, fontSize: 16),
+       //          ),
+       //        );
+       //      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+       //        return const Center(
+       //          child: Text(
+       //            'You have not created any service',
+       //            style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+       //          ),
+       //        );
+       //      } else {
+       //        final List<Map<String, dynamic>> myServices = snapshot.data!;
+       //
+       //        return ListView.builder(
+       //          scrollDirection: Axis.vertical,
+       //          itemCount: myServices.length,
+       //          itemBuilder: (context, index) {
+       //            final Timestamp timestamp = myServices[index]['createdOn'] as Timestamp;
+       //            final DateTime dateTime = timestamp.toDate();
+       //            final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+       //
+       //            return Container(
+       //              color: whiteColor,
+       //              width: MediaQuery.of(context).size.width * 0.6,
+       //              margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+       //              child: Card(
+       //                color: whiteColor,
+       //                elevation: 8.0,
+       //                shape: RoundedRectangleBorder(
+       //                  borderRadius: BorderRadius.circular(10.0),
+       //                ),
+       //                child: Padding(
+       //                  padding: const EdgeInsets.all(16.0),
+       //                  child: Column(
+       //                    crossAxisAlignment: CrossAxisAlignment.start,
+       //                    children: [
+       //                      Text(
+       //                        'Created on: $formattedDate',
+       //                        style: const TextStyle(
+       //                          fontWeight: FontWeight.bold,
+       //                          fontSize: 16,
+       //                        ),
+       //                      ),
+       //                      const SizedBox(height: 8.0),
+       //                      Text(
+       //                        myServices[index]['title'] ?? 'No Title',
+       //                        style: const TextStyle(
+       //                          fontSize: 18,
+       //                          fontWeight: FontWeight.w600,
+       //                        ),
+       //                      ),
+       //                      const SizedBox(height: 4.0),
+       //                      Text(
+       //                        myServices[index]['description'] ?? 'No Description',
+       //                        style: TextStyle(
+       //                          fontSize: 14,
+       //                          color: Colors.grey[700],
+       //                        ),
+       //                      ),
+       //                      const SizedBox(height: 8.0),
+       //                      Text(
+       //                        '\$${myServices[index]['price'] ?? '0.00'}',
+       //                        style: const TextStyle(
+       //                          fontSize: 16,
+       //                          color: Colors.green,
+       //                          fontWeight: FontWeight.bold,
+       //                        ),
+       //                      ),
+       //                    ],
+       //                  ),
+       //                ),
+       //              ),
+       //            );
+       //          },
+       //        );
+       //      }
+       //    },
+       //  ),
       ),
     );
   }

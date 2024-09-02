@@ -50,7 +50,7 @@ class LoginController {
       if (userType == 'client') {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0,)));
       } else if (userType == 'lawyer') {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer(selectedIndex: 0,)));
       } else {
         print('User type not found');
       }

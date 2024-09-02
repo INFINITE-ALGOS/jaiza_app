@@ -35,7 +35,7 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
             return const Center(child: Text('No jobs available', style: TextStyle(fontSize: 16)));
           } else {
             List<DocumentSnapshot> filteredDocuments = snapshot.data!.docs
-                .where((doc) => doc['category'] == widget.categoryName)
+                .where((doc) => doc['category'] == widget.categoryName).where((doc)=>doc['status']=='pending')
                 .toList();
 
             if (filteredDocuments.isEmpty) {

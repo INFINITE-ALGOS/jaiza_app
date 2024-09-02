@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/controllers/my_services_check_controller.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
 import '../../../controllers/my_jobs_check_contoller.dart';
 
-class CancelledJobsScreen extends StatefulWidget {
-  const CancelledJobsScreen({super.key});
+class CancelledServiceScreen extends StatefulWidget {
+  const CancelledServiceScreen({super.key});
 
   @override
-  State<CancelledJobsScreen> createState() => _CancelledJobsScreenState();
+  State<CancelledServiceScreen> createState() => _CancelledServiceScreenState();
 }
 
-class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
-  late MyJobsCheckController _myJobsCheckController;
+class _CancelledServiceScreenState extends State<CancelledServiceScreen> {
+  late MyServicesCheckController _myServiceCheckController;
 
   @override
   void initState() {
     super.initState();
-    _myJobsCheckController = MyJobsCheckController();
+    _myServiceCheckController = MyServicesCheckController();
   }
 
   @override
@@ -26,9 +27,9 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: _myJobsCheckController.fetchJobsAndOffers(
+          future: _myServiceCheckController.fetchServicesAndRequests(
             context,
-            ['pending', 'active', 'completed'],
+            ['active', 'deleted'],
             ['cancelled'],
           ),
           builder: (context, snapshot) {
@@ -39,33 +40,33 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
               return Center(child: Text("Error: ${snapshot.error.toString()}"));
             }
             if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return const Center(child: Text("No Jobs Available"));
+              return const Center(child: Text("No Services Available"));
             }
             else {
               // Create a list to store all cancelled offers
-              List<Widget> cancelledOffersWidgets = [];
+              List<Widget> completedRequestsWidgets = [];
 
               // Iterate through each job
-              for (var jobData in snapshot.data!) {
-                final jobs = jobData['jobDetails'] as Map<String, dynamic>;
-                final offers = jobData['offers'] as List<dynamic>?;
+              for (var serviceData in snapshot.data!) {
+                final service = serviceData['serviceDetails'] as Map<String, dynamic>;
+                final requests = serviceData['requests'] as List<dynamic>?;
 
                 // Check if there are offers and they are not empty
-                if (offers != null && offers.isNotEmpty) {
-                  for (var offer in offers) {
-                    cancelledOffersWidgets.add(
+                if (requests != null && requests.isNotEmpty) {
+                  for (var request in requests) {
+                    completedRequestsWidgets.add(
                       JobCard(
-                        job: jobs,
-                        offer: offer as Map<String, dynamic>,
+                        service: service,
+                        request: request as Map<String, dynamic>,
                       ),
                     );
                   }
                   return ListView(
-                    children: cancelledOffersWidgets,
+                    children: completedRequestsWidgets,
                   );
                 }
               }
-              return Center(child: Text('No cancelled jobs'),);
+              return Center(child: Text('No cancelled services'),);
 
 
             }
@@ -77,17 +78,19 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
 }
 
 class JobCard extends StatelessWidget {
-  final Map<String, dynamic> job;
-  final Map<String, dynamic> offer;
+  final Map<String, dynamic> service;
+  final Map<String, dynamic> request;
 
   const JobCard({
     super.key,
-    required this.job,
-    required this.offer,
+    required this.service,
+    required this.request,
   });
 
   @override
   Widget build(BuildContext context) {
+    final Map<String,dynamic> requestDetails=request['requestDetails'];
+    final Map<String,dynamic> clientDetails=request['clientDetails'];
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -102,7 +105,7 @@ class JobCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  job['title'] ?? '??',
+                  requestDetails['requestMessage'] ?? '??',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 Spacer(),
@@ -113,7 +116,7 @@ class JobCard extends StatelessWidget {
                   ),
                   padding: EdgeInsets.all(5),
                   child: Text(
-                    '${offer['offerDetails']['status'] ?? ''}'.toUpperCase(),
+                    '${requestDetails['status'] ?? ''}'.toUpperCase(),
                     style: TextStyle(color: whiteColor, fontSize: 9),
                   ),
                 ),
@@ -124,11 +127,11 @@ class JobCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  job['duration'] ?? '',
+                  requestDetails['duration'] ?? '',
                   style: TextStyle(),
                 ),
                 Text(
-                  'PKR ${offer['offerDetails']['offerAmount'] ?? ''}',
+                  'PKR ${requestDetails['requestAmount'] ?? ''}',
                   style: TextStyle(color: greyColor),
                 ),
               ],
@@ -141,7 +144,7 @@ class JobCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      offer['lawyerDetails']['name'] ?? '??',
+                      clientDetails['name'] ?? '??',
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(height: 10),
@@ -149,7 +152,7 @@ class JobCard extends StatelessWidget {
                       children: [
                         Icon(Icons.star, color: yellowColor),
                         Text(
-                          offer['lawyerDetails']['rating'] ?? '0.0',
+                          clientDetails['rating'] ?? '0.0',
                           style: TextStyle(),
                         ),
                       ],

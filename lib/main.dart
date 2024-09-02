@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale('en'), Locale('ur')],
           theme: ThemeData(scaffoldBackgroundColor: Colors.white),
           debugShowCheckedModeBanner: false,
-         // home: const BottomNavigationLawyer(),
+         // home:  BottomNavigationLawyer(selectedIndex: 0,),
        //home: BottomNavigationbarClient(selectedIndex: 0,),
       home: LoginScreen(),
          //home: PdfTestScreen(),

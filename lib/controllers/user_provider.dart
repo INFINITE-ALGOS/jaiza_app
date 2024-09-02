@@ -54,7 +54,7 @@ class UserProvider extends ChangeNotifier
         else if(_role=="lawyer")
         {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => BottomNavigationLawyer()));
+              MaterialPageRoute(builder: (context) => BottomNavigationLawyer(selectedIndex: 0,)));
         }
         else
         {

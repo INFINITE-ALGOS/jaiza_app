@@ -33,7 +33,7 @@ class _ActiveJobsScreenState extends State<ActiveJobsScreen> {
         padding: const EdgeInsets.all(12.0),
         child: FutureBuilder<List<Map<String, dynamic>>>(
           future: _myJobsCheckController.fetchJobsAndOffers(
-              context, ['searching','active'], ['accepted','pending']),
+              context, ['pending','active'], ['active','pending']),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -58,7 +58,7 @@ class _ActiveJobsScreenState extends State<ActiveJobsScreen> {
                       final offerStatus = firstOffer['offerDetails']['status'];
 
                       // Check if offerStatus is 'accepted'
-                      if (offerStatus == 'accepted') {
+                      if (offerStatus == 'active') {
                         return ActiveJobCard(
                           job: jobs,
                           offer: firstOffer,
@@ -171,7 +171,11 @@ class ActiveJobCard extends StatelessWidget {
                             ],
                           ),
                       ]                ),
-                      CircleAvatar()
+                      InkWell(
+                          onTap:(){
+
+                          },
+                          child: CircleAvatar())
                     ],
                   ),
                 ),
@@ -183,42 +187,6 @@ class ActiveJobCard extends StatelessWidget {
     );
   }
 
-  void _showCancelledDialog(
-    BuildContext context,
-  ) {
-    final TextEditingController controller = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Cancelled the Job'),
-          content: TextField(
-            controller: controller,
-            decoration: const InputDecoration(
-                hintText: 'Enter the valid reason of cancellation'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                final requestDetails = controller.text;
-                if (requestDetails.isNotEmpty) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Done'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
 class SearchingJobCard extends StatelessWidget {
   final Map<String, dynamic> job;
@@ -288,7 +256,7 @@ class SearchingJobCard extends StatelessWidget {
             )
         ),
       ),
-    );;
+    );
   }
 }
 
