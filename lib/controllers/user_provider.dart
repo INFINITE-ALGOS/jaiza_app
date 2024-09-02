@@ -34,24 +34,28 @@ class UserProvider extends ChangeNotifier
       {
         final data = UserDoc.data();
         print('User data: $data');
-        _role = data!["role"] as String?;
-        if(_role=="client")
+        _role = data!["type"].toString();
+        print("role is $_role");
+
+        if(_role?.trim()=="client")
         {
           _clientModel = ClientModel.fromMap(data);
         }
-        else if(_role=="lawyer")
+        else if(_role?.trim()=="lawyer")
         {
           _lawyerModel = LawyerModel.fromMap(data);
         }
 
         _isAuthenticated=true;
         notifyListeners();
-        if(_role=="client")
+        print(_role);
+
+        if(_role?.trim()=="client")
         {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => BottomNavigationbarClient(selectedIndex: 0,)));
         }
-        else if(_role=="lawyer")
+        else if(_role?.trim()=="lawyer")
         {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => BottomNavigationLawyer()));
@@ -62,6 +66,7 @@ class UserProvider extends ChangeNotifier
               MaterialPageRoute(builder: (context) => SignUpScreen()));
         }
       }
+      //todo : if user doc doesnt exsisit
     }
   }
 }

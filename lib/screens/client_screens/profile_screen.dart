@@ -64,81 +64,81 @@ class _ProfileScreenClientState extends State<ProfileScreenClient> {
                 ),
                 border: Border.all(color: Colors.grey.shade300, width: 1),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 30),
-                    Text(
-                      'Other Information',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 30),
+                      Text(
+                        'Other Information',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                          ),
+                        ),
+                        child: Text(
+                          "Name: ${_profileData?['name'] ?? ""}",
+                          style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
-                      child: Text(
-                        "Name: ${_profileData?['name'] ?? ""}",
-                        style: TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                          ),
+                        ),
+                        child: Text(
+                          'Phone: ${_profileData?['phone'] ?? ""}',
+                          style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
-                      child: Text(
-                        'Phone: ${_profileData?['phone'] ?? ""}',
-                        style: TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                          ),
+                        ),
+                        child: Text(
+                          'Rating: ${_profileData?['rating'] ?? ""}',
+                          style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
-                      child: Text(
-                        'Rating: ${_profileData?['rating'] ?? ""}',
-                        style: TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProfileScreen(),
+                      SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfileScreen(),
+                              ),
+                            );
+                            // Refresh profile data after returning from EditProfileScreen
+                            _fetchProfileData();
+                          },
+                          child: Text('Edit Info'),
+                          style: ElevatedButton.styleFrom(
+                            //primary: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                          );
-                          // Refresh profile data after returning from EditProfileScreen
-                          _fetchProfileData();
-                        },
-                        child: Text('Edit Info'),
-                        style: ElevatedButton.styleFrom(
-                          //primary: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ),
           ],
         ),

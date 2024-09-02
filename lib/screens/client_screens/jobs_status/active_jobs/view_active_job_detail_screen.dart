@@ -56,7 +56,7 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                                 Spacer(),
                                 Container(
                                   decoration: BoxDecoration(
-                                      color: blueColor,
+                                      color: primaryColor,
                                       borderRadius: BorderRadius.circular(6)
                                   ),
                                   padding: EdgeInsets.all(5),
@@ -141,7 +141,7 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  side: BorderSide(color: blueColor),
+                  side: BorderSide(color: primaryColor),
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),

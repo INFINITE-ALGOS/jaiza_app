@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:law_education_app/controllers/signup_with_email_controller.dart';
+import 'package:law_education_app/screens/auth/userlawyer_profile_collection_screen.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 import 'package:provider/provider.dart';
 
@@ -22,8 +23,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
-  String selectedRole = 'client';
   bool _obscureText = true;
 
   void _togglePasswordVisibility() {
@@ -32,20 +34,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  bool clientSelected = true;
+  bool lawyerSelected = false;
+  String selectedRole ="";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: primaryColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Simplified layout without keyboard visibility handling
             Container(
               height: MediaQuery
                   .of(context)
                   .size
                   .height * 0.2,
-              color: Colors.grey,
+              color: primaryColor,
               width: double.infinity,
             ),
             Container(
@@ -61,11 +66,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 40),
+                    SizedBox(height: 20),
                     Center(
                       child: Text(
                         AppLocalizations.of(context)!.sign_up,
@@ -75,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     CustomTextField(
                       title: AppLocalizations.of(context)!.name,
                       fieldTitle: AppLocalizations.of(context)!
@@ -95,42 +100,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: passwordController,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Expanded(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Radio<String>(
-                                value: "client",
-                                groupValue: selectedRole,
-                                activeColor: blueColor,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedRole = value!;
-                                  });
-                                },
-                              ),
-                              Text(AppLocalizations.of(context)!.client),
-                            ],
+                        InkWell(
+                          onTap: ()
+                          {
+                            setState(() {
+                              clientSelected=true;
+                              lawyerSelected=false;
+                              selectedRole='client';
+                            });
+                          },
+                          child: Container(
+                            width: 130,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: clientSelected?primaryColor:Colors.transparent,
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color:primaryColor,width: 2)
+                            ),
+                            child: Center(
+                              child: Text("client",style: TextStyle(
+                                color: clientSelected?Colors.white:primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w300
+                              ),),
+                            ),
                           ),
                         ),
-                        Expanded(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Radio<String>(
-                                value: "lawyer",
-                                groupValue: selectedRole,
-                                activeColor: blueColor,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedRole = value!;
-                                  });
-                                },
-                              ),
-                              Text(AppLocalizations.of(context)!.lawyer),
-                            ],
+                        SizedBox(width: 7,),
+                        InkWell(
+                          onTap: ()
+                          {
+                            setState(() {
+                              clientSelected=false;
+                              lawyerSelected=true;
+                              selectedRole = 'lawyer';
+                            });
+                          },
+                          child: Container(
+                            width: 130,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color:lawyerSelected?primaryColor:Colors.transparent,
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(color: primaryColor,width: 1)
+                            ),
+                            child: Center(
+                              child: Text("Lawyer",style: TextStyle(
+                                color: lawyerSelected?Colors.white:primaryColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w300
+                              ),),
+                            ),
                           ),
                         ),
                       ],
@@ -140,6 +162,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: CustomClickRoundedButton(
                         text: AppLocalizations.of(context)!.sign_up,
                         onPress: () {
+                        if(clientSelected)
+                        {
                           widget.signupWithEmailController
                               .signUpWithEmailMethod(
                             context: context,
@@ -149,29 +173,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             userPassword: passwordController.text.trim(),
                             selectedRole: selectedRole,
                           );
+                        }
+                        else if(lawyerSelected)
+                        {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UserlawyerProfileCollectionScreen (), // Replace with your next screen
+                            ),
+                          );
+                        }
                         },
                       ),
                     ),
                     const SizedBox(height: 20),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginScreen(),
-                          ),
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.login,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.blue,
+                    Row(
+                      children: [
+                        Container(
+                          padding:EdgeInsets.only(left:30),
+                          child: Text("Already have an account?",style: TextStyle(
+                            fontSize: 15
+                          ),),
+                        ),
+                        SizedBox(width: 10,),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.login,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: primaryColor
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),

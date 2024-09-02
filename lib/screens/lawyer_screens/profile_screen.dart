@@ -62,7 +62,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                         },
                         child: CircleAvatar(
                           radius: 14,
-                          backgroundColor: blueColor,
+                          backgroundColor: primaryColor,
                           child: const Icon(
                             Icons.add_sharp,
                             size: 15,
@@ -181,7 +181,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                       },
                       child: const Text('Cancel', style: TextStyle(color: whiteColor)),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: blueColor,
+                        backgroundColor: primaryColor,
                       ),
                     ),
                     ElevatedButton(
@@ -195,7 +195,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                       },
                       child: const Text('Logout', style: TextStyle(color: whiteColor)),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: blueColor,
+                        backgroundColor: primaryColor,
                       ),
                     ),
                   ],

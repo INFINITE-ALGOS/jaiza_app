@@ -178,7 +178,7 @@ class JobCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             // Action Buttons
-            const Text("Rate the lawyer",style: TextStyle(color: blueColor),)
+            const Text("Rate the lawyer",style: TextStyle(color: primaryColor),)
           ],
         ),
       ),

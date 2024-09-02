@@ -43,7 +43,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
             },
               child: const Icon(
             Icons.edit,
-            color: blueColor,
+            color: primaryColor,
           )),
           const SizedBox(
             width: 30,
@@ -202,7 +202,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                         decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(12),
-                            color: blueColor),
+                            color: primaryColor),
                         child: const Text(
                           "View Offers",
                           style: TextStyle(
@@ -567,7 +567,7 @@ final key=GlobalKey<FormState>();
                       decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(12),
-                          color: blueColor),
+                          color: primaryColor),
                       child: const Text(
                         "Done",
                         style: TextStyle(

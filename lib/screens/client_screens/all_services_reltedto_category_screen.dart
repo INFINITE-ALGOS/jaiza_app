@@ -20,7 +20,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: blueColor,
+        backgroundColor: primaryColor,
         title: Text('Services in ${widget.categoryName}', style: const TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -83,7 +83,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Icons.location_on, size: 16, color: blueColor),
+                                  const Icon(Icons.location_on, size: 16, color: primaryColor),
                                   const SizedBox(width: 5),
                                   Text(service["location"], style: const TextStyle(fontSize: 14)),
                                 ],

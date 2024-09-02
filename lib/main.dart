@@ -8,14 +8,15 @@ import 'package:law_education_app/controllers/create_job_controller.dart';
 import 'package:law_education_app/provider/get_categories_provider.dart';
 import 'package:law_education_app/provider/pdf_provider.dart';
 import 'package:law_education_app/screens/auth/login_screen.dart';
+import 'package:law_education_app/screens/auth/signup_screen.dart';
+import 'package:law_education_app/screens/auth/splash_screen.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
-import 'package:law_education_app/utils/navigation_service.dart';
-import 'package:law_education_app/utils/test.dart';
 import 'package:provider/provider.dart';
 import 'package:law_education_app/provider/language_provider.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
 
 import 'controllers/my_jobs_check_contoller.dart';
+import 'controllers/user_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ void main() async {
       //  Provider(create: (_)=>NavigationService()),
         Provider(create: (_)=>CategoriesProvider()),
         ChangeNotifierProvider(create: (context) => languageProvider),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: const MyApp(),
     ),
@@ -60,7 +62,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
          // home: const BottomNavigationLawyer(),
        //home: BottomNavigationbarClient(selectedIndex: 0,),
-      home: LoginScreen(),
+      home: SignUpScreen(),
          //home: PdfTestScreen(),
           builder: EasyLoading.init(),
         );

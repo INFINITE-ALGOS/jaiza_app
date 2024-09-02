@@ -127,7 +127,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
@@ -258,7 +258,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
@@ -336,7 +336,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
@@ -404,7 +404,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
