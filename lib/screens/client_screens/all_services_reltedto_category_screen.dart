@@ -122,7 +122,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                             margin: EdgeInsets.all(10),
                             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12), // Matches ButtonStyle padding
                             decoration: BoxDecoration(
-                              color: blueColor, // Replace with your color
+                              color: primaryColor, // Replace with your color
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(

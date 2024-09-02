@@ -103,7 +103,7 @@ class JobCard extends StatelessWidget {
                       Spacer(),
                       Container(
                         decoration: BoxDecoration(
-                            color: blueColor,
+                            color: primaryColor,
                             borderRadius: BorderRadius.circular(6)
                         ),
                         padding: EdgeInsets.all(5),

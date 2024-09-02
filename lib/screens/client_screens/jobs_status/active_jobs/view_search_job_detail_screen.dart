@@ -7,12 +7,9 @@ import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/models/create_job_model.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_offers_onmyjob_screen.dart';
-import 'package:law_education_app/utils/manage_keyboard.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../provider/get_categories_provider.dart';
-import '../../../lawyer_screens/services_status/active_services/view_service_active_detail_screen.dart';
 
 class ViewJobDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> job;
@@ -25,7 +22,7 @@ class ViewJobDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<ViewJobDetailsScreen> createState() => _ViewJobDetailsScreenState();
+  _ViewJobDetailsScreenState createState() => _ViewJobDetailsScreenState();
 }
 
 class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
@@ -33,7 +30,8 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime createdOn = (widget.job['createdOn'] as Timestamp).toDate();
+    final Timestamp? createdOnTimestamp = widget.job['createdOn'] as Timestamp?;
+    final DateTime createdOn = createdOnTimestamp?.toDate() ?? DateTime.now();
     final String formattedDate = DateFormat('yyyy-MM-dd').format(createdOn);
 
     return Scaffold(
@@ -59,7 +57,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
               color: primaryColor,
             ),
           ),
-           SizedBox(width: 30),
+          const SizedBox(width: 30),
           GestureDetector(
             onTap: () {
               showDialog(
@@ -91,7 +89,6 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
             ),
           ),
           const SizedBox(width: 30),
-
         ],
       ),
       body: Padding(
@@ -100,15 +97,15 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 35),
-            _buildDetailContainer("Title", widget.job['title']),
+            _buildDetailContainer("Title", widget.job['title'] ?? 'N/A'),
             const SizedBox(height: 20),
-            _buildDetailContainer("Description", widget.job['description']),
+            _buildDetailContainer("Description", widget.job['description'] ?? 'N/A'),
             const SizedBox(height: 20),
             _buildDetailContainer("Created On", formattedDate),
             const SizedBox(height: 20),
-            _buildDetailContainer("Price", widget.job['price']),
+            _buildDetailContainer("Price", widget.job['price'] ?? 'N/A'),
             const SizedBox(height: 20),
-            _buildDetailContainer("Duration", widget.job['duration']),
+            _buildDetailContainer("Duration", widget.job['duration'] ?? 'N/A'),
             const SizedBox(height: 20),
             Center(
               child: InkWell(
@@ -126,89 +123,13 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(12),
-                    color: blueColor,
+                    color: primaryColor,
                   ),
                   child: const Text(
                     "View Offers",
                     style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
                   ),
                 ),
-                  Container(
-                    //   padding: EdgeInsets.only(top: 35),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Price",
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(widget.job['price']),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    //   padding: EdgeInsets.only(top: 35),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Duration",
-                          style: TextStyle(
-                              fontSize: 17, fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(widget.job['duration']),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Center(
-                    child: InkWell(
-                      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewOffersOnMyJobScreen(job: widget.job, offers: widget.offers)));},
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        margin: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(12),
-                            color: primaryColor),
-                        child: const Text(
-                          "View Offers",
-                          style: TextStyle(
-                              color: whiteColor, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
               ),
             ),
           ],
@@ -247,6 +168,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
     );
   }
 }
+
 class EditJobDetailScreen extends StatefulWidget {
   final Map<String, dynamic> job;
 

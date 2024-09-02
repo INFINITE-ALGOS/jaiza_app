@@ -60,7 +60,7 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
             },
             child: const Icon(
               Icons.edit,
-              color: blueColor,
+              color: primaryColor,
             ),
           ),
           const SizedBox(width: 30),
@@ -153,7 +153,7 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(12),
-                    color: blueColor,
+                    color: primaryColor,
                   ),
                   child: const Text(
                     "View Active Requests",
@@ -187,7 +187,7 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(12),
-                    color: blueColor,
+                    color: primaryColor,
                   ),
                   child: const Text(
                     "View Pending Requests",
@@ -388,7 +388,7 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(12),
-                      color: blueColor,
+                      color: primaryColor,
                     ),
                     child: const Text(
                       "Done",
