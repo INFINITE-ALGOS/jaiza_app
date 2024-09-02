@@ -130,7 +130,7 @@ class ActiveJobCard extends StatelessWidget {
                         Spacer(),
                         Container(
                           decoration: BoxDecoration(
-                              color: blueColor,
+                              color:primaryColor,
                               borderRadius: BorderRadius.circular(6)
                           ),
                           padding: EdgeInsets.all(5),
@@ -226,7 +226,7 @@ class SearchingJobCard extends StatelessWidget {
                         Spacer(),
                         Container(
                           decoration: BoxDecoration(
-                            color: blueColor,
+                            color: primaryColor,
                             borderRadius: BorderRadius.circular(6)
                           ),
                           padding: EdgeInsets.all(5),

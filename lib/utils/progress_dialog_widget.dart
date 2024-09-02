@@ -47,7 +47,7 @@ class CustomProgressDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(
-                color: blueColor,
+                color: primaryColor,
               ),
               SizedBox(height: 16.0),
               Text(

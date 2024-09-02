@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 
@@ -8,6 +10,10 @@ class ForgetPasswordScreen extends StatefulWidget {
   State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+
+  TextEditingController emailController = TextEditingController();
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +82,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     alignment: Alignment.centerLeft,
                     child: const Text("E-mail",style: TextStyle(fontSize: 17,color: Colors.grey),),
                   ),
-                  const Padding(
+                 Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
@@ -91,15 +98,22 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                   ),
                   const SizedBox(height: 30,),
-                  CustomClickRoundedButton(text: "Submit",
-                    onPress: ()
-                    {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OtpVerify(),),
-                      );
-                    },)
+                  CustomClickRoundedButton(
+                    text: "Submit",
+                    onPress: () {
+                      auth.sendPasswordResetEmail(email: emailController.text.toString()).then((value) {
+                        print("Password reset email sent successfully.");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Password reset email sent.')),
+                        );
+                      }).onError((error, stacktrace) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Failed to send password reset email.')),
+                        );
+                        print(error.toString());
+                      });
+                    },
+                  ),
                 ],
               ),
             )

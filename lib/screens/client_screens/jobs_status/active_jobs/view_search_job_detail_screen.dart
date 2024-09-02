@@ -56,10 +56,10 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
             },
             child: const Icon(
               Icons.edit,
-              color: blueColor,
+              color: primaryColor,
             ),
           ),
-          const SizedBox(width: 30),
+           SizedBox(width: 30),
           GestureDetector(
             onTap: () {
               showDialog(
@@ -91,6 +91,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
             ),
           ),
           const SizedBox(width: 30),
+
         ],
       ),
       body: Padding(
@@ -132,6 +133,82 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                     style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
                   ),
                 ),
+                  Container(
+                    //   padding: EdgeInsets.only(top: 35),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Price",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(widget.job['price']),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    //   padding: EdgeInsets.only(top: 35),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Duration",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(widget.job['duration']),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewOffersOnMyJobScreen(job: widget.job, offers: widget.offers)));},
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        margin: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(12),
+                            color: primaryColor),
+                        child: const Text(
+                          "View Offers",
+                          style: TextStyle(
+                              color: whiteColor, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ],
@@ -367,13 +444,14 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(12),
-                      color: blueColor,
+                      color: primaryColor,
                     ),
                     child: const Text(
                       "Done",
                       style: TextStyle(
                         color: whiteColor,
                         fontWeight: FontWeight.w600,
+
                       ),
                     ),
                   ),

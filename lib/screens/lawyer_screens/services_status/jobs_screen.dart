@@ -72,7 +72,8 @@ class _JobsStatusScreenLawyerState extends State<JobsStatusScreenLawyer> {
         height: MediaQuery.of(context).size.height * 0.075,
         width: MediaQuery.of(context).size.width * 0.47,
         decoration: BoxDecoration(
-          color: isActive ? blueColor : const Color(0xFFf1f1f2),
+
+          color: isActive ? primaryColor : Color(0xFFf1f1f2),
           border: Border.all(
             color: Colors.transparent,
             width: 2,

@@ -67,7 +67,7 @@ class _OnBooardingScreenState extends State<OnBooardingScreen> {
                   controller: controllerDef,
                   count: 3,
                   effect: WormEffect(
-                    activeDotColor: blueColor,
+                    activeDotColor: primaryColor,
                   ),
                 ),
               ),
@@ -128,7 +128,7 @@ class _OnBooardingScreenState extends State<OnBooardingScreen> {
           alignment: Alignment.bottomRight,
           height: 30,
           width: 100,
-          color: blueColor,
+          color: primaryColor,
           child: Center(
             child: Text("Get Started",style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _OnBooardingScreenState extends State<OnBooardingScreen> {
         child: Text("Next",style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 15,
-          color: blueColor,
+          color: primaryColor,
         ),),
       ),
     );

@@ -155,6 +155,7 @@ class JobCard extends StatelessWidget {
 
             ],
           )
+           
       ),
     );
   }

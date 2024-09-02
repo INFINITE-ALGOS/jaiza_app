@@ -78,7 +78,7 @@ class SearchingJobCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
 
-        border: Border.all(color: blueColor)
+        border: Border.all(color: primaryColor)
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),

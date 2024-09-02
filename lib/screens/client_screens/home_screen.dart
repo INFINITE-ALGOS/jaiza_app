@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
@@ -347,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
@@ -419,7 +419,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: const Text(
                             "View all >>",
                             style: TextStyle(
-                                color: blueColor, fontWeight: FontWeight.w600),
+                                color: primaryColor, fontWeight: FontWeight.w600),
                           ),
                         )
                       ],
