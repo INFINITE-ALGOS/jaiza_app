@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/accept_bookin_screen.dart';
-import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/cancel_booking_screen.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/complete_jobbooking_screen.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/cancel_jobbooking_screen.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
 import '../../../../conts.dart';

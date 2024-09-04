@@ -73,6 +73,55 @@ class MyJobsCheckController {
     }
   }
 
+  Future<List<Map<String, dynamic>>> fetchRequests(List requestStatus) async {
+    // Corrected initialization for the list
+    List<Map<String, dynamic>> fetchRequestList = [];
+
+    try {
+      // Fetch requests where clientId matches the current user's UID
+      QuerySnapshot<Map<String, dynamic>> requestSnapshot = await FirebaseFirestore.instance
+          .collection('requests')
+          .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser!.uid).where('status',whereIn: requestStatus)
+          .get();
+
+      // Iterate over each request document
+      for (var requestDoc in requestSnapshot.docs) {
+        Map<String, dynamic> requestData = requestDoc.data();
+        String serviceId = requestData['serviceId']; // Assuming serviceId is a field in the request
+        String lawyerId = requestData['lawyerId'];   // Assuming lawyerId is a field in the service or request
+
+        // Fetch the corresponding service details
+        DocumentSnapshot<Map<String, dynamic>> serviceSnapshot = await FirebaseFirestore.instance
+            .collection('services')
+            .doc(serviceId)
+            .get();
+        Map<String, dynamic>? serviceData = serviceSnapshot.data();
+
+        // Fetch the corresponding lawyer details
+        DocumentSnapshot<Map<String, dynamic>> lawyerSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(lawyerId)
+            .get();
+        Map<String, dynamic>? lawyerData = lawyerSnapshot.data();
+
+        // Create a map to hold all three pieces of data
+        Map<String, dynamic> combinedData = {
+          'requestDetails': requestData,
+          'serviceDetails': serviceData ?? {},  // Handle null case
+          'lawyerDetails': lawyerData ?? {},    // Handle null case
+        };
+
+        // Add the combined data to the list
+        fetchRequestList.add(combinedData);
+      }
+
+    } catch (e) {
+      print('Error fetching requests and related data: $e');
+    }
+
+    return fetchRequestList;
+  }
+
   Future<void> deleteJob(String jobId) async {
     await FirebaseFirestore.instance
         .collection('jobs')

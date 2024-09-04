@@ -1,7 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:law_education_app/screens/lawyer_screens/services_status/jobs_screen.dart';
+import 'package:law_education_app/screens/lawyer_screens/services_status/service_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:law_education_app/provider/language_provider.dart';
 import 'package:law_education_app/screens/lawyer_screens/create_service_screen.dart';
@@ -33,7 +33,7 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
     const HomeScreenLawyer(),
     const ChatScreenLawyer(),
     const ChatScreenLawyer(),
-    JobsStatusScreenLawyer(),
+    ServiceStatusScreenLawyer(),
   ];
 
   final List<String> labelText = [
@@ -60,7 +60,7 @@ void didChangeDependencies() {
       child: Scaffold(
         drawer: const CustomDrawerLawyer(),
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.hello_lawyer),
+          title: Text('Hello Lawyer'),
           backgroundColor: Colors.blue,
           actions: [
             PopupMenuButton<Locale>(

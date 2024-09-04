@@ -19,7 +19,7 @@ class _CreateJobScreenState extends State<CreateJobScreen> {
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    final categoryProvider=Provider.of<CategoriesProvider>(context);
+        final categoryProvider=Provider.of<CategoriesProvider>(context);
     return SafeArea(child: Scaffold(
       body: Column(
         children: [

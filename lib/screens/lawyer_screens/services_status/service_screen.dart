@@ -7,13 +7,13 @@ import 'package:law_education_app/screens/lawyer_screens/services_status/cancell
 import 'package:law_education_app/screens/lawyer_screens/services_status/completed_service_screen.dart';
 
 
-class JobsStatusScreenLawyer extends StatefulWidget {
-   const JobsStatusScreenLawyer({super.key});
+class ServiceStatusScreenLawyer extends StatefulWidget {
+   const ServiceStatusScreenLawyer({super.key});
   @override
-  State<JobsStatusScreenLawyer> createState() => _JobsStatusScreenLawyerState();
+  State<ServiceStatusScreenLawyer> createState() => _ServiceStatusScreenLawyerState();
 }
 
-class _JobsStatusScreenLawyerState extends State<JobsStatusScreenLawyer> {
+class _ServiceStatusScreenLawyerState extends State<ServiceStatusScreenLawyer> {
   int selected_index=0;
   final List<Widget> _screens = [
     const ActiveServiceScreenLawyer(),

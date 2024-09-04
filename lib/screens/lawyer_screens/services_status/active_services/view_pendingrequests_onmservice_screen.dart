@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
+import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
 
 class ViewPendingRequestsOnMyServiceScreen extends StatelessWidget {
@@ -140,18 +141,22 @@ class OfferCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
+        request['status']=='pending'  ?Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
                 onTap: (){
                  // FirebaseFirestore.instance.collection('offers').doc(request['offerId']).update({'status':"active"});
-                  FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"active"});
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
-                        (Route<dynamic> route) => false, // Predicate to determine which routes to remove
-                  );
+                  showDialog(context: context, builder: (context){
+                    return CustomAlertDialog(title: 'Are you sure you want to accept the request', content: "", onConfirm: ()async{
+                      await FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"active"});
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
+                            (Route<dynamic> route) => false, // Predicate to determine which routes to remove
+                      );
+                    }, onCancel: (){Navigator.of(context).pop();});
+                  });
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -167,12 +172,16 @@ class OfferCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"rejected"});
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
-                        (Route<dynamic> route) => false, // Predicate to determine which routes to remove
-                  );
+                  showDialog(context: context, builder: (context){
+                    return CustomAlertDialog(title: 'Are you sure you want to reject the request', content: "", onConfirm: ()async{
+                      await FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"rejected"});
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
+                            (Route<dynamic> route) => false, // Predicate to determine which routes to remove
+                      );
+                    }, onCancel: (){Navigator.of(context).pop();});
+                  });
 
                   // Handle Reject action
                 },
@@ -190,10 +199,16 @@ class OfferCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"reproposal"});
-
-                  // Handle Reproposal action
-                },
+                  showDialog(context: context, builder: (context){
+                    return CustomAlertDialog(title: 'Are you sure you want to repropose the request', content: "", onConfirm: ()async{
+                      await FirebaseFirestore.instance.collection('requests').doc(request['requestId']).update({'status':"reproposal"});
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) =>BottomNavigationLawyer(selectedIndex: 3)), // New screen to navigate to
+                            (Route<dynamic> route) => false, // Predicate to determine which routes to remove
+                      );
+                    }, onCancel: (){Navigator.of(context).pop();});
+                  }); },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   decoration: BoxDecoration(
@@ -207,7 +222,7 @@ class OfferCard extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          ):Center(child: Text("Reproposal"),),
         ],
       ),
     );
