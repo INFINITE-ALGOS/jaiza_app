@@ -158,69 +158,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(height: 20),
                       Center(
                         child: Text(
-                          AppLocalizations.of(context)!.sign_up,
+                          'SignUp',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
-
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20),
-                    Center(
-                      child: Text(
-                       'Sign Up',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    CustomTextField(
-                      title: 'Name',
-                      fieldTitle: 'Please enter name',
-                      controller: nameController,
-                    ),
-                    CustomTextField(
-                      title: 'Email',
-                      fieldTitle: 'PLease enter email',
-                      controller: emailController,
-                    ),
-                    CustomTextField(
-                      title: 'Password',
-                      fieldTitle: 'Please Enter Password',
-                      controller: passwordController,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        InkWell(
-                          onTap: ()
-                          {
-                            setState(() {
-                              clientSelected=true;
-                              lawyerSelected=false;
-                              selectedRole='client';
-                            });
-                          },
-                          child: Container(
-                            width: 130,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: clientSelected?primaryColor:Colors.transparent,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(color:primaryColor,width: 2)
-                            ),
-                            child: Center(
-                              child: Text("client",style: TextStyle(
-                                color: clientSelected?Colors.white:primaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w300
-                              ),),
-                            ),
                           ),
                         ),
                       ),
@@ -260,23 +201,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       SizedBox(height: 15),
                       CustomTextField(
-                        title: AppLocalizations.of(context)!.name,
-                        fieldTitle: AppLocalizations.of(context)!
-                            .please_enter_name,
+                        title:'Name',
+                        fieldTitle:'Please enter name',
                         controller: nameController,
                         maxLines: 1,
                       ),
                       CustomTextField(
-                        title: AppLocalizations.of(context)!.email,
-                        fieldTitle: AppLocalizations.of(context)!
-                            .please_enter_email,
+                        title: 'Email',
+                        fieldTitle: "Please Enter Email",
                         controller: emailController,
                         maxLines: 1,
                       ),
                       CustomTextField(
-                        title: AppLocalizations.of(context)!.password,
-                        fieldTitle: AppLocalizations.of(context)!
-                            .please_enter_password,
+                        title: "Password",
+                        fieldTitle: "Please enter password",
                         controller: passwordController,
                         maxLines: 1,
                       ),
@@ -316,80 +254,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   fontSize: 16,
                                   fontWeight: FontWeight.w300
                                 ),),
-                          child: Container(
-                            width: 130,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color:lawyerSelected?primaryColor:Colors.transparent,
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(color: primaryColor,width: 1)
-                            ),
-                            child: Center(
-                              child: Text("Lawyer",style: TextStyle(
-                                color: lawyerSelected?Colors.white:primaryColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w300
-                              ),),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: CustomClickRoundedButton(
-                        text: "Sign Up",
-                        onPress: () {
-                        if(clientSelected)
-                        {
-                          widget.signupWithEmailController
-                              .signUpWithEmailMethod(
-                            context: context,
-                            userType: selectedRole,
-                            userName: nameController.text.trim(),
-                            userEmail: emailController.text.trim(),
-                            userPassword: passwordController.text.trim(),
-                            selectedRole: selectedRole,
-                          );
-                        }
-                        else if(lawyerSelected)
-                        {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => UserlawyerProfileCollectionScreen (), // Replace with your next screen
-                            ),
-                          );
-                        }
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Container(
-                          padding:EdgeInsets.only(left:30),
-                          child: Text("Already have an account?",style: TextStyle(
-                            fontSize: 15
-                          ),),
-                        ),
-                        SizedBox(width: 10,),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            );
-                          },
-                          child: Center(
-                            child: Text(
-                              'LogIn',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: primaryColor
                               ),
                             ),
                           ),
@@ -423,7 +287,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
                         child: CustomClickRoundedButton(
-                          text: islawyerSelected ? "Continue =>" : AppLocalizations.of(context)!.sign_up,
+                          text: islawyerSelected ? "Continue =>" : "Sign Up",
                           onPress: () async {
                             if (_validateFields()) {
                               if (islawyerSelected) {
@@ -481,7 +345,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             child: Center(
                               child: Text(
-                                AppLocalizations.of(context)!.login,
+                                "LogIn",
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w400,
