@@ -45,7 +45,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         rating: _ratingController.text,
         isVerified: false,
         type: '',
-        url: '');
+        url: '',
+        address: '');
     _myProfileController.updateProfileDataClient(updatedData);
     Navigator.pop(context);
   }

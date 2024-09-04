@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/myprofile_controller.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:provider/provider.dart';
-
 import '../../controllers/user_provider.dart';
-import '../../utils/image_picker.dart';
 import 'edit_profile_screen.dart';
 import '../auth/login_screen.dart';
 
@@ -58,7 +56,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                       ),
                       InkWell(
                         onTap: () {
-                          ImageUploadService.pickImage(context);
+                          //ImageUploadService.pickImage(context);
                         },
                         child: CircleAvatar(
                           radius: 14,

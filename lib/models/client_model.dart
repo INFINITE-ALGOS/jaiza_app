@@ -4,6 +4,7 @@ class ClientModel{
   final String name;
   final String email;
   final String phone;
+  final String address;
   final String rating;
   final bool isActive;
   final dynamic createdOn;
@@ -17,6 +18,7 @@ class ClientModel{
     required this.name,
     required this.email,
     required this.phone,
+    required this.address,
     required this.isActive,
     required this.createdOn,
     required this.rating,
@@ -32,6 +34,7 @@ class ClientModel{
       'name': name,
       'email': email,
       'phone': phone,
+      'address':address,
       'isActive': isActive,
       'createdOn': createdOn,
       'rating':rating,
@@ -47,6 +50,7 @@ class ClientModel{
         name: json['name'],
         email: json['email'],
         phone: json['phone'],
+        address: json['address'],
         rating: json['rating'],
         isActive: json['isActive'],
         createdOn: json['createdOn'].toString(),
