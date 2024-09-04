@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/cancel_requestbooking_screen.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/complete_jobbooking_screen.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/cancel_jobbooking_screen.dart';
+import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/complete_requestbooking_screen.dart';
+import 'package:law_education_app/screens/lawyer_screens/services_status/cancelled_service_screen.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
 import '../../../../conts.dart';
 
-class ViewActiveJobDetailScreen extends StatelessWidget {
-  final Map<String, dynamic> job;
-  final Map<String, dynamic> offer;
+class ViewActiveServiceDetailScreen extends StatelessWidget {
+  final Map<String, dynamic> requestDetails;
+  final Map<String, dynamic> serviceDetails;
+  final Map<String, dynamic> lawyerDetails;
 
-  const ViewActiveJobDetailScreen({super.key, required this.job, required this.offer});
+  const ViewActiveServiceDetailScreen({super.key, required this.requestDetails, required this.lawyerDetails,required this.serviceDetails});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      //  title: Text('#524587'),
+        //  title: Text('#524587'),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -54,19 +58,18 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                         children: [
                           Container(
                             child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(job['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
-                               //   Spacer(),
+                                  Text(requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                                 // Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
                                         color: primaryColor,
                                         borderRadius: BorderRadius.circular(6)
                                     ),
                                     padding: EdgeInsets.all(5),
-                                    child: Text('${job['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
+                                    child: Text('${requestDetails['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
                                   )
                                 ],
                               ),
@@ -79,10 +82,10 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         //  Icon(Icons.star,color: yellowColor,),
-                                        Text(job['duration']?? '',style: TextStyle(),),
+                                        Text(requestDetails['duration']?? '',style: TextStyle(),),
                                       ],
                                     ),
-                                    Text('PKR ${offer['offerDetails']['offerAmount']?? ''}',style: TextStyle(color: greyColor),)
+                                    Text('PKR ${requestDetails['requestAmount']?? ''}',style: TextStyle(color: greyColor),)
                                   ],
                                 )],
                             ),
@@ -93,13 +96,13 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
-                                    children: [Text(offer['lawyerDetails']['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                                    children: [Text(lawyerDetails['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
                                       SizedBox(height: 10,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Icon(Icons.star,color: yellowColor,),
-                                          Text(offer['lawyerDetails']['rating']?? '0.0',style: TextStyle(),),
+                                          Text(lawyerDetails['rating']?? '0.0',style: TextStyle(),),
                                         ],
                                       ),
                                     ]                ),
@@ -137,12 +140,12 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
-              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${offer['offerDetails']['offerAmount']}'),
+              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${requestDetails['requestAmount']}'),
               OrderSummaryRow(label: 'Est. Tax', amount: 'PKR 0.0'),
               Divider(),
-              OrderSummaryRow(label: 'Total', amount: 'PKR ${offer['offerDetails']['offerAmount']}', isTotal: true),
-            SizedBox(height: 30,),
-            //  Spacer(),
+              OrderSummaryRow(label: 'Total', amount: 'PKR ${requestDetails['requestAmount']}', isTotal: true),
+        SizedBox(height: 30,),
+             // Spacer(),
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -154,7 +157,7 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>AcceptBookingScreen(job: job, offer: offer)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CompleteRequestBookingScreen(requestDetails: requestDetails,lawyerDetails: lawyerDetails,serviceDetails: serviceDetails,)));
                   },
                   child: Text(
                     'Complete Booking',
@@ -175,7 +178,7 @@ class ViewActiveJobDetailScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CancelBookingScreen(job: job, offer: offer)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CancelRequestBookingScreen(requestDetails: requestDetails, lawyerDetails: lawyerDetails, serviceDetails: serviceDetails)));
                   },
                   child: Text(
                     'Cancel Booking',

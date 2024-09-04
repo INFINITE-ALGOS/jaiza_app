@@ -51,17 +51,19 @@ class _StarRatingState extends State<StarRating> {
   }
 }
 
-class AcceptBookingScreen extends StatefulWidget {
-  final Map<String, dynamic> job;
-  final Map<String, dynamic> offer;
+class CancelRequestBookingScreen extends StatefulWidget {
+  final Map<String, dynamic> requestDetails;
+  final Map<String, dynamic> serviceDetails;
+  final Map<String, dynamic> lawyerDetails;
 
-  const AcceptBookingScreen({super.key, required this.job, required this.offer});
+
+  const CancelRequestBookingScreen({super.key, required this.requestDetails, required this.lawyerDetails,required this.serviceDetails});
 
   @override
-  _AcceptBookingScreenState createState() => _AcceptBookingScreenState();
+  _CancelRequestBookingScreenState createState() => _CancelRequestBookingScreenState();
 }
 
-class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
+class _CancelRequestBookingScreenState extends State<CancelRequestBookingScreen> {
   double _rating = 3.0; // Default rating
 
   @override
@@ -107,7 +109,7 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                         Row(
                           children: [
                             Text(
-                              widget.job['title'] ?? '??',
+                              widget.requestDetails['requestMessage'] ?? '??',
                               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                             Spacer(),
@@ -118,7 +120,7 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                               ),
                               padding: EdgeInsets.all(5),
                               child: Text(
-                                '${widget.job['status'] ?? ''}'.toUpperCase(),
+                                '${widget.requestDetails['status'] ?? ''}'.toUpperCase(),
                                 style: TextStyle(color: whiteColor, fontSize: 9),
                               ),
                             ),
@@ -131,11 +133,11 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(widget.job['duration'] ?? '', style: TextStyle()),
+                                Text(widget.requestDetails['duration'] ?? '', style: TextStyle()),
                               ],
                             ),
                             Text(
-                              'PKR ${widget.offer['offerDetails']['offerAmount'] ?? ''}',
+                              'PKR ${widget.requestDetails['requestAmount'] ?? ''}',
                               style: TextStyle(color: greyColor),
                             ),
                           ],
@@ -148,7 +150,7 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.offer['lawyerDetails']['name'] ?? '??',
+                                  widget.lawyerDetails['name'] ?? '??',
                                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                                 ),
                                 SizedBox(height: 10),
@@ -156,7 +158,7 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(Icons.star, color: yellowColor),
-                                    Text(widget.offer['lawyerDetails']['rating'] ?? '0.0', style: TextStyle()),
+                                    Text(widget.lawyerDetails['rating'] ?? '0.0', style: TextStyle()),
                                   ],
                                 ),
                               ],
@@ -253,38 +255,70 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
               ),
 
               SizedBox(height: 16.0),
+              Container(
+                margin:EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18.0),
+                  border: Border.all(color: lightGreyColor,width: 2),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Reason for cancellation',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
+                    TextField(
+                      decoration: InputDecoration(hintText: "Please write a valid reason",border: InputBorder.none),
+                    ),
+                    SizedBox(height: 5.0),
+
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 16.0),
               Text(
                 'Job Summary',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
-              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}'),
+              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${widget.requestDetails['requestAmount']}'),
               OrderSummaryRow(label: 'Est. Tax', amount: 'PKR 0.0'),
               Divider(),
-              OrderSummaryRow(label: 'Total', amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}', isTotal: true),
+              OrderSummaryRow(label: 'Total', amount: 'PKR ${widget.requestDetails['requestAmount']}', isTotal: true),
 
               SizedBox(height: 20), // Replace Spacer with SizedBox
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
-                    side: BorderSide(color: primaryColor),
+                    side: BorderSide(color: redColor),
                     padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  onPressed: () {
+                  onPressed: () async{
                     EasyLoading.show(status: "PLease wait");
-                    FirebaseFirestore.instance.collection('jobs').doc(widget.job['jobId']).update({'status':'completed'});
-                    FirebaseFirestore.instance.collection('offers').doc(widget.offer['offerDetails']['offerId']).update({'status':'completed'});
+                   // FirebaseFirestore.instance.collection('jobs').doc(widget.job['jobId']).update({'status':'pending'});
+                   // FirebaseFirestore.instance.collection('requests').where('requestId',isEqualTo: widget.requestDetails['requestId']).get();
+                  await FirebaseFirestore.instance.collection('requests').doc(widget.requestDetails['requestId']).update(
+                       {'status':'cancelled'});
                     EasyLoading.dismiss();
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 3)),  (Route<dynamic> route) => false,);
                     // Handle complete booking action
                   },
                   child: Text(
-                    'Complete Booking',
-                    style: TextStyle(color: Colors.blue),
+                    'Cancel Booking',
+                    style: TextStyle(color: redColor),
                   ),
                 ),
               ),

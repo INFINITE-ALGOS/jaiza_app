@@ -11,6 +11,12 @@ import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 import '../../../../provider/get_categories_provider.dart';
 
+import 'package:flutter/material.dart';
+import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
+import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ViewJobDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> job;
   final List<Map<String, dynamic>>? offers;
@@ -38,6 +44,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
       appBar: AppBar(
         title: const Text("Job Details"),
         backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           GestureDetector(
             onTap: () {
@@ -67,7 +74,10 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                     title: 'Delete my Job',
                     content: 'Are you sure you want to delete your job?',
                     onConfirm: () {
-                      FirebaseFirestore.instance.collection('jobs').doc(widget.job['jobId']).update({'status': 'deleted'});
+                      FirebaseFirestore.instance
+                          .collection('jobs')
+                          .doc(widget.job['jobId'])
+                          .update({'status': 'deleted'});
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -96,20 +106,20 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 35),
-            _buildDetailContainer("Title", widget.job['title'] ?? 'N/A'),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Description", widget.job['description'] ?? 'N/A'),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Created On", formattedDate),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Price", widget.job['price'] ?? 'N/A'),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Duration", widget.job['duration'] ?? 'N/A'),
+            _buildDetailRow("Title", widget.job['title'] ?? 'N/A'),
+            const Divider(),
+            _buildDetailRow("Description", widget.job['description'] ?? 'N/A'),
+            const Divider(),
+            _buildDetailRow("Created On", formattedDate),
+            const Divider(),
+            _buildDetailRow("Price", 'PKR ${widget.job['price'] ?? 'N/A'}'),
+            const Divider(),
+            _buildDetailRow("Duration", widget.job['duration'] ?? 'N/A'),
+            const Divider(),
             const SizedBox(height: 20),
             Center(
-              child: InkWell(
-                onTap: () {
+              child: ElevatedButton(
+                onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -117,18 +127,16 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                     ),
                   );
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  margin: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(12),
-                    color: primaryColor,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Text(
-                    "View Offers",
-                    style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
-                  ),
+                ),
+                child: const Text(
+                  "View Offers",
+                  style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -138,31 +146,21 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
     );
   }
 
-  Widget _buildDetailContainer(String title, String content) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
+  Widget _buildDetailRow(String title, String content) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8),
-          Text(content),
+          const SizedBox(height: 4),
+          Text(
+            content,
+            style: const TextStyle(fontSize: 14),
+          ),
         ],
       ),
     );

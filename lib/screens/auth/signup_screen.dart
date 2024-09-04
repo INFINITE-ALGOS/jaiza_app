@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(height: 20),
                     Center(
                       child: Text(
-                        AppLocalizations.of(context)!.sign_up,
+                       'Sign Up',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
@@ -82,21 +82,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 10),
                     CustomTextField(
-                      title: AppLocalizations.of(context)!.name,
-                      fieldTitle: AppLocalizations.of(context)!
-                          .please_enter_name,
+                      title: 'Name',
+                      fieldTitle: 'Please enter name',
                       controller: nameController,
                     ),
                     CustomTextField(
-                      title: AppLocalizations.of(context)!.email,
-                      fieldTitle: AppLocalizations.of(context)!
-                          .please_enter_email,
+                      title: 'Email',
+                      fieldTitle: 'PLease enter email',
                       controller: emailController,
                     ),
                     CustomTextField(
-                      title: AppLocalizations.of(context)!.password,
-                      fieldTitle: AppLocalizations.of(context)!
-                          .please_enter_password,
+                      title: 'Password',
+                      fieldTitle: 'Please Enter Password',
                       controller: passwordController,
                     ),
                     Row(
@@ -160,7 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: CustomClickRoundedButton(
-                        text: AppLocalizations.of(context)!.sign_up,
+                        text: "Sign Up",
                         onPress: () {
                         if(clientSelected)
                         {
@@ -207,7 +204,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           },
                           child: Center(
                             child: Text(
-                              AppLocalizations.of(context)!.login,
+                              'LogIn',
                               style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,

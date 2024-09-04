@@ -27,8 +27,8 @@ class _CompletedJobsScreenState extends State<CompletedJobsScreen> {
       // appBar: AppBar(title: Text("My Jobs")),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: _myJobsCheckController.fetchJobsAndOffers(context, ['completed'], ['completed']),
+        child: FutureBuilder<List<dynamic>>(
+          future: Future.wait([_myJobsCheckController.fetchJobsAndOffers(context, ['completed'], ['completed']),_myJobsCheckController.fetchRequests(['completed'])]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -39,26 +39,45 @@ class _CompletedJobsScreenState extends State<CompletedJobsScreen> {
             if (snapshot.data == null || snapshot.data!.isEmpty) {
               return const Center(child: Text("No Jobs Available"));
             } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
+              final combinedList =
+              snapshot.data![0] as List<Map<String, dynamic>>; // Jobs data
+              final servicesList = snapshot.data![1]
+              as List<Map<String, dynamic>>; // Services data
+              combinedList.addAll(servicesList);
+              return combinedList.isNotEmpty? ListView.builder(
+                itemCount: combinedList.length,
                 itemBuilder: (context, index) {
-                  final jobData = snapshot.data![index];
-                  final jobs = jobData['jobDetails'] as Map<String, dynamic>;
-                  final offers = jobData['offers'] as List<dynamic>?;
-                  if (offers == null || offers.isEmpty) {
-                    return Center(
-                      child: const Text('No offers available'),
-                    );
-                  }
+                  final itemData = combinedList[index];
 
-                  final offer = offers[0] as Map<String, dynamic>;
+                  // Check if the item is a job or a service
+                  final isJob = itemData.containsKey('jobDetails');
 
-                  return JobCard(
-                    job: jobs,
-                    offer: offer,
-                  );
+                 if(isJob){
+                   final jobs =
+                   itemData['jobDetails'] as Map<String, dynamic>;
+                   final offers =
+                   itemData['offers'] as List<Map<String, dynamic>>?;
+                   if (offers == null || offers.isEmpty) {
+                     return Center(
+                       child: const Text('No offers available'),
+                     );
+                   }
+
+                   final offer = offers[0] as Map<String, dynamic>;
+
+                   return JobCard(
+                     job: jobs,
+                     offer: offer,
+                   );
+                 }
+                 else{
+                   final requestData = itemData;
+                   return ServiceCard(requestDetails: requestData['requestDetails'],
+                       serviceDetails: requestData['serviceDetails'],
+                       lawyerDetails: requestData['lawyerDetails']);
+                 }
                 },
-              );
+              ) : Center(child: Text('No completed Jobs'),);
             }
           },
         ),
@@ -156,6 +175,96 @@ class JobCard extends StatelessWidget {
             ],
           )
            
+      ),
+    );
+  }
+}
+class ServiceCard extends StatelessWidget {
+  final Map<String, dynamic> requestDetails;
+  final Map<String, dynamic> serviceDetails;
+  final Map<String, dynamic> lawyerDetails;
+
+
+  const ServiceCard({super.key,
+    required this.requestDetails,
+    required this.serviceDetails,
+    required this.lawyerDetails
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: lightGreyColor,width: 2),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child:Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [Row(
+                    children: [
+                      Text(requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                      Spacer(),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(6)
+                        ),
+                        padding: EdgeInsets.all(5),
+                        child: Text('${requestDetails['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
+                      )
+                    ],
+                  ),
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //  Icon(Icons.star,color: yellowColor,),
+                            Text(requestDetails['duration']?? '',style: TextStyle(),),
+                          ],
+                        ),
+                        Text('PKR ${requestDetails['requestAmount']?? ''}',style: TextStyle(color: greyColor),)
+                      ],
+                    )],
+                ),
+              ),
+              Divider(),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                        children: [Text(lawyerDetails['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                          SizedBox(height: 10,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.star,color: yellowColor,),
+                              Text(lawyerDetails['rating']?? '0.0',style: TextStyle(),),
+                            ],
+                          ),
+                        ]                ),
+                    InkWell(
+                        onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
+                        },
+                        child: CircleAvatar())
+                  ],
+                ),
+              ),
+
+            ],
+          )
+
       ),
     );
   }

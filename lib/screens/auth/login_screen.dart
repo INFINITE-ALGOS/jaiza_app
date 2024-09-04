@@ -49,13 +49,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.only(left: 20),
-                    child: Text(AppLocalizations.of(context)!.login,style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                    child: Text('Login',style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
                   ),
                   const SizedBox(height: 20,),
                   Container(
                     padding: const EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
-                    child: Text(AppLocalizations.of(context)!.email,style: const TextStyle(fontSize: 17,color: Colors.grey),),
+                    child: Text('Email',style: const TextStyle(fontSize: 17,color: Colors.grey),),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: AppLocalizations.of(context)!.please_enter_email,
+                        hintText: "Please enter an email",
                         fillColor: Colors.white,
                         filled: true,
                       ),
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(left: 20),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      AppLocalizations.of(context)!.password,
+                     'Password',
                       style: const TextStyle(fontSize: 17, color: Colors.grey),
                     ),
                   ),
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: AppLocalizations.of(context)!.please_enter_password,
+                        hintText: 'PLease enter password',
                         fillColor: Colors.white,
                         filled: true,
                         suffixIcon: IconButton(
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      child: Text(AppLocalizations.of(context)!.forget_password,style: const TextStyle(
+                      child: Text('Forget password',style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.grey
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Container(
                       alignment: Alignment.center,
-                      child: Text(AppLocalizations.of(context)!.sign_up,style: const TextStyle(
+                      child: Text('SignUp',style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.blue

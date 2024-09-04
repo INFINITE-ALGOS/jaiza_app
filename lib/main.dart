@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,9 @@ import 'package:law_education_app/provider/pdf_provider.dart';
 import 'package:law_education_app/screens/auth/login_screen.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
 import 'package:law_education_app/screens/auth/splash_screen.dart';
+import 'package:law_education_app/screens/auth/userlawyer_profile_collection_screen.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/utils/extra.dart';
 import 'package:provider/provider.dart';
 import 'package:law_education_app/provider/language_provider.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
@@ -62,8 +66,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
          // home:  BottomNavigationLawyer(selectedIndex: 0,),
        //home: BottomNavigationbarClient(selectedIndex: 0,),
-      home: SignUpScreen(),
+     // home: SignUpScreen(),
          //home: PdfTestScreen(),
+          home: UserLawyerProfileCollectionScreen(basicInfo: {}, imageFile: File('path')),
           builder: EasyLoading.init(),
         );
       },

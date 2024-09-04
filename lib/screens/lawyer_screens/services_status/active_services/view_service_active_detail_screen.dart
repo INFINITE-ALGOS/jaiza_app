@@ -169,7 +169,7 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                   List<Map<String,dynamic>> pendingRequests=[];
                  if(widget.requests!=null && widget.requests!.isNotEmpty){
                    for(var pendingRequest in widget.requests!){
-                     if(pendingRequest['requestDetails']['status']=='pending'){
+                     if(pendingRequest['requestDetails']['status']=='pending'||pendingRequest['requestDetails']['status']=='reproposal'){
                        pendingRequests.add(pendingRequest);
                      }
                    }
