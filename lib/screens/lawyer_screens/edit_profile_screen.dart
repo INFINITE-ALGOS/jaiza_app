@@ -31,6 +31,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> _updateProfile() async {
     LawyerModel updatedData = LawyerModel(
+      portfolio: [],
+      lawyerProfile: {},
+        address: '',
       name: _nameController.text,
       email: '',
       phone: _phoneController.text,
@@ -40,7 +43,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       rating: _ratingController.text,
       isVerified: false,
       url: '',
-      experience: ''
     );
     await _profileController.updateProfileDataLawyer(updatedData);
     Navigator.pop(context);

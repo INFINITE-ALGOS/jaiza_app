@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<CategoriesProvider>(context).getCategories();
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, child) {
         return MaterialApp(

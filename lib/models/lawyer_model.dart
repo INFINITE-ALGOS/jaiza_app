@@ -10,18 +10,23 @@ class LawyerModel{
   final bool isVerified;
   final String type;
   final String url;
-  final String experience;
+  final Map<String,dynamic> lawyerProfile;
+  final List<Map<String,dynamic>> portfolio;
+  String address;
 
 
 
   LawyerModel({
     required this.name,
-    required this.experience,
     required this.email,
+    required this.address,
     required this.phone,
     required this.isActive,
     required this.createdOn,
     required this.rating,
+    required this.portfolio,
+    required this.lawyerProfile,
+
     required this.isVerified,
     required this.type,
     required this.url,
@@ -31,10 +36,12 @@ class LawyerModel{
   // Serialize the UserModel instance to a JSON map
   Map<String, dynamic> toMap() {
     return {
-      'experience':experience,
       'name': name,
       'email': email,
+      'address':address,
       'phone': phone,
+      'lawyerProfile':lawyerProfile,
+      'portfolio':portfolio,
       'isActive': isActive,
       'createdOn': createdOn,
       'rating':rating,
@@ -51,15 +58,17 @@ class LawyerModel{
   factory LawyerModel.fromMap(Map<String, dynamic> json) {
     return LawyerModel(
         name: json['name'],
+        portfolio: json['portfolio'],
+        lawyerProfile: json['lawyerProfile'],
         email: json['email'],
         phone: json['phone'],
+        address: json['address'],
         rating: json['rating'],
         isActive: json['isActive'],
         createdOn: json['createdOn'].toString(),
         isVerified: json['isVerified'],
         type: json["type"],
         url: json["url"],
-        experience: json["experience"]
 
     );
   }
