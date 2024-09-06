@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:law_education_app/controllers/signup_with_email_controller.dart';
@@ -132,7 +131,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: GestureDetector(
           onTap: (){
             FocusScope.of(context).unfocus(); // Close keyboard
-
           },
           child: SingleChildScrollView(
             child: Form(
