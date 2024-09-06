@@ -50,29 +50,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (pickedImage != null) {
       setState(() {
         image = File(pickedImage.path);
-       });
-      Navigator.of(context, rootNavigator: true).pop();
-    }
-    else
-    {
-      Navigator.of(context, rootNavigator: true).pop();
+      });
+      // Removed the extra pop here
     }
   }
+
   Future<void> choseCamera() async {
     final pickedImage = await picker.pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       setState(() {
         image = File(pickedImage.path);
       });
-      Navigator.of(context, rootNavigator: true).pop();
-    }
-    else
-    {
-      Navigator.of(context, rootNavigator: true).pop();
+      // Removed the extra pop here
     }
   }
 
-   void pickImage(BuildContext context) {
+
+  void pickImage(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -116,7 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       firebase_storage.UploadTask uploadTask = firebaseStorageRef.putFile(image);
       firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
       photoUrl = await taskSnapshot.ref.getDownloadURL();
-      ProgressDialogWidget.hide(context);
+     // ProgressDialogWidget.hide(context);
     }
     catch (error)
     {
