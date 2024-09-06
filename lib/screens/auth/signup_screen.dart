@@ -15,7 +15,7 @@ import '../../utils/progress_dialog_widget.dart';
 import 'login_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
-
+//jkh
 class SignUpScreen extends StatefulWidget {
   final SignupWithEmailController signupWithEmailController = SignupWithEmailController();
 
