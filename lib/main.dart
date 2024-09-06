@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
          // home:  BottomNavigationLawyer(selectedIndex: 0,),
        //home: BottomNavigationbarClient(selectedIndex: 0,),
-          home: SignUpScreen(),
+          home: LoginScreen(),
          //home: PdfTestScreen()
           builder: EasyLoading.init(),
         );
