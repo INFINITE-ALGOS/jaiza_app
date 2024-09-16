@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import the custom alert dialog component
 import '../../../../conts.dart';
 
@@ -93,81 +94,82 @@ class _CancelRequestBookingScreenState extends State<CancelRequestBookingScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Service List
-              InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: lightGreyColor, width: 2),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              widget.requestDetails['requestMessage'] ?? '??',
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: lightGreyColor, width: 2),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+
+                            child: Text(
+                              widget.requestDetails['requestMessage'] ?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                             ),
-                            Spacer(),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(6),
+                          ),
+                          Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              '${widget.requestDetails['status'] ?? ''}'.toUpperCase(),
+                              style: TextStyle(color: whiteColor, fontSize: 9),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(widget.requestDetails['duration'] ?? '', style: TextStyle()),
+                            ],
+                          ),
+                          Text(
+                            'PKR ${widget.requestDetails['requestAmount'] ?? ''}',
+                            style: TextStyle(color: greyColor),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.lawyerDetails['name'] ?? '??',
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                               ),
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                '${widget.requestDetails['status'] ?? ''}'.toUpperCase(),
-                                style: TextStyle(color: whiteColor, fontSize: 9),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.star, color: yellowColor),
+                                  Text(widget.lawyerDetails['rating'] ?? '0.0', style: TextStyle()),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(widget.requestDetails['duration'] ?? '', style: TextStyle()),
-                              ],
-                            ),
-                            Text(
-                              'PKR ${widget.requestDetails['requestAmount'] ?? ''}',
-                              style: TextStyle(color: greyColor),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.lawyerDetails['name'] ?? '??',
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.star, color: yellowColor),
-                                    Text(widget.lawyerDetails['rating'] ?? '0.0', style: TextStyle()),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            CircleAvatar(),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ],
+                          ),
+                          CacheImageCircle(url:widget.lawyerDetails['url']),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),

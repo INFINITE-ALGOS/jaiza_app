@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/conts.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String title;
@@ -55,7 +56,7 @@ class CustomAlertDialog extends StatelessWidget {
         ElevatedButton(
           onPressed: onConfirm,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
+            backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),

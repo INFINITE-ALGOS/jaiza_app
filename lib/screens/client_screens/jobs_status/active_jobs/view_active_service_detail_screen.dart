@@ -4,6 +4,7 @@ import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/cancel_jobbooking_screen.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/complete_requestbooking_screen.dart';
 import 'package:law_education_app/screens/lawyer_screens/services_status/cancelled_service_screen.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
 import '../../../../conts.dart';
@@ -42,78 +43,77 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Service List
-              InkWell(
-                onTap: (){
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      padding: const EdgeInsets.all(15.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: lightGreyColor,width: 2),
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child:Column(
-                        children: [
-                          Container(
-                            child: Column(
-                              children: [Row(
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    padding: const EdgeInsets.all(15.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: lightGreyColor,width: 2),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child:Column(
+                      children: [
+                        Container(
+                          child: Column(
+                            children: [Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                    constraints: BoxConstraints(maxWidth: 200),
+
+                                    child: Text(requestDetails['requestMessage']?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
+                               // Spacer(),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      borderRadius: BorderRadius.circular(6)
+                                  ),
+                                  padding: EdgeInsets.all(5),
+                                  child: Text('${requestDetails['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
+                                )
+                              ],
+                            ),
+                              SizedBox(height: 10,),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                                 children: [
-                                  Text(requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
-                                 // Spacer(),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: primaryColor,
-                                        borderRadius: BorderRadius.circular(6)
-                                    ),
-                                    padding: EdgeInsets.all(5),
-                                    child: Text('${requestDetails['status']??''}'.toUpperCase(),style: TextStyle(color: whiteColor,fontSize: 9),),
-                                  )
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      //  Icon(Icons.star,color: yellowColor,),
+                                      Text(requestDetails['duration']?? '',style: TextStyle(),),
+                                    ],
+                                  ),
+                                  Text('PKR ${requestDetails['requestAmount']?? ''}',style: TextStyle(color: greyColor),)
                                 ],
-                              ),
-                                SizedBox(height: 10,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        
-                                  children: [
+                              )],
+                          ),
+                        ),
+                        Divider(),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                  children: [Text(lawyerDetails['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                                    SizedBox(height: 10,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        //  Icon(Icons.star,color: yellowColor,),
-                                        Text(requestDetails['duration']?? '',style: TextStyle(),),
+                                        Icon(Icons.star,color: yellowColor,),
+                                        Text(lawyerDetails['rating']?? '0.0',style: TextStyle(),),
                                       ],
                                     ),
-                                    Text('PKR ${requestDetails['requestAmount']?? ''}',style: TextStyle(color: greyColor),)
-                                  ],
-                                )],
-                            ),
+                                  ]                ),
+                              CacheImageCircle(url: lawyerDetails['url'])
+                            ],
                           ),
-                          Divider(),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                    children: [Text(lawyerDetails['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
-                                      SizedBox(height: 10,),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.star,color: yellowColor,),
-                                          Text(lawyerDetails['rating']?? '0.0',style: TextStyle(),),
-                                        ],
-                                      ),
-                                    ]                ),
-                                CircleAvatar()
-                              ],
-                            ),
-                          ),
-        
-                        ],
-                      )
-                  ),
+                        ),
+
+                      ],
+                    )
                 ),
               ),
               SizedBox(height: 16.0),
@@ -161,7 +161,7 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
                   },
                   child: Text(
                     'Complete Booking',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: primaryColor),
                   ),
                 ),
               ),

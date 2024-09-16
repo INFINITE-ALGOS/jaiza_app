@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
+import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
 
 import '../../../controllers/my_jobs_check_contoller.dart';
 
@@ -118,7 +119,9 @@ class JobCard extends StatelessWidget {
                 child: Column(
                   children: [Row(
                     children: [
-                      Text(job['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                      Container(
+                          constraints: BoxConstraints(maxWidth: 200),
+                          child: Text(job['title']?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
                       Spacer(),
                       Container(
                         decoration: BoxDecoration(
@@ -163,11 +166,7 @@ class JobCard extends StatelessWidget {
                             ],
                           ),
                         ]                ),
-                    InkWell(
-                        onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
-                        },
-                        child: CircleAvatar())
+                   CacheImageCircle(url: offer['lawyerDetails']['rating'])
                   ],
                 ),
               ),
@@ -208,7 +207,9 @@ class ServiceCard extends StatelessWidget {
                 child: Column(
                   children: [Row(
                     children: [
-                      Text(requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                      Container(
+                          constraints: BoxConstraints(maxWidth: 200),
+                          child: Text(requestDetails['requestMessage']?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
                       Spacer(),
                       Container(
                         decoration: BoxDecoration(
@@ -253,11 +254,7 @@ class ServiceCard extends StatelessWidget {
                             ],
                           ),
                         ]                ),
-                    InkWell(
-                        onTap:(){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
-                        },
-                        child: CircleAvatar())
+                   CacheImageCircle(url: lawyerDetails['url'])
                   ],
                 ),
               ),

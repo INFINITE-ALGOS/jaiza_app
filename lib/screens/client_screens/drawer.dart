@@ -1,57 +1,62 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:law_education_app/screens/client_screens/profile_screen.dart';
+import 'package:law_education_app/screens/client_screens/profile_screen(client).dart';
+import 'package:provider/provider.dart';
 
-import '../../controllers/myprofile_controller.dart';
+import '../../provider/myprofile_controller.dart';
 import '../../conts.dart';
+import '../auth/login_screen.dart';
 
-class CustomDrawer extends StatefulWidget {
-  const CustomDrawer({super.key});
+class CustomDrawerClient extends StatefulWidget {
+  const CustomDrawerClient({super.key});
 
   @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
+  State<CustomDrawerClient> createState() => _CustomDrawerClientState();
 }
 
-class _CustomDrawerState extends State<CustomDrawer> {
+class _CustomDrawerClientState extends State<CustomDrawerClient> {
 
-  late MyProfileController _profileController;
-  Map<String, dynamic>? _profileData;
 
-  @override
-  void initState() {
-    super.initState();
-    _profileController = MyProfileController();
-    _fetchProfileData();
-  }
-
-  Future<void> _fetchProfileData() async {
-    _profileData = await _profileController.getProfileData();
-    print("Fetched Profile Data: $_profileData");
-    setState(() {});
-  }
+  // Future<void> _fetchProfileData() async {
+  //   _profileData = await _profileController.getProfileData();
+  //   print("Fetched Profile Data: $_profileData");
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final profileData=Provider.of<MyProfileProvider>(context).profileData;
     return Drawer(
+      clipBehavior: Clip.hardEdge,
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
             accountName: Padding(
               padding: EdgeInsets.only(top: 30,left: 10),
-              child: Text(_profileData?['name']??"Loading..."),
+              child: Text(profileData['name']??"Loading..."),
             ),
             accountEmail: Padding(
               padding: EdgeInsets.only(left: 10),
-              child: Text(_profileData?['email']??"Loading..."),
+              child: Text(profileData['email']??"Loading..."),
             ),
             decoration: BoxDecoration(
-                color: Color(0xFF2196f3)
+                color: primaryColor
             ),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: primaryColor,
-              radius: 45,
-              backgroundImage:_profileData?["url"]!= null
-                  ? NetworkImage(_profileData!["url"])
-                  : NetworkImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+              radius: 50,
+              backgroundColor: Colors.grey[200], // Set a background color if image is null
+              child: profileData['url'] == null || profileData['url'] == ''
+                  ? Icon(Icons.person, size: 50) // Default icon if no image
+                  : ClipOval(
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'lib/assets/person.png', // Placeholder image while loading
+                  image: profileData['url'], // Network image URL
+                  fit: BoxFit.cover,
+                  width: 100, // Ensure width matches the CircleAvatar radius * 2
+                  height: 100, // Ensure height matches the CircleAvatar radius * 2
+                ),
+              ),
             ),
           ),
           ListTile(
@@ -61,11 +66,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreenClient()));
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.play_circle),
-            title: const Text("Add Free Subcription"),
-            onTap: (){},
-          ),
+
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text("App Info"),
@@ -103,9 +104,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
             onTap: (){},
           ),
           ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text("Delete Account"),
-            onTap: (){},
+            leading: const Icon(Icons.logout),
+            title: const Text("Log Out"),
+            onTap: () async{
+             await FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginScreen()), (Route route)=>false);
+
+            },
           ),
         ],
       ),

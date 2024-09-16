@@ -5,8 +5,10 @@ import 'package:law_education_app/controllers/get_client_jobs_controller.dart';
 import 'package:law_education_app/conts.dart';
 
 class AllJobsRelatedToCategory extends StatefulWidget {
-  final String categoryName;
-  const AllJobsRelatedToCategory({super.key, required this.categoryName});
+  final String name;
+  final String url;
+
+  const AllJobsRelatedToCategory({super.key, required this.name,required this.url});
 
   @override
   State<AllJobsRelatedToCategory> createState() => _AllJobsRelatedToCategoryState();
@@ -21,7 +23,7 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
-        title: Text('Jobs in ${widget.categoryName}', style: const TextStyle(color: Colors.white)),
+        title: Text('Jobs in ${widget.name}', style: const TextStyle(color: Colors.white)),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: FutureBuilder<QuerySnapshot>(
@@ -35,7 +37,7 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
             return const Center(child: Text('No jobs available', style: TextStyle(fontSize: 16)));
           } else {
             List<DocumentSnapshot> filteredDocuments = snapshot.data!.docs
-                .where((doc) => doc['category'] == widget.categoryName).where((doc)=>doc['status']=='pending')
+                .where((doc) => doc['category'] == widget.name).where((doc)=>doc['status']=='pending')
                 .toList();
 
             if (filteredDocuments.isEmpty) {

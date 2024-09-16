@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
-import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
+import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
 
@@ -83,7 +83,7 @@ class OfferCard extends StatelessWidget {
                                   style: TextStyle(fontSize: 12, color: Colors.blue, decoration: TextDecoration.underline),
                                 ),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
+                                //  Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
                                   // Handle "View Profile" tap
                                 },
                               ),
@@ -291,7 +291,7 @@ class ReproposalOfferCard extends StatelessWidget {
                                   style: TextStyle(fontSize: 12, color: Colors.blue, decoration: TextDecoration.underline),
                                 ),
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
+                                //  Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
                                   // Handle "View Profile" tap
                                 },
                               ),

@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   intl:
   intl_translation:
   flutter_localizations:
@@ -28,6 +29,9 @@ dependencies:
   flutter_pdfview:
   dio:
   url_launcher:
+  lottie:
+  readmore:
+  shimmer: ^3.0.0
   path_provider:
   cloud_firestore: ^4.8.0
   flutter_keyboard_visibility: ^5.4.0
@@ -38,7 +42,8 @@ dependencies:
   firebase_storage: ^11.6.0
   cool_alert: ^2.0.1
   smooth_page_indicator: ^1.2.0+3
-
+  cached_network_image: ^3.4.1
+  carousel_slider: ^5.0.0
 
 
 
@@ -57,3 +62,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - lib/assets/

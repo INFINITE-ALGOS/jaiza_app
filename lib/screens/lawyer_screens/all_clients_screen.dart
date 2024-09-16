@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
+import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 
 import '../../conts.dart';
 class AllClientsScreen extends StatefulWidget {
@@ -63,7 +63,7 @@ class _AllClientsScreenState extends State<AllClientsScreen> {
                       return InkWell(
                         onTap: ()
                         {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const SeeLawyerProfile()));
+                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>const SeeLawyerProfile()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20,right: 20, top: 15),

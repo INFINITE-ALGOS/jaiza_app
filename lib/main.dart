@@ -7,7 +7,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/controllers/create_job_controller.dart';
-import 'package:law_education_app/provider/get_categories_provider.dart';
+import 'package:law_education_app/provider/get_lawyers_provider.dart';
+import 'package:law_education_app/provider/myprofile_controller.dart';
+import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/provider/general_provider.dart';
 import 'package:law_education_app/provider/pdf_provider.dart';
 import 'package:law_education_app/screens/auth/login_screen.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
@@ -27,7 +30,6 @@ void main() async {
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance.activate();
 
-
   // Initialize the LanguageProvider and load the saved locale
   final LanguageProvider languageProvider = LanguageProvider();
   await languageProvider.loadLocale();
@@ -35,11 +37,13 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=>PDFProvider()),
-      //  Provider(create: (_)=>NavigationService()),
-        Provider(create: (_)=>CategoriesProvider()),
+        ChangeNotifierProvider(create: (_) => PDFProvider()),
+        //  Provider(create: (_)=>NavigationService()),
+        Provider(create: (_) => GeneralProvider()),
+        Provider(create: (_)=>GetLawyersProvider()),
         ChangeNotifierProvider(create: (context) => languageProvider),
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context)=>MyProfileProvider())
       ],
       child: const MyApp(),
     ),
@@ -51,7 +55,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CategoriesProvider>(context).getCategories();
+    Provider.of<GeneralProvider>(context).getCategories();
+    Provider.of<GeneralProvider>(context).getCrouselUrls();
+
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, child) {
         return MaterialApp(
@@ -63,12 +69,23 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           supportedLocales: const [Locale('en'), Locale('ur')],
-          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          theme: ThemeData(
+              scaffoldBackgroundColor: Colors.white,
+              bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                selectedItemColor: primaryColor
+              ),
+              appBarTheme: AppBarTheme(
+                centerTitle: true,
+                titleTextStyle: TextStyle(color: whiteColor,fontSize: 20),
+                  color: primaryColor,
+                  iconTheme: IconThemeData(color: whiteColor))),
+
           debugShowCheckedModeBanner: false,
-         // home:  BottomNavigationLawyer(selectedIndex: 0,),
-       //home: BottomNavigationbarClient(selectedIndex: 0,),
-          home: LoginScreen(),
-         //home: PdfTestScreen()
+         //  home:  BottomNavigationLawyer(selectedIndex: 0,),
+         // home: BottomNavigationbarClient(selectedIndex: 0,),
+          //home: LoginScreen(),
+          //home: PdfTestScreen(),
+          home: SplashScreen(),
           builder: EasyLoading.init(),
         );
       },

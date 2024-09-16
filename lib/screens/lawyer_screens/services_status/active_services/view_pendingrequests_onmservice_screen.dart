@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
@@ -38,7 +40,7 @@ class OfferCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue), // Example color
+        border: Border.all(color: primaryColor), // Example color
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -73,7 +75,7 @@ class OfferCard extends StatelessWidget {
                               InkWell(
                                 child: const Text(
                                   'View Profile',
-                                  style: TextStyle(fontSize: 12, color: Colors.blue, decoration: TextDecoration.underline),
+                                  style: TextStyle(fontSize: 12, color: primaryColor, decoration: TextDecoration.underline,decorationColor: primaryColor),
                                 ),
                                 onTap: () {
                                   // Handle "View Profile" tap
@@ -90,11 +92,21 @@ class OfferCard extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      const CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.blue, // Example color
-                        child: Icon(CupertinoIcons.chat_bubble, color: Colors.white),
-                      ),
+                      Container(
+                        height: 35, // Increase the size to make the circular image more visible
+                        width: 35,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect( // Clip the image in a circular shape
+                          borderRadius: BorderRadius.circular(17.5), // Half of the width/height to make it circular
+                          child: CachedNetworkImage(
+                            imageUrl:
+                            client['url'],
+                            fit: BoxFit.cover, // This will make sure the image covers the entire circular area
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   const Divider(),
@@ -116,7 +128,7 @@ class OfferCard extends StatelessWidget {
               children: [
                 const TextSpan(
                   text: "Message: ",
-                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text: request['requestMessage'],
@@ -131,7 +143,7 @@ class OfferCard extends StatelessWidget {
               children: [
                 const TextSpan(
                   text: "Request Price: ",
-                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text: request['requestAmount'],

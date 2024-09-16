@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 class ClientModel{
+  final String id;
   final String name;
   final String email;
   final String phone;
@@ -16,6 +17,7 @@ class ClientModel{
 
   ClientModel({
     required this.name,
+    required this.id,
     required this.email,
     required this.phone,
     required this.address,
@@ -32,6 +34,7 @@ class ClientModel{
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'id':id,
       'email': email,
       'phone': phone,
       'address':address,
@@ -48,6 +51,7 @@ class ClientModel{
   factory ClientModel.fromMap(Map<String, dynamic> json) {
     return ClientModel(
         name: json['name'],
+        id: json['id'],
         email: json['email'],
         phone: json['phone'],
         address: json['address'],

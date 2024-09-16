@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/controllers/login_controller.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
+import 'package:law_education_app/utils/manage_keyboard.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import '../../provider/myprofile_controller.dart';
 import '../../controllers/signin_with_email_controller.dart';
 import 'forget_password_screen.dart';
 
@@ -90,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: InputBorder.none,
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        hintText: 'PLease enter password',
+                        hintText: 'Please enter password',
                         fillColor: Colors.white,
                         filled: true,
                         suffixIcon: IconButton(
@@ -107,8 +111,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 50,),
                   CustomClickRoundedButton(text: "Log In",
                     onPress: ()async{
+                    KeyboardUtil().hideKeyboard(context);
+                    EasyLoading.show(status: "Please wait");
                       LoginController loginController = LoginController();
-                    await loginController.loginAndNavigate(emailController.text ,passwordController.text, context);
+                    await loginController.loginAndNavigate(emailController.text.trim() ,passwordController.text.trim(), context);
+EasyLoading.dismiss();
                   },),
                   SizedBox(height: 20,),
                   const SizedBox(height: 20,),

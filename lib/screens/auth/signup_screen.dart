@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:law_education_app/controllers/signup_with_email_controller.dart';
 import 'package:law_education_app/screens/auth/userlawyer_profile_collection_screen.dart';
+import 'package:law_education_app/utils/extra.dart';
 import 'package:law_education_app/utils/manage_keyboard.dart';
 import 'package:law_education_app/utils/validateor.dart';
 import 'package:law_education_app/widgets/custom_rounded_button.dart';
@@ -25,7 +29,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final foemKey=GlobalKey<FormState>();
+  final formKey=GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -101,19 +105,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
    String photoUrl = "";
 
-   Future<void> uploadImageToFirebase(BuildContext context,File image) async {
-    //ProgressDialogWidget.show(context,  'Uploading...');
-    try
-    {
-      firebase_storage.Reference firebaseStorageRef = firebase_storage.FirebaseStorage.instance.ref().child('uploads/${DateTime.now().millisecondsSinceEpoch}');
+  Future<void> uploadImageToFirebase(BuildContext context, File image) async {
+    try {
+      firebase_storage.Reference firebaseStorageRef = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('uploads/${FirebaseAuth.instance.currentUser?.uid}'); // Check for null here
       firebase_storage.UploadTask uploadTask = firebaseStorageRef.putFile(image);
       firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
       photoUrl = await taskSnapshot.ref.getDownloadURL();
-     // ProgressDialogWidget.hide(context);
-    }
-    catch (error)
-    {
-      ProgressDialogWidget.hide(context);
+      print("Upload complete. Photo URL: $photoUrl"); // Debug print
+    } catch (error) {
+      CustomScaffoldSnackbar.showSnackbar(context, error.toString());
     }
   }
 
@@ -128,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
           child: SingleChildScrollView(
             child: Form(
-              key: foemKey,
+              key: formKey,
               child: Column(
                 children: [
                 isKeyboardVisible?Container():  Container(
@@ -177,24 +179,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Stack(
                                   alignment: Alignment.bottomRight,
                                   children: [
-                                    CircleAvatar(
-                                      backgroundColor: primaryColor,
-                                      radius: 45,
-                                      backgroundImage: image != null
-                                          ? FileImage(image!)
-                                          : NetworkImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-                                    ),
-                                    InkWell(
-                                      onTap: ()
-                                      {},
+                                    Container(
+                                      color: whiteColor,
                                       child: CircleAvatar(
-                                        radius: 14,
-                                        backgroundColor: blackColor,
-                                        child: const Icon(
-                                          Icons.add_sharp,
-                                          size: 15,
-                                          color: Colors.white,
-                                        ),
+                                        backgroundColor: whiteColor,
+                                        radius: 45,
+                                        backgroundImage: image != null
+                                            ? FileImage(image!)
+                                            : NetworkImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+                                      ),
+                                    ),
+                                    CircleAvatar(
+                                      radius: 14,
+                                      backgroundColor: blackColor,
+                                      child: const Icon(
+                                        Icons.add_sharp,
+                                        size: 15,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ],
@@ -206,6 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               title:'Name',
                               fieldTitle:'Please enter name',
                               controller: nameController,
+                              type: TextInputType.text,
                               maxLines: 1,
                               validator: (value){
                                 if (value == null || value.isEmpty) {
@@ -215,6 +217,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               },
                             ),
                             CustomTextField(
+                              type: TextInputType.emailAddress,
+
                               title: 'Email',
                               fieldTitle: "Please Enter Email",
                               controller: emailController,
@@ -225,6 +229,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               maxLines: 1,
                             ),
                             CustomTextField(
+                              type: TextInputType.text,
+
                               title: "Password",
                               fieldTitle: "Please enter password",
                               controller: passwordController,
@@ -235,6 +241,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                             ),
                             CustomTextField(
+                              type: TextInputType.phone,
+
                               title: "Phone no",
                               fieldTitle: "Please Enter your phone no",
                               controller: phoneController,
@@ -246,6 +254,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             CustomTextField(
                               title: "Address",
+                              type: TextInputType.text,
+
                               fieldTitle: "Please Enter your Address",
                               controller: addressController,
                               maxLines: 3,
@@ -317,9 +327,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 text: islawyerSelected ? "Continue =>" : "Sign Up",
                                 onPress: () async {
                                   KeyboardUtil().hideKeyboard(context);
-                                  if(foemKey.currentState!.validate() && image!=null){
+                                  if(formKey.currentState!.validate() && image!=null){
                                     if (islawyerSelected) {
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => UserlawyerProfileCollectionScreen(
@@ -335,6 +345,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       );
                                     } else {
+                                      //EasyLoading.show(status: "Please wait");
                                       await uploadImageToFirebase(context, image!).whenComplete(() {
                                         widget.signupWithEmailController.clientSignUpWithEmailMethod(
                                           context: context,
@@ -349,12 +360,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                         );
                                       });
+                                     // EasyLoading.dismiss();
                                     }
                                   }
-                                  else{
+                                  else if(formKey.currentState!.validate() && image==null){
                                     CustomScaffoldSnackbar.showSnackbar(context, "Please upload your picture",backgroundColor: redColor);
-
                                   }
+
                                 },
                               ),
                             ),
@@ -412,13 +424,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController controller;
   final int maxLines;
   final String? Function(String?)? validator;
+  final TextInputType type;
 
   CustomTextField({
     super.key,
     required this.title,
+    this.type = TextInputType.text,
     required this.fieldTitle,
     required this.controller,
-    required this.maxLines,
+     this.maxLines=3,
     this.validator,
   });
 
@@ -446,7 +460,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             border: Border.all(color: blackColor),
           ),
           child: TextFormField(
-            keyboardType: TextInputType.text,
+            keyboardType: type,
             controller: controller,
             maxLines: maxLines,
             validator:validator,
