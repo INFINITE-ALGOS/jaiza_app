@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import the custom alert dialog component
 import '../../../../conts.dart';
 
@@ -107,9 +108,13 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                       children: [
                         Row(
                           children: [
-                            Text(
-                              widget.requestDetails['requestMessage'] ?? '??',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 200),
+
+                              child: Text(
+                                widget.requestDetails['requestMessage'] ?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                              ),
                             ),
                             Spacer(),
                             Container(
@@ -162,7 +167,7 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                                 ),
                               ],
                             ),
-                            CircleAvatar(),
+                            CacheImageCircle(url: widget.lawyerDetails['url']),
                           ],
                         ),
                       ],
@@ -285,7 +290,7 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                   },
                   child: Text(
                     'Complete Booking',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: primaryColor),
                   ),
                 ),
               ),

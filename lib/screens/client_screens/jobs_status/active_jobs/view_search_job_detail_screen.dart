@@ -9,11 +9,11 @@ import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_offers_onmyjob_screen.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
-import '../../../../provider/get_categories_provider.dart';
+import '../../../../provider/general_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
+import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -229,7 +229,7 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> categoriesOptions = Provider.of<CategoriesProvider>(context).categoriesList;
+    List<dynamic> categoriesOptions = Provider.of<GeneralProvider>(context).categoriesNameList;
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 

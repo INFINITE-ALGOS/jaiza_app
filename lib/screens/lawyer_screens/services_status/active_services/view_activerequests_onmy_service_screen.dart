@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 
 import '../../../../conts.dart';
 class ViewActiverequestsOnmyServiceScreen extends StatefulWidget {
@@ -57,10 +59,16 @@ class ActiveServiceCard extends StatelessWidget {
               children: [
                 Container(
                   child: Column(
-                    children: [Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
-                        Spacer(),
+                        Container(
+                            constraints:BoxConstraints(maxWidth: 200),
+                            child: SeeMoreTextCustom(text: requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600)))
+                     ,   Spacer(),
                         Container(
                           decoration: BoxDecoration(
                               color: primaryColor,
@@ -108,7 +116,7 @@ class ActiveServiceCard extends StatelessWidget {
                           onTap:(){
 
                           },
-                          child: CircleAvatar())
+                          child: CacheImageCircle(url: clientDetails['url']))
                     ],
                   ),
                 ),

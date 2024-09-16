@@ -6,10 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_job_detail_screen.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_service_detail_screen.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 
 import '../../../../controllers/my_jobs_check_contoller.dart';
 import '../../../../conts.dart';
 import '../../../../widgets/custom_alert_dialog.dart';
+import '../../see_lawyer_profile.dart';
 import 'view_search_job_detail_screen.dart';
 
 class ActiveJobsScreen extends StatefulWidget {
@@ -169,11 +172,13 @@ class ServiceCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            requestDetails['requestMessage'] ?? '??',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
+                          Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: SeeMoreTextCustom(text:requestDetails['requestMessage'] ?? '??',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),),
                           ),
                           Spacer(),
                           Container(
@@ -218,11 +223,21 @@ class ServiceCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(children: [
-                        Text(
-                          lawyerDetails['name'] ?? '??',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                        Row(
+                          children: [
+                            Text(
+                              lawyerDetails['name'] ?? '??',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),SizedBox(width: 8,),
+                            InkWell(
+                                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyerDetails)));},
+                                child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+                          ],
                         ),
                         SizedBox(
                           height: 10,
@@ -241,7 +256,7 @@ class ServiceCard extends StatelessWidget {
                           ],
                         ),
                       ]),
-                      InkWell(onTap: () {}, child: CircleAvatar())
+                      InkWell(onTap: () {}, child:CacheImageCircle(url: lawyerDetails['url']))
                     ],
                   ),
                 ),

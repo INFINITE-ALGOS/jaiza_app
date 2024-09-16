@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/my_services_check_controller.dart';
 import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/client_screens/lawyer_profile.dart';
+import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../controllers/my_jobs_check_contoller.dart';
 
 class CompletedServiceScreen extends StatefulWidget {
@@ -237,11 +239,14 @@ class JobCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  requestDetails['requestMessage'] ?? '??',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                ),
+               Container(
+                 constraints: BoxConstraints(maxWidth: 200),
+                 child: SeeMoreTextCustom(text:                   requestDetails['requestMessage'] ?? '??',
+                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                 ),
+               ),
                 Spacer(),
                 Container(
                   decoration: BoxDecoration(
@@ -293,17 +298,7 @@ class JobCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SeeLawyerProfile(),
-                      ),
-                    );
-                  },
-                  child: CircleAvatar(),
-                ),
+                CacheImageCircle(url: clientDetails['url'])
               ],
             ),
           ],

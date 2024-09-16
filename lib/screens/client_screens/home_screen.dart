@@ -1,11 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:law_education_app/controllers/general+admin_task.dart';
+import 'package:law_education_app/provider/get_lawyers_provider.dart';
 import 'package:law_education_app/screens/client_screens/all_lawyers_screens.dart';
 import 'package:law_education_app/screens/client_screens/all_services_screen.dart';
+import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
+import 'package:law_education_app/widgets/crousel_slider.dart';
 import 'package:provider/provider.dart';
 
 import '../../conts.dart';
-import '../../provider/get_categories_provider.dart';
+import '../../provider/general_provider.dart';
 import 'all_services_reltedto_category_screen.dart';
 import 'law_books_screen.dart';
 
@@ -19,12 +24,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
+  List<Map<String,dynamic>> initialLawyers=[];
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    final categoryProvider = Provider.of<CategoriesProvider>(context);
+    final lawyerProvider = Provider.of<GetLawyersProvider>(context);
+    initialLawyers=lawyerProvider.initialLawyers;
 
+    final generalProvider = Provider.of<GeneralProvider>(context);
+    List<String> crouselUrls=generalProvider.crouselUrlList ;
+//print(initialLawyers);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -33,11 +44,17 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(
                   top: screenHeight * 0.03, right: 20, left: 20),
               child: Container(
-                child: const Row(
+                child:  Row(
                   children: [
-                    Icon(
-                      CupertinoIcons.location,
-                      color: greyColor,
+                    InkWell(
+                      child: Icon(
+                        CupertinoIcons.location,
+                        color: greyColor,
+                      ),
+                      onTap:(){
+                       // GeneralAdmiinTaskController().getCategoriesUrl('general/categories/tax.jpg', 'tax');
+                        //CrouserSliderController().fetchAndSaveUrls('general/crouselImages');
+                      },
                     ),
                     SizedBox(
                       width: 10,
@@ -94,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.only(
                   top: screenHeight * 0.03, right: 20, left: 20),
-              child: Placeholder(
-                fallbackHeight: screenHeight * 0.23,
-              ),
+              child: ImageCarousel(crouselUrls: crouselUrls as List<String>),
             ),
             SizedBox(
               height: screenHeight * 0.01,
@@ -109,29 +124,29 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        const Text(
-                          "My Jobs",
-                          style: TextStyle(
-                              fontSize: 21, fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ViewAllMyJobs()));
-                          },
-                          child: const Text(
-                            "View all >>",
-                            style: TextStyle(
-                                color: primaryColor, fontWeight: FontWeight.w600),
-                          ),
-                        )
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     const Text(
+                    //       "My Jobs",
+                    //       style: TextStyle(
+                    //           fontSize: 21, fontWeight: FontWeight.bold),
+                    //     ),
+                    //     const Spacer(),
+                    //     InkWell(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => ViewAllMyJobs()));
+                    //       },
+                    //       child: const Text(
+                    //         "View all >>",
+                    //         style: TextStyle(
+                    //             color: primaryColor, fontWeight: FontWeight.w600),
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
                     // Container(
                     //   color: whiteColor,
                     //   height: MediaQuery.of(context).size.height * 0.3,
@@ -267,8 +282,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: screenHeight * 0.2,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: categoryProvider.categoriesList.length,
+                          itemCount: generalProvider.categoriesMap.length,
                           itemBuilder: (context, index) {
+                            String key = generalProvider.categoriesMap.keys.elementAt(index);
+                            Map<String, dynamic> category = generalProvider.categoriesMap[key];
+                            final String url=category['url'];
+                            final String name=category['name'];
+
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -276,8 +296,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AllServicesRelatedToCategory(
-                                                categoryName: categoryProvider
-                                                    .categoriesList[index])));
+                                                categoryName: name,url: url,),
+                                    ));
                               },
                               child: Padding(
                                 padding:
@@ -287,20 +307,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Container(
                                         height: screenHeight * 0.12,
-                                        width: screenWidth * 0.24,
+                                        width: screenWidth * 0.28,
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                                color: lightGreyColor,
-                                                width: 1)),
-                                        child: const Center(
-                                          child: Icon(
-                                              Icons.miscellaneous_services),
+                                          borderRadius: BorderRadius.circular(20),
+                                          border: Border.all(
+                                            color: lightGreyColor,
+                                            width: 1,
+                                          ),
+                                          //shape: BoxShape.circle, // Makes the container circular
                                         ),
+                                        clipBehavior: Clip.hardEdge, // Ensures the image is clipped to the circular border
+                                        child: CachedNetworkImage(height: 100,width: double.infinity,imageUrl: url,
+                                          placeholder: (context, url) => CupertinoActivityIndicator(),  // Loading widget
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                          fit: BoxFit.cover,// Fallback when image not found
+                                        )
                                       ),
                                       Text(
-                                        categoryProvider.categoriesList[index],
+                                        name,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600),
                                       )
@@ -339,6 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Spacer(),
                         InkWell(
                           onTap: () {
+                         //  await Provider.of<GetLawyersProvider>(context).getAllLawyers();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -353,32 +378,51 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Container(
-                      height: screenHeight * 0.25,
+                      height: screenHeight * 0.2,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 10,
+                          itemCount: initialLawyers.length,
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 25, top: 15),
-                              child: Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Placeholder(
-                                      fallbackHeight: screenHeight * 0.12,
-                                      fallbackWidth: screenWidth * 0.2,
-                                    ),
-                                    SizedBox(
-                                      height: screenHeight * 0.02,
-                                    ),
-                                    const Text(
-                                      "Criminal",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
+                            final lawyer=initialLawyers[index];
+                            final String name=initialLawyers[index]['name'];
+                            final String url=initialLawyers[index]['url'];
+
+                            return InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyer,)));
+                              },
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(top: 15, right: 15),
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          height: screenHeight * 0.12,
+                                          width: screenWidth * 0.28,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: lightGreyColor,
+                                              width: 1,
+                                            ),
+                                            //shape: BoxShape.circle, // Makes the container circular
+                                          ),
+                                          clipBehavior: Clip.hardEdge, // Ensures the image is clipped to the circular border
+                                          child: CachedNetworkImage(height: 100,width: double.infinity,imageUrl: url,
+                                            placeholder: (context, url) => CupertinoActivityIndicator(),  // Loading widget
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
+                                            fit: BoxFit.cover,// Fallback when image not found
+                                          )
+                                      ),
+                                      SizedBox(height: 6,),
+                                      Text(
+                                        name,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

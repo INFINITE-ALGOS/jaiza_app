@@ -15,7 +15,7 @@ import 'package:law_education_app/utils/custom_snackbar.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../provider/get_categories_provider.dart';
+import '../../../../provider/general_provider.dart';
 import '../../../lawyer_screens/services_status/active_services/view_service_active_detail_screen.dart';
 
 class ViewServiceActiveDetailScreen extends StatefulWidget {
@@ -42,9 +42,10 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Service Details"),
-        backgroundColor: Colors.transparent,
+        title: const Text("Service Details",style: TextStyle(color: whiteColor),),
+        backgroundColor: primaryColor,
         actions: [
+          SizedBox(width: 5,),
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -60,7 +61,7 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
             },
             child: const Icon(
               Icons.edit,
-              color: primaryColor,
+              color: whiteColor,
             ),
           ),
           const SizedBox(width: 30),
@@ -116,87 +117,92 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
           const SizedBox(width: 30),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 35),
-            _buildDetailContainer("Title", widget.service['title']),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Description", widget.service['description']),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Created On", formattedDate),
-            const SizedBox(height: 20),
-            _buildDetailContainer("Price", widget.service['price']),
-            // const SizedBox(height: 20),
-            // _buildDetailContainer("Duration", widget.job['duration']),
-             const SizedBox(height: 20),
-            Center(
-              child: InkWell(
-                onTap: () {
-    List<Map<String,dynamic>> activeRequests=[];
-    if(widget.requests!=null && widget.requests!.isNotEmpty){
-    for(var pendingRequest in widget.requests!){
-    if(pendingRequest['requestDetails']['status']=='active'){
-    activeRequests.add(pendingRequest);}}}
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ViewActiverequestsOnmyServiceScreen(service: widget.service, activeRequests: activeRequests),
-      ),
-    );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  margin: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(12),
-                    color: primaryColor,
-                  ),
-                  child: const Text(
-                    "View Active Requests",
-                    style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 35),
+              _buildDetailContainer("Category", widget.service['category']),
+        
+              const SizedBox(height: 35),
+              _buildDetailContainer("Title", widget.service['title']),
+              const SizedBox(height: 20),
+              _buildDetailContainer("Description", widget.service['description']),
+              const SizedBox(height: 20),
+              _buildDetailContainer("Created On", formattedDate),
+              const SizedBox(height: 20),
+              _buildDetailContainer("Price", widget.service['price']),
+              // const SizedBox(height: 20),
+              // _buildDetailContainer("Duration", widget.job['duration']),
+               const SizedBox(height: 20),
+              Center(
+                child: InkWell(
+                  onTap: () {
+            List<Map<String,dynamic>> activeRequests=[];
+            if(widget.requests!=null && widget.requests!.isNotEmpty){
+            for(var pendingRequest in widget.requests!){
+            if(pendingRequest['requestDetails']['status']=='active'){
+            activeRequests.add(pendingRequest);}}}
+            Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ViewActiverequestsOnmyServiceScreen(service: widget.service, activeRequests: activeRequests),
+        ),
+            );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(12),
+                      color: primaryColor,
+                    ),
+                    child: const Text(
+                      "View Active Requests",
+                      style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  List<Map<String,dynamic>> pendingRequests=[];
-                 if(widget.requests!=null && widget.requests!.isNotEmpty){
-                   for(var pendingRequest in widget.requests!){
-                     if(pendingRequest['requestDetails']['status']=='pending'||pendingRequest['requestDetails']['status']=='reproposal'){
-                       pendingRequests.add(pendingRequest);
+              const SizedBox(height: 10),
+              Center(
+                child: InkWell(
+                  onTap: () {
+                    List<Map<String,dynamic>> pendingRequests=[];
+                   if(widget.requests!=null && widget.requests!.isNotEmpty){
+                     for(var pendingRequest in widget.requests!){
+                       if(pendingRequest['requestDetails']['status']=='pending'||pendingRequest['requestDetails']['status']=='reproposal'){
+                         pendingRequests.add(pendingRequest);
+                       }
                      }
                    }
-                 }
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ViewPendingRequestsOnMyServiceScreen(service: widget.service, pendingRequests: pendingRequests),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewPendingRequestsOnMyServiceScreen(service: widget.service, pendingRequests: pendingRequests),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(12),
+                      color: primaryColor,
                     ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  margin: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(12),
-                    color: primaryColor,
-                  ),
-                  child: const Text(
-                    "View Pending Requests",
-                    style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
+                    child: const Text(
+                      "View Pending Requests",
+                      style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -280,7 +286,7 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> categoriesOptions = Provider.of<CategoriesProvider>(context).categoriesList;
+    List<dynamic> categoriesOptions = Provider.of<GeneralProvider>(context).categoriesNameList;
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 
@@ -430,6 +436,7 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
             border: Border.all(color: blackColor),
           ),
           child: DropdownButtonFormField<dynamic>(
+            dropdownColor: whiteColor,
             value: value,
             items: items.map((dynamic item) {
               return DropdownMenuItem<dynamic>(

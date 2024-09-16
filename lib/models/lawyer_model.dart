@@ -2,6 +2,7 @@
 
 class LawyerModel{
   final String name;
+  final String id;
   final String email;
   final String phone;
   final String rating;
@@ -19,6 +20,7 @@ class LawyerModel{
   LawyerModel({
     required this.name,
     required this.email,
+    required this.id,
     required this.address,
     required this.phone,
     required this.isActive,
@@ -39,6 +41,7 @@ class LawyerModel{
       'name': name,
       'email': email,
       'address':address,
+      'id':id,
       'phone': phone,
       'lawyerProfile':lawyerProfile,
       'portfolio':portfolio,
@@ -58,6 +61,7 @@ class LawyerModel{
   factory LawyerModel.fromMap(Map<String, dynamic> json) {
     return LawyerModel(
         name: json['name'],
+        id:json['id'],
         portfolio: json['portfolio'],
         lawyerProfile: json['lawyerProfile'],
         email: json['email'],

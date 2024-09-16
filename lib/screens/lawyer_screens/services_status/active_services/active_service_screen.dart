@@ -51,12 +51,11 @@ class _ActiveServiceScreenLawyerState extends State<ActiveServiceScreenLawyer> {
               final offersData=snapshot.data![1]  as List<Map<String, dynamic>>; ;
               combinedData.addAll(offersData);
             //  print('${snapshot.data![1] }');
-              return ListView.builder(
+              return combinedData.isNotEmpty? ListView.builder(
                 itemCount: combinedData.length,
                   itemBuilder: (context, index) {
                     final itemData = combinedData[index];
                     final isService = itemData.containsKey('serviceDetails');
-
                     if(isService){
                       final serviceData = itemData;
                       final service = serviceData['serviceDetails'] as Map<String, dynamic>;
@@ -71,7 +70,7 @@ class _ActiveServiceScreenLawyerState extends State<ActiveServiceScreenLawyer> {
                       return OfferJobCard(clientDetails: clientDetails, jobDetails: jobDetails, offerDetails: offerDetails);
                     }
                   }
-              );
+              ) : Center(child: Text("No active services"),);
             }
           },
         ),
@@ -317,7 +316,9 @@ class ServiceCard extends StatelessWidget {
                     children: [Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(service['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                        Container(
+                          constraints:BoxConstraints(maxWidth: 200),
+                            child: Text(service['title']?? '??',maxLines: 2,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
                         Container(
                           decoration: BoxDecoration(
                             color: primaryColor,
@@ -337,7 +338,10 @@ class ServiceCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                             //  Icon(Icons.star,color: yellowColor,),
-                              Text(service['location']?? '',style: TextStyle(),),
+                              Container(
+                                  constraints:BoxConstraints(maxWidth: 200),
+
+                                  child: Text(service['location']?? '',maxLines: 2,overflow: TextOverflow.ellipsis,style: TextStyle(),)),
                             ],
                           ),
                           Text('PKR ${service['price']?? ''}',style: TextStyle(color: greyColor),)

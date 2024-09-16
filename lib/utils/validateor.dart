@@ -12,9 +12,14 @@ class FieldValidators {
   );
 
   // Regular expression for validating a password (example: at least 8 characters, including uppercase, lowercase, digits, and special characters)
+  // static final RegExp passwordRegex = RegExp(
+  //   r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+  // );
   static final RegExp passwordRegex = RegExp(
-    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+    r'^.{6,}$',  // This will match at least 6 characters of any kind
   );
+
+
 
   // Validation methods for each field
   static String? validateEmail(String valueValidator) {
@@ -39,8 +44,14 @@ class FieldValidators {
     if (valueValidator.isEmpty) {
       return 'Password cannot be empty';
     } else if (!passwordRegex.hasMatch(valueValidator)) {
-      return 'Password must be at least 8 characters long and include uppercase, lowercase, digits, and special characters';
+      return 'Password must be at least 8 characters long';
     }
     return null;
+  }
+  String? validateField(String? value, String title) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter $title';
+    }
+    return null; // Return null if the field is valid
   }
 }
