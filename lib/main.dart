@@ -13,6 +13,7 @@ import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/provider/general_provider.dart';
 import 'package:law_education_app/provider/pdf_provider.dart';
 import 'package:law_education_app/screens/auth/login_screen.dart';
+import 'package:law_education_app/screens/auth/onboarding_screen.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
 import 'package:law_education_app/screens/auth/splash_screen.dart';
 import 'package:law_education_app/screens/auth/userlawyer_profile_collection_screen.dart';
@@ -81,10 +82,6 @@ class MyApp extends StatelessWidget {
                   iconTheme: IconThemeData(color: whiteColor))),
 
           debugShowCheckedModeBanner: false,
-         //  home:  BottomNavigationLawyer(selectedIndex: 0,),
-         // home: BottomNavigationbarClient(selectedIndex: 0,),
-          //home: LoginScreen(),
-          //home: PdfTestScreen(),
           home: SplashScreen(),
           builder: EasyLoading.init(),
         );
