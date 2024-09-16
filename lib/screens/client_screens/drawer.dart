@@ -6,11 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../provider/myprofile_controller.dart';
 import '../../conts.dart';
-<<<<<<< Updated upstream
 import '../auth/login_screen.dart';
-=======
 import 'contact_us.dart';
->>>>>>> Stashed changes
 
 class CustomDrawerClient extends StatefulWidget {
   const CustomDrawerClient({super.key});

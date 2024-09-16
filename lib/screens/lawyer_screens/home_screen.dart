@@ -9,14 +9,10 @@ import 'package:law_education_app/screens/lawyer_screens/pdf_viewer_screen_lawye
 import 'package:provider/provider.dart';
 import '../../controllers/book_controller.dart';
 import '../../conts.dart';
-<<<<<<< Updated upstream
 import '../../provider/general_provider.dart';
 import '../../widgets/crousel_slider.dart';
-=======
 import '../../models/books_model.dart';
-import '../../provider/get_categories_provider.dart';
 import '../client_screens/law_books_screen.dart';
->>>>>>> Stashed changes
 import 'all_clients_screen.dart';
 import 'all_jobs_screens.dart';
 import 'law_books_screen.dart';
@@ -31,9 +27,6 @@ class HomeScreenLawyer extends StatefulWidget {
 class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
   double screenHeight = 0;
   double screenWidth = 0;
-<<<<<<< Updated upstream
-
-=======
   Future<List<Books>>? books;
   final bookCon = BookController();
   @override
@@ -42,7 +35,6 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
     super.initState();
     books=bookCon.fetchBooks();
   }
->>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<MyProfileProvider>(context);
@@ -302,15 +294,9 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                         InkWell(
                           onTap: () {
                             Navigator.push(
-<<<<<<< Updated upstream
                               context,
                               MaterialPageRoute(builder: (context) => const LawBooksLawyer()),
                             );
-=======
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>  LawBooks()));
->>>>>>> Stashed changes
                           },
                           child: const Text(
                             "View all >>",
@@ -319,7 +305,6 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                         ),
                       ],
                     ),
-<<<<<<< Updated upstream
                     Container(
                       height: screenHeight * 0.2,
                       child: ListView.builder(
@@ -345,7 +330,6 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                             );
                           }),
                     ),
-=======
                     FutureBuilder<List<Books>>(
                       future: books,
                       builder: (context, snapshot) {
@@ -406,7 +390,6 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                       },
                     ),
                     SizedBox(height: 50,),
->>>>>>> Stashed changes
                   ],
                 ),
               ),

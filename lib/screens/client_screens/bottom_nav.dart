@@ -1,12 +1,8 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
-<<<<<<< Updated upstream
 import 'package:law_education_app/provider/general_provider.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
-=======
-import 'package:law_education_app/provider/get_categories_provider.dart';
->>>>>>> Stashed changes
 import 'package:provider/provider.dart';
 import '../../provider/language_provider.dart'; // Adjust the import path as needed
 import '../client_screens/chat_screen.dart';
@@ -58,11 +54,7 @@ class _BottomNavigationbarClientState extends State<BottomNavigationbarClient> {
     return Scaffold(
       drawer: const CustomDrawerClient(),
       appBar: AppBar(
-<<<<<<< Updated upstream
-       // backgroundColor: const Color(0xFF2196f3),
-=======
         backgroundColor:primaryColor,
->>>>>>> Stashed changes
         actions: [
           PopupMenuButton<Locale>(
             onSelected: (Locale locale) {
@@ -108,20 +100,12 @@ class _BottomNavigationbarClientState extends State<BottomNavigationbarClient> {
               Icon(
                 iconList[index],
                 size: 24,
-<<<<<<< Updated upstream
                 color: isActive ? primaryColor : Colors.grey,
-=======
-                color: isActive ? primaryColor: Colors.grey,
->>>>>>> Stashed changes
               ),
               Text(
                 labelText[index],
                 style: TextStyle(
-<<<<<<< Updated upstream
                   color: isActive ? primaryColor : Colors.grey,
-=======
-                  color: isActive ?primaryColor : Colors.grey,
->>>>>>> Stashed changes
                   fontSize: 10,
                 ),
               ),

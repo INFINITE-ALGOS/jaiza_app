@@ -1,25 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:law_education_app/controllers/general+admin_task.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
 import 'package:law_education_app/screens/client_screens/all_lawyers_screens.dart';
 import 'package:law_education_app/screens/client_screens/all_services_screen.dart';
-<<<<<<< Updated upstream
 import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 import 'package:law_education_app/widgets/crousel_slider.dart';
-=======
 import 'package:law_education_app/screens/client_screens/pdf_viewer_screen.dart';
->>>>>>> Stashed changes
 import 'package:provider/provider.dart';
 import '../../controllers/book_controller.dart';
 import '../../conts.dart';
-<<<<<<< Updated upstream
 import '../../provider/general_provider.dart';
-=======
 import '../../models/books_model.dart';
-import '../../provider/get_categories_provider.dart';
->>>>>>> Stashed changes
 import 'all_services_reltedto_category_screen.dart';
 import 'law_books_screen.dart';
 import '../../controllers/book_controller.dart';
@@ -34,10 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   double screenHeight = 0;
   double screenWidth = 0;
-<<<<<<< Updated upstream
   List<Map<String,dynamic>> initialLawyers=[];
-
-=======
   Future<List<Books>>? books;
   final bookCon = BookController();
   @override
@@ -46,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     books=bookCon.fetchBooks();
   }
->>>>>>> Stashed changes
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -145,122 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 child: Column(
                   children: [
-<<<<<<< Updated upstream
-                    // Row(
-                    //   children: [
-                    //     const Text(
-                    //       "My Jobs",
-                    //       style: TextStyle(
-                    //           fontSize: 21, fontWeight: FontWeight.bold),
-                    //     ),
-                    //     const Spacer(),
-                    //     InkWell(
-                    //       onTap: () {
-                    //         Navigator.push(
-                    //             context,
-                    //             MaterialPageRoute(
-                    //                 builder: (context) => ViewAllMyJobs()));
-                    //       },
-                    //       child: const Text(
-                    //         "View all >>",
-                    //         style: TextStyle(
-                    //             color: primaryColor, fontWeight: FontWeight.w600),
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    // Container(
-                    //   color: whiteColor,
-                    //   height: MediaQuery.of(context).size.height * 0.3,
-                    //   child: FutureBuilder<List<Map<String, dynamic>>>(
-                    //     future: myJobsCheckController.myJobCheckMethod(context: context),
-                    //     builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-                    //       if (snapshot.connectionState == ConnectionState.waiting) {
-                    //         return Center(child: CircularProgressIndicator());
-                    //       } else if (snapshot.hasError) {
-                    //         return Center(
-                    //           child: Text(
-                    //             'Error: ${snapshot.error}',
-                    //             style: TextStyle(color: Colors.red, fontSize: 16),
-                    //           ),
-                    //         );
-                    //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    //         return Center(
-                    //           child: Text(
-                    //             'You have not created any job',
-                    //             style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                    //           ),
-                    //         );
-                    //       } else {
-                    //         final List<Map<String, dynamic>> myJobs = snapshot.data!;
-                    //
-                    //         return ListView.builder(
-                    //           scrollDirection: Axis.horizontal,
-                    //           itemCount: myJobs.length,
-                    //           itemBuilder: (context, index) {
-                    //             final Timestamp timestamp = myJobs[index]['createdOn'] as Timestamp;
-                    //             final DateTime dateTime = timestamp.toDate();
-                    //             final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-                    //
-                    //             return Container(
-                    //               color: whiteColor,
-                    //               width: MediaQuery.of(context).size.width * 0.6,
-                    //               margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-                    //               child: Card(
-                    //                 color: whiteColor,
-                    //                 elevation: 8.0,
-                    //                 shape: RoundedRectangleBorder(
-                    //                   borderRadius: BorderRadius.circular(10.0),
-                    //                 ),
-                    //                 child: Padding(
-                    //                   padding: EdgeInsets.all(16.0),
-                    //                   child: Column(
-                    //                     crossAxisAlignment: CrossAxisAlignment.start,
-                    //                     children: [
-                    //                       Text(
-                    //                         'Created on: $formattedDate',
-                    //                         style: TextStyle(
-                    //                           fontWeight: FontWeight.bold,
-                    //                           fontSize: 16,
-                    //                         ),
-                    //                       ),
-                    //                       SizedBox(height: 8.0),
-                    //                       Text(
-                    //                         myJobs[index]['title'] ?? 'No Title',
-                    //                         style: TextStyle(
-                    //                           fontSize: 18,
-                    //                           fontWeight: FontWeight.w600,
-                    //                         ),
-                    //                       ),
-                    //                       SizedBox(height: 4.0),
-                    //                       Text(
-                    //                         myJobs[index]['description'] ?? 'No Description',
-                    //                         style: TextStyle(
-                    //                           fontSize: 14,
-                    //                           color: Colors.grey[700],
-                    //                         ),
-                    //                       ),
-                    //                       SizedBox(height: 8.0),
-                    //                       Text(
-                    //                         '\$${myJobs[index]['price'] ?? '0.00'}',
-                    //                         style: TextStyle(
-                    //                           fontSize: 16,
-                    //                           color: Colors.green,
-                    //                           fontWeight: FontWeight.bold,
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //             );
-                    //           },
-                    //         );
-                    //       }
-                    //     },
-                    //   ),
-                    // )
-=======
+
                     Row(
                       children: [
                         const Text(
@@ -284,7 +158,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
->>>>>>> Stashed changes
                   ],
                 ),
               ),

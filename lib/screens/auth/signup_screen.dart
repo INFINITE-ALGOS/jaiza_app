@@ -342,11 +342,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       );
                                     } else {
-<<<<<<< Updated upstream
-                                      //EasyLoading.show(status: "Please wait");
-=======
-                                      print("i am here");
->>>>>>> Stashed changes
                                       await uploadImageToFirebase(context, image!).whenComplete(() {
                                         widget.signupWithEmailController.clientSignUpWithEmailMethod(
                                           context: context,

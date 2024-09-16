@@ -41,20 +41,9 @@ dependencies:
   firebase_storage: ^12.3.0
   cool_alert: ^2.0.1
   smooth_page_indicator: ^1.2.0+3
-<<<<<<< Updated upstream
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
-
-
-
-
-
-
-
-
-=======
   flutter_pdfview: ^1.0.3
->>>>>>> Stashed changes
   build_runner:
 
 dev_dependencies:
@@ -66,8 +55,5 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
-<<<<<<< Updated upstream
     - lib/assets/
-=======
     - assets/images/
->>>>>>> Stashed changes
