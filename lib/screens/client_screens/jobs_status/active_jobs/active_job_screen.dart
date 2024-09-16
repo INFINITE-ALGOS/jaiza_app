@@ -514,10 +514,13 @@ class SearchingJobCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            job['title'] ?? '??',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
+                          Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: Text(
+                              job['title'] ?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
                           ),
                           Spacer(),
                           Container(

@@ -43,7 +43,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Job Details"),
-        backgroundColor: Colors.transparent,
+        backgroundColor: primaryColor,
         elevation: 0,
         actions: [
           GestureDetector(
@@ -61,7 +61,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
             },
             child: const Icon(
               Icons.edit,
-              color: primaryColor,
+              color: whiteColor,
             ),
           ),
           const SizedBox(width: 30),
@@ -101,46 +101,48 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
           const SizedBox(width: 30),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildDetailRow("Title", widget.job['title'] ?? 'N/A'),
-            const Divider(),
-            _buildDetailRow("Description", widget.job['description'] ?? 'N/A'),
-            const Divider(),
-            _buildDetailRow("Created On", formattedDate),
-            const Divider(),
-            _buildDetailRow("Price", 'PKR ${widget.job['price'] ?? 'N/A'}'),
-            const Divider(),
-            _buildDetailRow("Duration", widget.job['duration'] ?? 'N/A'),
-            const Divider(),
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ViewOffersOnMyJobScreen(job: widget.job, offers: widget.offers),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildDetailRow("Title", widget.job['title'] ?? 'N/A'),
+              const Divider(),
+              _buildDetailRow("Description", widget.job['description'] ?? 'N/A'),
+              const Divider(),
+              _buildDetailRow("Created On", formattedDate),
+              const Divider(),
+              _buildDetailRow("Price", 'PKR ${widget.job['price'] ?? 'N/A'}'),
+              const Divider(),
+              _buildDetailRow("Duration", widget.job['duration'] ?? 'N/A'),
+              const Divider(),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ViewOffersOnMyJobScreen(job: widget.job, offers: widget.offers),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  backgroundColor: primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    "View Offers",
+                    style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
                   ),
                 ),
-                child: const Text(
-                  "View Offers",
-                  style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

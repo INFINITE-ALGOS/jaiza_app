@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/auth/signup_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'onboarding_1.dart';
 import 'onboarding_2.dart';
@@ -19,16 +18,6 @@ class _OnBooardingScreenState extends State<OnBooardingScreen> {
 
   PageController controllerDef =  PageController();
   int currentPage=0;
-
-  Future<void> CompletedOnBoardingScreen()async
-  {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    await sp.setBool("seenOnBoadingScreen",true);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SignUpScreen()),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +119,10 @@ class _OnBooardingScreenState extends State<OnBooardingScreen> {
       child: InkWell(
         onTap: ()
         {
-          CompletedOnBoardingScreen();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => SignUpScreen()),//AccountSelection()),
+          );
         },
         child: Container(
           alignment: Alignment.bottomRight,

@@ -328,7 +328,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                 child: AlertDialog(
                   contentPadding: EdgeInsets.all(20),
                   backgroundColor: Colors.white,
-                  title: Text('Request Service for ${service["title"]}'),
+                  title: Text('Request Service for ${service["title"]}',maxLines: 5,overflow: TextOverflow.ellipsis,),
                   content: SizedBox(
                     width: double.maxFinite, // Ensure content takes full width
                     child: Column(

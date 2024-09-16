@@ -5,6 +5,9 @@ import 'package:law_education_app/controllers/my_services_check_controller.dart'
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_job_detail_screen.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
+import 'package:law_education_app/screens/lawyer_screens/see_client_profile.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 
 import '../../../../controllers/my_jobs_check_contoller.dart';
 import '../../../../conts.dart';
@@ -109,13 +112,15 @@ class OfferJobCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            jobDetails['title'] ?? '??',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
-                          ),
+                         Container(constraints: BoxConstraints(maxWidth: 200),
+                           child: SeeMoreTextCustom(text:                             jobDetails['title'] ?? '??',
+                             style: TextStyle(
+                                 fontSize: 15, fontWeight: FontWeight.w600),
+                           ),
+                         ),
                           Container(
                             decoration: BoxDecoration(
                                 color: primaryColor,
@@ -158,11 +163,21 @@ class OfferJobCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(children: [
-                        Text(
-                          clientDetails['name'] ?? '??',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                        Row(
+                          children: [
+                            Text(
+                              clientDetails['name'] ?? '??',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(width: 20,),
+                            InkWell(
+                                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails,)));},
+                                child: Text("View Profile",style: TextStyle(color: primaryColor,decorationColor: primaryColor,decoration: TextDecoration.underline),))
+                          ],
                         ),
                         SizedBox(
                           height: 10,
@@ -181,7 +196,7 @@ class OfferJobCard extends StatelessWidget {
                           ],
                         ),
                       ]),
-                      InkWell(onTap: () {}, child: CircleAvatar())
+                      CacheImageCircle(url: clientDetails['url'])
                     ],
                   ),
                 ),
@@ -197,7 +212,8 @@ class OfferJobCard extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Give Offer for ${jobDetails["title"]}'),
+          backgroundColor: whiteColor,
+          title: Text('Give Offer for ${jobDetails["title"]}',maxLines: 4,overflow: TextOverflow.ellipsis,),
           content: Container(
             height: 150,
             child: TextField(
@@ -211,7 +227,7 @@ class OfferJobCard extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text('Cancel',style: TextStyle(color: primaryColor),),
             ),
             TextButton(
               onPressed: () {
@@ -227,7 +243,7 @@ class OfferJobCard extends StatelessWidget {
                  );
                 }
               },
-              child: const Text('Submit'),
+              child: const Text('Submit',style: TextStyle(color: primaryColor),),
             ),
           ],
         );});},

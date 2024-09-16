@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/get_client_jobs_controller.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 
 class AllJobsRelatedToCategory extends StatefulWidget {
   final String name;
@@ -70,15 +71,13 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            job["title"],
+                          SeeMoreTextCustom(text: job["title"],
                             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 10),
-                          Text(
-                            job["description"],
-                            style: const TextStyle(fontSize: 14),
-                          ),
+                         SeeMoreTextCustom(text:  job["description"],
+                           style: const TextStyle(fontSize: 14),
+                         ),
                           const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +86,9 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
                                 children: [
                                   const Icon(Icons.location_on, size: 16, color: primaryColor),
                                   const SizedBox(width: 5),
-                                  Text(job["location"], style: const TextStyle(fontSize: 14)),
+                                  Container(
+                                      constraints: BoxConstraints(maxWidth: 200),
+                                      child: SeeMoreTextCustom(text: job["location"], style: const TextStyle(fontSize: 14)))
                                 ],
                               ),
                               Text(
@@ -96,12 +97,17 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              _showOfferDialog(context, job);
-                            },
-                            child: const Text('Give Offer'),
+                          const SizedBox(height: 20),
+                          Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor
+                              ),
+                              onPressed: () {
+                                _showOfferDialog(context, job);
+                              },
+                              child: const Text('Give Offer',style: TextStyle(color: whiteColor),),
+                            ),
                           ),
                         ],
                       ),
@@ -124,7 +130,8 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Give Offer for ${job["title"]}'),
+          backgroundColor: whiteColor,
+          title: Text('Give Offer for ${job["title"]}',maxLines: 4,overflow: TextOverflow.ellipsis,),
           content: Container(
             height: 150,
             child: Column(
@@ -147,7 +154,7 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text('Cancel',style: TextStyle(color: primaryColor),),
             ),
             TextButton(
               onPressed: () {
@@ -157,7 +164,7 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
                   Navigator.of(context).pop();
                 }
               },
-              child: const Text('Submit'),
+              child: const Text('Submit',style: TextStyle(color: primaryColor)),
             ),
           ],
         );

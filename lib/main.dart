@@ -1,16 +1,28 @@
+import 'dart:io';
+
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:law_education_app/controllers/create_job_controller.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/provider/general_provider.dart';
 import 'package:law_education_app/provider/pdf_provider.dart';
+import 'package:law_education_app/screens/auth/login_screen.dart';
+import 'package:law_education_app/screens/auth/signup_screen.dart';
 import 'package:law_education_app/screens/auth/splash_screen.dart';
+import 'package:law_education_app/screens/auth/userlawyer_profile_collection_screen.dart';
+import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
+import 'package:law_education_app/utils/extra.dart';
 import 'package:provider/provider.dart';
 import 'package:law_education_app/provider/language_provider.dart';
+import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
+
+import 'controllers/my_jobs_check_contoller.dart';
 import 'controllers/user_provider.dart';
 
 void main() async {
@@ -51,7 +63,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           locale: languageProvider.locale,
           localizationsDelegates: [
-           //AppLocalizations.delegate,
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -69,11 +81,11 @@ class MyApp extends StatelessWidget {
                   iconTheme: IconThemeData(color: whiteColor))),
 
           debugShowCheckedModeBanner: false,
+         //  home:  BottomNavigationLawyer(selectedIndex: 0,),
+         // home: BottomNavigationbarClient(selectedIndex: 0,),
+          //home: LoginScreen(),
+          //home: PdfTestScreen(),
           home: SplashScreen(),
-         // home:  BottomNavigationLawyer(selectedIndex: 0,),
-       //home: BottomNavigationbarClient(selectedIndex: 0,),
-          //home: BottomNavigationLawyer(selectedIndex: 0,),
-         //home: PdfTestScreen()
           builder: EasyLoading.init(),
         );
       },

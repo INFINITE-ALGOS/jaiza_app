@@ -54,7 +54,7 @@ class _BottomNavigationbarClientState extends State<BottomNavigationbarClient> {
     return Scaffold(
       drawer: const CustomDrawerClient(),
       appBar: AppBar(
-        backgroundColor:primaryColor,
+       // backgroundColor: const Color(0xFF2196f3),
         actions: [
           PopupMenuButton<Locale>(
             onSelected: (Locale locale) {

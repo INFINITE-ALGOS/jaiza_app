@@ -5,6 +5,7 @@ import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../controllers/my_jobs_check_contoller.dart';
+import '../see_client_profile.dart';
 
 class CompletedServiceScreen extends StatefulWidget {
   const CompletedServiceScreen({super.key});
@@ -104,110 +105,113 @@ class OfferJobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => ViewActiveJobDetailScreen(
-        //           job: job,
-        //           offer: offer,
-        //         )));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-            width: MediaQuery.sizeOf(context).width,
-            padding: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: lightGreyColor, width: 2),
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  child: Column(
-                    children: [
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          padding: const EdgeInsets.all(15.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: lightGreyColor, width: 2),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Column(
+            children: [
+              Container(
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                       Container(
+                         constraints: BoxConstraints(maxWidth: 200),
+                         child: SeeMoreTextCustom(text:  jobDetails['title'] ?? '??',
+                           style: TextStyle(
+                               fontSize: 15, fontWeight: FontWeight.w600),
+                         ),
+                       ),
+                        Spacer(),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(6)),
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            '${offerDetails['status'] ?? ''}'.toUpperCase(),
+                            style: TextStyle(color: whiteColor, fontSize: 9),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //  Icon(Icons.star,color: yellowColor,),
+                            Text(
+                              jobDetails['duration'] ?? '',
+                              style: TextStyle(),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          'PKR ${offerDetails['offerAmount'] ?? ''}',
+                          style: TextStyle(color: greyColor),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Divider(),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(children: [
                       Row(
                         children: [
                           Text(
-                            jobDetails['title'] ?? '??',
+                            clientDetails['name'] ?? '??',
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
-                          Spacer(),
-                          Container(
-                            decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(6)),
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              '${offerDetails['status'] ?? ''}'.toUpperCase(),
-                              style: TextStyle(color: whiteColor, fontSize: 9),
-                            ),
-                          )
+                          SizedBox(width: 20,),
+                          InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails,)));
+                              },
+                              child: Text("View Profile",style: TextStyle(color: primaryColor,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
                         ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              //  Icon(Icons.star,color: yellowColor,),
-                              Text(
-                                jobDetails['duration'] ?? '',
-                                style: TextStyle(),
-                              ),
-                            ],
+                          Icon(
+                            Icons.star,
+                            color: yellowColor,
                           ),
                           Text(
-                            'PKR ${offerDetails['offerAmount'] ?? ''}',
-                            style: TextStyle(color: greyColor),
-                          )
+                            clientDetails['rating'] ?? '0.0',
+                            style: TextStyle(),
+                          ),
                         ],
-                      )
-                    ],
-                  ),
+                      ),
+                    ]),
+                    CacheImageCircle(url: clientDetails['url'])
+                  ],
                 ),
-                Divider(),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(children: [
-                        Text(
-                          clientDetails['name'] ?? '??',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: yellowColor,
-                            ),
-                            Text(
-                              clientDetails['rating'] ?? '0.0',
-                              style: TextStyle(),
-                            ),
-                          ],
-                        ),
-                      ]),
-                      InkWell(onTap: () {}, child: CircleAvatar())
-                    ],
-                  ),
-                ),
-              ],
-            )),
-      ),
+              ),
+            ],
+          )),
     );
   }
 }
@@ -250,7 +254,7 @@ class JobCard extends StatelessWidget {
                 Spacer(),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: primaryColor,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   padding: EdgeInsets.all(5),
@@ -282,9 +286,20 @@ class JobCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      clientDetails['name'] ?? '??',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    Row(
+                      children: [
+                        Text(
+                          clientDetails['name'] ?? '??',
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 20,),
+                        InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails,)));
+                            },
+                            child: Text("View Profile",style: TextStyle(color: primaryColor,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+                      ],
                     ),
                     SizedBox(height: 10),
                     Row(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/my_services_check_controller.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
+import 'package:law_education_app/screens/lawyer_screens/see_client_profile.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../controllers/my_jobs_check_contoller.dart';
@@ -114,89 +115,92 @@ class OfferJobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // Add navigation or other logic here if needed
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: lightGreyColor, width: 2),
-            borderRadius: BorderRadius.circular(18),
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    jobDetails['title'] ?? '??',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.all(15.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: lightGreyColor, width: 2),
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+               Container(
+                 constraints: BoxConstraints(maxWidth: 200),
+                 child: SeeMoreTextCustom(text:   jobDetails['title'] ?? '??',
+                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                 ),
+               ),
+                Spacer(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: redColor,
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  Spacer(),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    padding: EdgeInsets.all(5),
-                    child: Text(
-                      '${offerDetails['status'] ?? ''}'.toUpperCase(),
-                      style: TextStyle(color: whiteColor, fontSize: 9),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    jobDetails['duration'] ?? '',
-                    style: TextStyle(),
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    '${offerDetails['status'] ?? ''}'.toUpperCase(),
+                    style: TextStyle(color: whiteColor, fontSize: 9),
                   ),
-                  Text(
-                    'PKR ${offerDetails['offerAmount'] ?? ''}',
-                    style: TextStyle(color: greyColor),
-                  ),
-                ],
-              ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        clientDetails['name'] ?? '??',
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: yellowColor),
-                          Text(
-                            clientDetails['rating'] ?? '0.0',
-                            style: TextStyle(),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  jobDetails['duration'] ?? '',
+                  style: TextStyle(),
+                ),
+                Text(
+                  'PKR ${offerDetails['offerAmount'] ?? ''}',
+                  style: TextStyle(color: greyColor),
+                ),
+              ],
+            ),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          clientDetails['name'] ?? '??',
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 20,),
+                        InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails)));
+                            },
+                            child: Text("View Profile",style: TextStyle(color: primaryColor,decoration: TextDecoration.underline,decorationColor: primaryColor),))
 
-
-                    },
-                    child: CircleAvatar(),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Icon(Icons.star, color: yellowColor),
+                        Text(
+                          clientDetails['rating'] ?? '0.0',
+                          style: TextStyle(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                CacheImageCircle(url: clientDetails['url'])
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -272,9 +276,20 @@ class JobCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      clientDetails['name'] ?? '??',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    Row(
+                      //mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          clientDetails['name'] ?? '??',
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 20,),
+                        InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails,)));
+                            },
+                            child: Text("View Profile",style: TextStyle(color: primaryColor,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+                      ],
                     ),
                     SizedBox(height: 10),
                     Row(

@@ -5,14 +5,10 @@ import 'package:intl/intl.dart';
 import 'package:law_education_app/controllers/my_services_check_controller.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/screens/lawyer_screens/alljobs_realtedto_category.dart';
-import 'package:law_education_app/screens/lawyer_screens/pdf_viewer_screen_lawyer.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/book_controller.dart';
 import '../../conts.dart';
 import '../../provider/general_provider.dart';
 import '../../widgets/crousel_slider.dart';
-import '../../models/books_model.dart';
-import '../client_screens/law_books_screen.dart';
 import 'all_clients_screen.dart';
 import 'all_jobs_screens.dart';
 import 'law_books_screen.dart';
@@ -27,14 +23,7 @@ class HomeScreenLawyer extends StatefulWidget {
 class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
   double screenHeight = 0;
   double screenWidth = 0;
-  Future<List<Books>>? books;
-  final bookCon = BookController();
-  @override
-  void initState()
-  {
-    super.initState();
-    books=bookCon.fetchBooks();
-  }
+
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<MyProfileProvider>(context);
@@ -330,66 +319,6 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                             );
                           }),
                     ),
-                    FutureBuilder<List<Books>>(
-                      future: books,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return Center(child: Text('Error: ${snapshot.error}'));
-                        }
-                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return Center(child: Text('No books available.'));
-                        }
-                        return Container(
-                          height: screenHeight * 0.22,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              final book = snapshot.data![index];
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 15, right: 15),
-                                child: Container(
-                                  child: Column(
-                                    children: [
-                                      InkWell(
-                                        onTap: ()
-                                        {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => PdfViewerScreenLawyer(fileUrl: book.fileUrl, title:book.title,),
-                                            ),
-                                          );
-                                        },
-                                        child: Container(
-                                          height: screenHeight * 0.12,
-                                          width: screenWidth * 0.24,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            border: Border.all(color: lightGreyColor, width: 1),
-                                          ),
-                                          child:  Center(
-                                            child: Image.network(book.cover,fit: BoxFit.cover,), // Show icon instead of cover image
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        book.title, // Display book title
-                                        style: const TextStyle(fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 50,),
                   ],
                 ),
               ),

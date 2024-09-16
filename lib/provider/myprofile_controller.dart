@@ -1,10 +1,12 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 
 class MyProfileProvider extends ChangeNotifier {
   Map<String, dynamic> profileData = {};
@@ -27,12 +29,12 @@ class MyProfileProvider extends ChangeNotifier {
 
   Future<void> updateProfileData(Map<String, dynamic> updatedData) async {
     if (_auth.currentUser != null) {
-      //  EasyLoading.show(status: "Please wait");
+    //  EasyLoading.show(status: "Please wait");
       await _firestore.collection("users").doc(_auth.currentUser!.uid).update(updatedData);
-      await getProfileData();
-      // EasyLoading.dismiss();
+     await getProfileData();
+     // EasyLoading.dismiss();
       notifyListeners();
     }
   }
 
-}
+ }
