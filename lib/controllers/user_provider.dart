@@ -66,7 +66,10 @@ class UserProvider extends ChangeNotifier
               MaterialPageRoute(builder: (context) => SignUpScreen()));
         }
       }
-      //todo : if user doc doesnt exsisit
+      else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => SignUpScreen()));
+      }
     }
   }
 }

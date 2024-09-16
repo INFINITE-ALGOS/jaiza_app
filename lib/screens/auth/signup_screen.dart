@@ -142,10 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: double.infinity,
                   ),
                   Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.8,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -345,7 +342,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       );
                                     } else {
+<<<<<<< Updated upstream
                                       //EasyLoading.show(status: "Please wait");
+=======
+                                      print("i am here");
+>>>>>>> Stashed changes
                                       await uploadImageToFirebase(context, image!).whenComplete(() {
                                         widget.signupWithEmailController.clientSignUpWithEmailMethod(
                                           context: context,

@@ -6,7 +6,11 @@ import 'package:provider/provider.dart';
 
 import '../../provider/myprofile_controller.dart';
 import '../../conts.dart';
+<<<<<<< Updated upstream
 import '../auth/login_screen.dart';
+=======
+import 'contact_us.dart';
+>>>>>>> Stashed changes
 
 class CustomDrawerClient extends StatefulWidget {
   const CustomDrawerClient({super.key});
@@ -101,7 +105,13 @@ class _CustomDrawerClientState extends State<CustomDrawerClient> {
           ListTile(
             leading: const Icon(Icons.message),
             title: const Text("Contact us"),
-            onTap: (){},
+            onTap: ()
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ContactUs()),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
