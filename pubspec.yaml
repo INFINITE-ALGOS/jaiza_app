@@ -27,6 +27,7 @@ dependencies:
   http:
   firebase_app_check:
   dio:
+
   url_launcher:
   lottie:
   readmore:
