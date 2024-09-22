@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/screens/chat/AllChat.dart';
+import 'package:law_education_app/screens/lawyer_screens/all_jobs_screens.dart';
 import 'package:law_education_app/screens/lawyer_screens/services_status/service_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:law_education_app/provider/language_provider.dart';
@@ -12,6 +14,7 @@ import 'package:law_education_app/screens/lawyer_screens/create_service_screen.d
 import 'package:law_education_app/screens/lawyer_screens/drawer.dart';
 
 import '../../provider/general_provider.dart';
+import 'all_clients_screen.dart';
 import 'chat_screen.dart';
 import 'home_screen.dart';
 import 'profile_screen(lawyer).dart';
@@ -34,9 +37,9 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreenLawyer(),
-    const ChatScreenLawyer(),
-    const ChatScreenLawyer(),
-    ServiceStatusScreenLawyer(),
+    const MyChats(),
+    const AllClientsScreen(),
+    ServiceStatusScreenLawyer(), 
   ];
 
   final List<String> labelText = [

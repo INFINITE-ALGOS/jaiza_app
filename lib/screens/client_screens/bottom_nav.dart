@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/provider/general_provider.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
+import 'package:law_education_app/screens/chat/AllChat.dart';
 import 'package:provider/provider.dart';
 import '../../provider/language_provider.dart'; // Adjust the import path as needed
 import '../client_screens/chat_screen.dart';
@@ -34,9 +35,9 @@ class _BottomNavigationbarClientState extends State<BottomNavigationbarClient> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
-    const ChatScreen(),
+    const MyChats(),
    const Chats(),
-    const JobsStatusScreen(),
+    const JobsStatusScreen(), 
 
   ];
 

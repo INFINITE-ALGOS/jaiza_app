@@ -45,7 +45,8 @@ dependencies:
   carousel_slider: ^5.0.0
   flutter_pdfview: ^1.0.3
   build_runner:
-
+  just_audio:
+  permission_handler:
 dev_dependencies:
   flutter_test:
     sdk: flutter
