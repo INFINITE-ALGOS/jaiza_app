@@ -6,9 +6,13 @@ import 'package:law_education_app/controllers/my_services_check_controller.dart'
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/screens/lawyer_screens/alljobs_realtedto_category.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/book_controller.dart';
 import '../../conts.dart';
+import '../../models/book_model.dart';
 import '../../provider/general_provider.dart';
 import '../../widgets/crousel_slider.dart';
+import '../client_screens/law_books_screen.dart';
+import '../client_screens/pdf_viewer_screen.dart';
 import 'all_clients_screen.dart';
 import 'all_jobs_screens.dart';
 import 'law_books_screen.dart';
@@ -23,6 +27,16 @@ class HomeScreenLawyer extends StatefulWidget {
 class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
   double screenHeight = 0;
   double screenWidth = 0;
+
+  Future<List<Books>>? books;
+
+  final bookController = BookController(); // Instance of BookController.
+
+  @override
+  void initState() {
+    super.initState();
+    books = bookController.fetchBooks(); // Fetch the list of books.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -270,57 +284,98 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
             SizedBox(height: screenHeight * 0.03),
             Padding(
               padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
-              child: Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          "Law Books",
-                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
+              child: Column(
+                children: [
+                  // Title Row with 'View all' button
+                  Row(
+                    children: [
+                      const Text(
+                        "Law Books",
+                        style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                      ),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const LawBooksLawyer()),
-                            );
-                          },
-                          child: const Text(
-                            "View all >>",
-                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
-                          ),
+                              MaterialPageRoute(
+                                  builder: (context) => const LawBooks()));
+                        },
+                        child: const Text(
+                          "View all >>",
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w600),
                         ),
-                      ],
-                    ),
-                    Container(
-                      height: screenHeight * 0.2,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 15, right: 15),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Placeholder(
-                                      fallbackHeight: screenHeight * 0.12,
-                                      fallbackWidth: screenWidth * 0.28,
+                      )
+                    ],
+                  ),
+
+                  // FutureBuilder for fetching and displaying books in a horizontal slider
+                  FutureBuilder<List<Books>>(
+                    future: books,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(child: Text('No books found'));
+                      } else {
+                        final books = snapshot.data!;
+                        return SizedBox(
+                          height: screenHeight * 0.25,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: books.length,
+                            itemBuilder: (context, index) {
+                              final book = books[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PdfViewerScreen(
+                                        fileUrl: book.fileUrl,
+                                        title: book.title,
+                                      ),
                                     ),
-                                    Text(
-                                      "Book Title",
-                                      style: const TextStyle(fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 15, right: 15),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: screenHeight * 0.12,
+                                        width: screenWidth * 0.24,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(color: lightGreyColor, width: 1),
+                                        ),
+                                        child: Image.network(
+                                          book.cover,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        book.title,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ],
-                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
           ],
