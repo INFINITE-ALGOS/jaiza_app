@@ -29,7 +29,8 @@ class ViewServiceActiveDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<ViewServiceActiveDetailScreen> createState() => _ViewJobDetailsScreenState();
+  State<ViewServiceActiveDetailScreen> createState() =>
+      _ViewJobDetailsScreenState();
 }
 
 class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
@@ -37,21 +38,28 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime createdOn = (widget.service['createdOn'] as Timestamp).toDate();
+    final DateTime createdOn =
+        (widget.service['createdOn'] as Timestamp).toDate();
     final String formattedDate = DateFormat('yyyy-MM-dd').format(createdOn);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Service Details",style: TextStyle(color: whiteColor),),
+        title: const Text(
+          "Service Details",
+          style: TextStyle(color: whiteColor),
+        ),
         backgroundColor: primaryColor,
         actions: [
-          SizedBox(width: 5,),
+          SizedBox(
+            width: 5,
+          ),
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditJobDetailScreen(service: widget.service),
+                  builder: (context) =>
+                      EditJobDetailScreen(service: widget.service),
                 ),
               ).then((_) {
                 setState(() {
@@ -76,7 +84,10 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                     onConfirm: () {
                       // First, check if there are any active requests
                       if (widget.requests != null) {
-                        bool hasActiveRequest = widget.requests!.any((request) => request['requestDetails']['status'] == 'active');
+                        bool hasActiveRequest = widget.requests!.any(
+                            (request) =>
+                                request['requestDetails']['status'] ==
+                                'active');
 
                         if (hasActiveRequest) {
                           Navigator.of(context).pop();
@@ -84,24 +95,28 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                           CustomSnackbar.showError(
                             context: context,
                             title: "Unable to Delete the Service",
-                            message: "Please first complete the active request or cancel it.",
+                            message:
+                                "Please first complete the active request or cancel it.",
                           );
                           return; // Exit the function to prevent further execution
                         }
                       }
 
                       // No active requests found, proceed with the deletion
-                      FirebaseFirestore.instance.collection('services').doc(widget.service['serviceId']).update({'status': 'deleted'});
+                      FirebaseFirestore.instance
+                          .collection('services')
+                          .doc(widget.service['serviceId'])
+                          .update({'status': 'deleted'});
 
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BottomNavigationLawyer(selectedIndex: 3),
+                          builder: (context) =>
+                              BottomNavigationLawyer(selectedIndex: 3),
                         ),
-                            (Route<dynamic> route) => false,
+                        (Route<dynamic> route) => false,
                       );
                     },
-
                     onCancel: () {
                       Navigator.of(context).pop();
                     },
@@ -125,32 +140,41 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
             children: [
               const SizedBox(height: 35),
               _buildDetailContainer("Category", widget.service['category']),
-        
+
               const SizedBox(height: 35),
               _buildDetailContainer("Title", widget.service['title']),
               const SizedBox(height: 20),
-              _buildDetailContainer("Description", widget.service['description']),
+              _buildDetailContainer(
+                  "Description", widget.service['description']),
               const SizedBox(height: 20),
               _buildDetailContainer("Created On", formattedDate),
               const SizedBox(height: 20),
               _buildDetailContainer("Price", widget.service['price']),
               // const SizedBox(height: 20),
               // _buildDetailContainer("Duration", widget.job['duration']),
-               const SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: InkWell(
                   onTap: () {
-            List<Map<String,dynamic>> activeRequests=[];
-            if(widget.requests!=null && widget.requests!.isNotEmpty){
-            for(var pendingRequest in widget.requests!){
-            if(pendingRequest['requestDetails']['status']=='active'){
-            activeRequests.add(pendingRequest);}}}
-            Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ViewActiverequestsOnmyServiceScreen(service: widget.service, activeRequests: activeRequests),
-        ),
-            );
+                    List<Map<String, dynamic>> activeRequests = [];
+                    if (widget.requests != null &&
+                        widget.requests!.isNotEmpty) {
+                      for (var pendingRequest in widget.requests!) {
+                        if (pendingRequest['requestDetails']['status'] ==
+                            'active') {
+                          activeRequests.add(pendingRequest);
+                        }
+                      }
+                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ViewActiverequestsOnmyServiceScreen(
+                                service: widget.service,
+                                activeRequests: activeRequests),
+                      ),
+                    );
                   },
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -162,7 +186,8 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                     ),
                     child: const Text(
                       "View Active Requests",
-                      style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: whiteColor, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -171,18 +196,25 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
               Center(
                 child: InkWell(
                   onTap: () {
-                    List<Map<String,dynamic>> pendingRequests=[];
-                   if(widget.requests!=null && widget.requests!.isNotEmpty){
-                     for(var pendingRequest in widget.requests!){
-                       if(pendingRequest['requestDetails']['status']=='pending'||pendingRequest['requestDetails']['status']=='reproposal'){
-                         pendingRequests.add(pendingRequest);
-                       }
-                     }
-                   }
+                    List<Map<String, dynamic>> pendingRequests = [];
+                    if (widget.requests != null &&
+                        widget.requests!.isNotEmpty) {
+                      for (var pendingRequest in widget.requests!) {
+                        if (pendingRequest['requestDetails']['status'] ==
+                                'pending' ||
+                            pendingRequest['requestDetails']['status'] ==
+                                'reproposal') {
+                          pendingRequests.add(pendingRequest);
+                        }
+                      }
+                    }
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ViewPendingRequestsOnMyServiceScreen(service: widget.service, pendingRequests: pendingRequests),
+                        builder: (context) =>
+                            ViewPendingRequestsOnMyServiceScreen(
+                                service: widget.service,
+                                pendingRequests: pendingRequests),
                       ),
                     );
                   },
@@ -196,7 +228,8 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
                     ),
                     child: const Text(
                       "View Pending Requests",
-                      style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: whiteColor, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -238,6 +271,7 @@ class _ViewJobDetailsScreenState extends State<ViewServiceActiveDetailScreen> {
     );
   }
 }
+
 class EditJobDetailScreen extends StatefulWidget {
   final Map<String, dynamic> service;
 
@@ -255,14 +289,13 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-  final TextEditingController customDurationController = TextEditingController();
+  final TextEditingController customDurationController =
+      TextEditingController();
 
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   double screenHeight = 0;
   double screenWidth = 0;
-
-
 
   String? selectedDuration;
   String? category;
@@ -286,7 +319,8 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic> categoriesOptions = Provider.of<GeneralProvider>(context).categoriesNameList;
+    List<dynamic> categoriesOptions =
+        Provider.of<GeneralProvider>(context).categoriesNameList;
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
 
@@ -361,7 +395,8 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                   onTap: () {
                     if (key.currentState!.validate()) {
                       EasyLoading.show(status: "Please wait");
-                      final CreateServiceModel createServiceModel = CreateServiceModel(
+                      final CreateServiceModel createServiceModel =
+                          CreateServiceModel(
                         title: titleController.text.trim(),
                         description: descriptionController.text.trim(),
                         price: priceController.text.trim(),
@@ -381,15 +416,17 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BottomNavigationLawyer(selectedIndex: 3),
+                            builder: (context) =>
+                                BottomNavigationLawyer(selectedIndex: 3),
                           ),
-                              (Route<dynamic> route) => false,
+                          (Route<dynamic> route) => false,
                         );
                       });
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
                     margin: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       shape: BoxShape.rectangle,

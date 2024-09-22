@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 
 import '../../../controllers/my_jobs_check_contoller.dart';
 
@@ -60,7 +61,7 @@ class _CompletedJobsScreenState extends State<CompletedJobsScreen> {
                    itemData['offers'] as List<Map<String, dynamic>>?;
                    if (offers == null || offers.isEmpty) {
                      return Center(
-                       child: const Text('No offers available'),
+                       child: const Text('No jobs available'),
                      );
                    }
 
@@ -118,10 +119,11 @@ class JobCard extends StatelessWidget {
               Container(
                 child: Column(
                   children: [Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                           constraints: BoxConstraints(maxWidth: 200),
-                          child: Text(job['title']?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
+                          child: SeeMoreTextCustom(text:  job['title']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
                       Spacer(),
                       Container(
                         decoration: BoxDecoration(
@@ -156,7 +158,17 @@ class JobCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                        children: [Text(offer['lawyerDetails']['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [Row(
+                          children: [
+                            Text(offer['lawyerDetails']['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                            SizedBox(width: 20,),
+                            InkWell(
+                                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: offer['lawyerDetails'])));},
+                                child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+                          ],
+                        ),
                           SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +178,7 @@ class JobCard extends StatelessWidget {
                             ],
                           ),
                         ]                ),
-                   CacheImageCircle(url: offer['lawyerDetails']['rating'])
+                   CacheImageCircle(url: offer['lawyerDetails']['url'])
                   ],
                 ),
               ),
@@ -206,10 +218,11 @@ class ServiceCard extends StatelessWidget {
               Container(
                 child: Column(
                   children: [Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                           constraints: BoxConstraints(maxWidth: 200),
-                          child: Text(requestDetails['requestMessage']?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
+                          child: SeeMoreTextCustom(text:  requestDetails['requestMessage']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),)),
                       Spacer(),
                       Container(
                         decoration: BoxDecoration(
@@ -244,7 +257,19 @@ class ServiceCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
-                        children: [Text(lawyerDetails['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [Row(
+                          children: [
+                            Text(lawyerDetails['name']?? '??',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+
+                            SizedBox(width: 20,),
+                            InkWell(
+                                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyerDetails)));},
+                                child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+
+                          ],
+                        ),
                           SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

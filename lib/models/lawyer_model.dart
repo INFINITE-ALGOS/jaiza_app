@@ -5,7 +5,7 @@ class LawyerModel{
   final String id;
   final String email;
   final String phone;
-  final String rating;
+  final double rating;
   final bool isActive;
   final dynamic createdOn;
   final bool isVerified;

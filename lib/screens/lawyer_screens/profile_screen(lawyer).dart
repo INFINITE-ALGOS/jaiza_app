@@ -14,13 +14,13 @@ class ProfileScreenLawyer extends StatefulWidget {
 }
 
 class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
-
   @override
   Widget build(BuildContext context) {
     //final _profileData=Provider.of<MyProfileProvider>(context).profileData;
 
-    return Consumer<MyProfileProvider>(builder: (context,profileProvider,child){
-      final _profileData=profileProvider.profileData;
+    return Consumer<MyProfileProvider>(
+        builder: (context, profileProvider, child) {
+      final _profileData = profileProvider.profileData;
       return Scaffold(
         backgroundColor: primaryColor,
         body: SingleChildScrollView(
@@ -35,21 +35,25 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundColor: Colors.grey[200], // Set a background color if image is null
-                      child: _profileData['url'] == null || _profileData['url'] == ''
-                          ? Icon(Icons.person, size: 50) // Default icon if no image
+                      backgroundColor: Colors
+                          .grey[200], // Set a background color if image is null
+                      child: _profileData['url'] == null ||
+                              _profileData['url'] == ''
+                          ? Icon(Icons.person,
+                              size: 50) // Default icon if no image
                           : ClipOval(
-                        child: FadeInImage.assetNetwork(
-                          placeholder: 'lib/assets/person.png', // Placeholder image while loading
-                          image: _profileData['url'], // Network image URL
-                          fit: BoxFit.cover,
-                          width: 100, // Ensure width matches the CircleAvatar radius * 2
-                          height: 100, // Ensure height matches the CircleAvatar radius * 2
-                        ),
-                      ),
+                              child: FadeInImage.assetNetwork(
+                                placeholder:
+                                    'lib/assets/person.png', // Placeholder image while loading
+                                image: _profileData['url'], // Network image URL
+                                fit: BoxFit.cover,
+                                width:
+                                    100, // Ensure width matches the CircleAvatar radius * 2
+                                height:
+                                    100, // Ensure height matches the CircleAvatar radius * 2
+                              ),
+                            ),
                     ),
-
-
                     SizedBox(height: 10),
                     Text(
                       _profileData?['email'] ?? 'Email not available',
@@ -77,14 +81,16 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                       SizedBox(height: 30),
                       Text(
                         'Other Information',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
                       ),
                       SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                            bottom: BorderSide(
+                                color: Colors.grey.shade300, width: 1),
                           ),
                         ),
                         child: Text(
@@ -97,7 +103,8 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                            bottom: BorderSide(
+                                color: Colors.grey.shade300, width: 1),
                           ),
                         ),
                         child: Text(
@@ -110,7 +117,8 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                            bottom: BorderSide(
+                                color: Colors.grey.shade300, width: 1),
                           ),
                         ),
                         child: Text(
@@ -123,7 +131,8 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                         padding: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           border: Border(
-                            bottom: BorderSide(color: Colors.grey.shade300, width: 1),
+                            bottom: BorderSide(
+                                color: Colors.grey.shade300, width: 1),
                           ),
                         ),
                         child: Text(
@@ -132,20 +141,24 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                         ),
                       ),
                       SizedBox(height: 40),
-
                       Center(
                         child: ElevatedButton(
                           onPressed: () async {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditProfileScreenLawyer(profileData: _profileData,),
+                                builder: (context) => EditProfileScreenLawyer(
+                                  profileData: _profileData,
+                                ),
                               ),
                             );
                             // Refresh profile data after returning from EditProfileScreen
                             // _fetchProfileData();
                           },
-                          child: Text('Edit Info',style: TextStyle(color: whiteColor),),
+                          child: Text(
+                            'Edit Info',
+                            style: TextStyle(color: whiteColor),
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
                             shape: RoundedRectangleBorder(

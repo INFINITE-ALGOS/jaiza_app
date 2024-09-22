@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/controllers/create_job_controller.dart';
+import 'package:law_education_app/provider/get_clients_provider.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/conts.dart';
@@ -40,6 +41,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PDFProvider()),
         //  Provider(create: (_)=>NavigationService()),
         Provider(create: (_) => GeneralProvider()),
+        Provider(create: (_)=>GetClientsProvider()),
         Provider(create: (_)=>GetLawyersProvider()),
         ChangeNotifierProvider(create: (context) => languageProvider),
         ChangeNotifierProvider(create: (context) => UserProvider()),

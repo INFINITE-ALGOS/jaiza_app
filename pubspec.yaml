@@ -56,4 +56,4 @@ flutter:
   generate: true
   assets:
     - lib/assets/
-  
+

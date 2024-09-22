@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
+
+import '../../../../conts.dart';
 
 
 class ViewOffersOnMyJobScreen extends StatelessWidget {
@@ -45,7 +48,7 @@ class OfferCard extends StatelessWidget {
 
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue), // Example color
+        border: Border.all(color: primaryColor), // Example color
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -76,17 +79,11 @@ class OfferCard extends StatelessWidget {
                                 (lawyer['name'] ?? '').toUpperCase(),
                                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 20,),
                               InkWell(
-                                child: const Text(
-                                  'View Profile',
-                                  style: TextStyle(fontSize: 12, color: Colors.blue, decoration: TextDecoration.underline),
-                                ),
-                                onTap: () {
-                                //  Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
-                                  // Handle "View Profile" tap
-                                },
-                              ),
+                                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer:lawyer)));},
+                                  child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -98,11 +95,7 @@ class OfferCard extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      const CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.blue, // Example color
-                        child: Icon(CupertinoIcons.chat_bubble, color: Colors.white),
-                      ),
+                     CacheImageCircle(url: lawyer['url'])
                     ],
                   ),
                   const Divider(),
@@ -110,9 +103,7 @@ class OfferCard extends StatelessWidget {
                   Row(
                     children: [
                       Text('Rating: ${lawyer['rating']}'),
-                      const SizedBox(width: 20),
-                      Text('Orders Completed: ${lawyer['ordersCompleted'] ?? '0'}'),
-                    ],
+                      ],
                   ),
                 ],
               ),
@@ -124,7 +115,7 @@ class OfferCard extends StatelessWidget {
               children: [
                 const TextSpan(
                   text: "Message: ",
-                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text: offer['offerMessage'],
@@ -139,7 +130,7 @@ class OfferCard extends StatelessWidget {
               children: [
                 const TextSpan(
                   text: "Offer Price: ",
-                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text: offer['offerAmount'],
@@ -253,7 +244,7 @@ class ReproposalOfferCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue), // Example color
+        border: Border.all(color: primaryColor), // Example color
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -284,17 +275,11 @@ class ReproposalOfferCard extends StatelessWidget {
                                 (lawyer['name'] ?? '').toUpperCase(),
                                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 20,),
                               InkWell(
-                                child: const Text(
-                                  'View Profile',
-                                  style: TextStyle(fontSize: 12, color: Colors.blue, decoration: TextDecoration.underline),
-                                ),
-                                onTap: () {
-                                //  Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile()));
-                                  // Handle "View Profile" tap
-                                },
-                              ),
+                                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyer)));},
+                                  child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -306,21 +291,15 @@ class ReproposalOfferCard extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      const CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.blue, // Example color
-                        child: Icon(CupertinoIcons.chat_bubble, color: Colors.white),
-                      ),
+                     CacheImageCircle(url: lawyer['url'])
                     ],
                   ),
                   const Divider(),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      Text('Rating: ${lawyer['rating']}'),
-                      const SizedBox(width: 20),
-                      Text('Orders Completed: ${lawyer['ordersCompleted'] ?? '0'}'),
-                    ],
+                      Text('Rating: ${lawyer['rating']?? '0.0'}'),
+                     ],
                   ),
                 ],
               ),
@@ -332,7 +311,7 @@ class ReproposalOfferCard extends StatelessWidget {
               children: [
                 const TextSpan(
                   text: "Message: ",
-                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text: offer['offerMessage'],
@@ -347,7 +326,7 @@ class ReproposalOfferCard extends StatelessWidget {
               children: [
                 const TextSpan(
                   text: "Offer Price: ",
-                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
                   text: offer['offerAmount'],
@@ -357,7 +336,7 @@ class ReproposalOfferCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Center(child: Text("Reproposal"),),
+          Center(child: Text("Reproposal",style: TextStyle(color: primaryColor,fontWeight: FontWeight.w600),),),
 
         ],
       ),

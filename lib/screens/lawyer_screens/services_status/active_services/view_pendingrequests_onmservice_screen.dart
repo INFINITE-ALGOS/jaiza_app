@@ -7,6 +7,8 @@ import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 
+import '../../see_client_profile.dart';
+
 
 class ViewPendingRequestsOnMyServiceScreen extends StatelessWidget {
   final Map<String,dynamic> ? service;
@@ -71,16 +73,11 @@ class OfferCard extends StatelessWidget {
                                 (client['name'] ?? '').toUpperCase(),
                                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: 20,),
                               InkWell(
-                                child: const Text(
-                                  'View Profile',
-                                  style: TextStyle(fontSize: 12, color: primaryColor, decoration: TextDecoration.underline,decorationColor: primaryColor),
-                                ),
-                                onTap: () {
-                                  // Handle "View Profile" tap
-                                },
-                              ),
+                                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: client,)));},
+                                  child: Text("View Profile",style: TextStyle(color: primaryColor,decorationColor: primaryColor,decoration: TextDecoration.underline),))
+
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -92,21 +89,7 @@ class OfferCard extends StatelessWidget {
                         ],
                       ),
                       const Spacer(),
-                      Container(
-                        height: 35, // Increase the size to make the circular image more visible
-                        width: 35,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: ClipRRect( // Clip the image in a circular shape
-                          borderRadius: BorderRadius.circular(17.5), // Half of the width/height to make it circular
-                          child: CachedNetworkImage(
-                            imageUrl:
-                            client['url'],
-                            fit: BoxFit.cover, // This will make sure the image covers the entire circular area
-                          ),
-                        ),
-                      )
+                      CachedNetworkImage(imageUrl: client['url'])
                     ],
                   ),
                   const Divider(),

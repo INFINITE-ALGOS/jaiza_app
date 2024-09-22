@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../controllers/my_jobs_check_contoller.dart';
 
 class CancelledJobsScreen extends StatefulWidget {
@@ -122,10 +123,14 @@ class JobCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  job['title'] ?? '??',
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                Container(
+                  constraints: BoxConstraints(maxWidth: 200),
+                  child: SeeMoreTextCustom(
+                   text:  job['title'] ?? '??',
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                 ),
                 const Spacer(),
                 Container(
@@ -162,9 +167,18 @@ class JobCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      offer['lawyerDetails']['name'] ?? '??',
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    Row(
+                      children: [
+                        Text(
+                          offer['lawyerDetails']['name'] ?? '??',
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 20,),
+                        InkWell(
+                            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: offer['lawyerDetails'])));},
+                            child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+                      ],
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -178,17 +192,7 @@ class JobCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                InkWell(
-                  onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => SeeLawyerProfile(),
-                    //   ),
-                    // );
-                  },
-                  child: const CircleAvatar(),
-                ),
+                CacheImageCircle(url: offer['lawyerDetails']['url'])
               ],
             ),
           ],
@@ -224,11 +228,12 @@ class ServiceCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   constraints: BoxConstraints(maxWidth: 200),
-                  child: Text(
-                    requestDetails['requestMessage'] ?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,
+                  child: SeeMoreTextCustom(
+                   text:  requestDetails['requestMessage'] ?? '??',
                     style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -267,9 +272,18 @@ class ServiceCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      lawyerDetails['name'] ?? '??',
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    Row(
+                      children: [
+                        Text(
+                          lawyerDetails['name'] ?? '??',
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(width: 20,),
+                        InkWell(
+                            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyerDetails)));},
+                            child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+                      ],
                     ),
                     const SizedBox(height: 10),
                     Row(

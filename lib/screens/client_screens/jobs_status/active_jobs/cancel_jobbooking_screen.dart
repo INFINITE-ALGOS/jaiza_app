@@ -4,7 +4,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import the custom alert dialog component
+import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../../conts.dart';
+import '../../see_lawyer_profile.dart';
 
 // Define a StarRating widget
 class StarRating extends StatefulWidget {
@@ -92,84 +94,92 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Service List
-              InkWell(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(15.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: lightGreyColor, width: 2),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              constraints: BoxConstraints(maxWidth: 200),
-                              child: Text(
-                                widget.job['title'] ?? '??',
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: lightGreyColor, width: 2),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: SeeMoreTextCustom(
+                             text:  widget.job['title'] ?? '??',
+                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              '${widget.job['status'] ?? ''}'.toUpperCase(),
+                              style: TextStyle(color: whiteColor, fontSize: 9),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(widget.job['duration'] ?? '', style: TextStyle()),
+                            ],
+                          ),
+                          Text(
+                            'PKR ${widget.offer['offerDetails']['offerAmount'] ?? ''}',
+                            style: TextStyle(color: greyColor),
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    widget.offer['lawyerDetails']['name'] ?? '??',
+                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(width: 20,),
+                                  InkWell(
+                                      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: widget.offer['lawyerDetails'])));},
+                                      child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+
+                                ],
                               ),
-                            ),
-                            Spacer(),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(6),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.star, color: yellowColor),
+                                  Text(widget.offer['lawyerDetails']['rating'] ?? '0.0', style: TextStyle()),
+                                ],
                               ),
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                '${widget.job['status'] ?? ''}'.toUpperCase(),
-                                style: TextStyle(color: whiteColor, fontSize: 9),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(widget.job['duration'] ?? '', style: TextStyle()),
-                              ],
-                            ),
-                            Text(
-                              'PKR ${widget.offer['offerDetails']['offerAmount'] ?? ''}',
-                              style: TextStyle(color: greyColor),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.offer['lawyerDetails']['name'] ?? '??',
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.star, color: yellowColor),
-                                    Text(widget.offer['lawyerDetails']['rating'] ?? '0.0', style: TextStyle()),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            CacheImageCircle(url: widget.offer['lawyerDetails']['url']),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ],
+                          ),
+                          CacheImageCircle(url: widget.offer['lawyerDetails']['url']),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),

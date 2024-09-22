@@ -15,7 +15,7 @@ class CacheImageCircle extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: ClipRRect( // Clip the image in a circular shape
-        borderRadius: BorderRadius.circular(17.5), // Half of the width/height to make it circular
+        borderRadius: BorderRadius.circular(borderRadius), // Half of the width/height to make it circular
         child: CachedNetworkImage(
           imageUrl:
           url,

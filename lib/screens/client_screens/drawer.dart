@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/screens/client_screens/profile_screen(client).dart';
+import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/myprofile_controller.dart';
@@ -45,18 +46,8 @@ class _CustomDrawerClientState extends State<CustomDrawerClient> {
             ),
             currentAccountPicture: CircleAvatar(
               radius: 50,
-              backgroundColor: Colors.grey[200], // Set a background color if image is null
-              child: profileData['url'] == null || profileData['url'] == ''
-                  ? Icon(Icons.person, size: 50) // Default icon if no image
-                  : ClipOval(
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'lib/assets/person.png', // Placeholder image while loading
-                  image: profileData['url'], // Network image URL
-                  fit: BoxFit.cover,
-                  width: 100, // Ensure width matches the CircleAvatar radius * 2
-                  height: 100, // Ensure height matches the CircleAvatar radius * 2
-                ),
-              ),
+              backgroundColor:primaryColor, // Set a background color if image is null
+              child: CacheImageCircle(url: profileData['url'],radius: 70,borderRadius: 35,)
             ),
           ),
           ListTile(

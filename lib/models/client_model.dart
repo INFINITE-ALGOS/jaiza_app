@@ -6,7 +6,7 @@ class ClientModel{
   final String email;
   final String phone;
   final String address;
-  final String rating;
+  final double rating;
   final bool isActive;
   final dynamic createdOn;
   final bool isVerified;

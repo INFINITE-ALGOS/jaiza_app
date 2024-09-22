@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class CheckAlreadyServiceBuy{
   final firestore= FirebaseFirestore.instance;
-  Future<bool> checkAlreadyService(String lawyerId, String serviceId) async {
+  Future<Map<String,dynamic>> checkAlreadyService(String lawyerId, String serviceId) async {
     try {
       // Get the current user's UID
       String clientId = FirebaseAuth.instance.currentUser!.uid;
@@ -16,15 +16,23 @@ class CheckAlreadyServiceBuy{
       .where('serviceId',isEqualTo: serviceId)
           .limit(1) // Limit to 1 to improve performance
           .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        // Return the first document's data as a Map
+        Map<String, dynamic> requestData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+        return requestData;
+
+      } else {
+        return {}; // Return an empty map if no document is found
+      }
 
       // If the query finds a document, return true; otherwise, return false
-      return querySnapshot.docs.isNotEmpty;
+
     } catch (e) {
       //print('Error checking service request: $e');
-      return false; // In case of an error, assume the document doesn't exist
+      return {}; // In case of an error, assume the document doesn't exist
     }
   }
-  Future<bool> checkAlreadyJobBuy(String clientId, String jobId) async {
+  Future<Map<String,dynamic>> checkAlreadyJobBuy(String clientId, String jobId) async {
     try {
       // Get the current user's UID
       String lawyerId = FirebaseAuth.instance.currentUser!.uid;
@@ -39,10 +47,16 @@ class CheckAlreadyServiceBuy{
           .get();
 
       // If the query finds a document, return true; otherwise, return false
-      return querySnapshot.docs.isNotEmpty;
-    } catch (e) {
+      if (querySnapshot.docs.isNotEmpty) {
+        // Return the first document's data as a Map
+        Map<String, dynamic> requestData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+        return requestData;
+
+      } else {
+        return {}; }}
+    catch (e) {
       //print('Error checking service request: $e');
-      return false; // In case of an error, assume the document doesn't exist
+      return {}; // In case of an error, assume the document doesn't exist
     }
   }
 

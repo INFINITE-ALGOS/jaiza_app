@@ -83,7 +83,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                   var lawyer = filteredDocuments[index]['lawyerDetails'] as Map<String, dynamic>;
 
                   final check = CheckAlreadyServiceBuy();
-                  return FutureBuilder<bool>(
+                  return FutureBuilder(
                     future: check.checkAlreadyService(service['lawyerId'], service['serviceId']),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -149,8 +149,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                           child: Text('Error: ${snapshot.error}'),
                         );
                       }
-
-                      bool alreadyget = snapshot.data ?? false;
+Map<String,dynamic> offer=snapshot.data!;
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                     child: Container(
@@ -207,21 +206,7 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                                     ),
                                   ),
                                 ]),
-                                InkWell(onTap: () {}, child:  Container(
-                                  height: 35, // Increase the size to make the circular image more visible
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: ClipRRect( // Clip the image in a circular shape
-                                    borderRadius: BorderRadius.circular(17.5), // Half of the width/height to make it circular
-                                    child: CachedNetworkImage(
-                                      imageUrl:
-                                      lawyer['url'],
-                                      fit: BoxFit.cover, // This will make sure the image covers the entire circular area
-                                    ),
-                                  ),
-                                ))
+                                CachedNetworkImage(imageUrl: lawyer['url'])
                               ],
                             ),
                           ),
@@ -258,50 +243,116 @@ class _AllServicesRelatedToCategoryState extends State<AllServicesRelatedToCateg
                                 ],
                               ),
                               const SizedBox(height: 10),
-                                               alreadyget?Container(
-                           margin: EdgeInsets.all(10),
-                           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12), // Matches ButtonStyle padding
-                           decoration: BoxDecoration(
-                             color: primaryColor, // Replace with your color
-                             borderRadius: BorderRadius.circular(8),
-                           ),
-                           child: Center(
-                             child: Text(
-                               'Requested',
-                               style: TextStyle(
-                                 color: Colors.white, // Matches ButtonStyle foregroundColor
-                                 fontWeight: FontWeight.w600,
-                               ),
-                             ),
-                           ),
-                                               ): Center(
-                            child: InkWell(
-                              onTap: ()  {
-                                // Show the request dialog and await its completion
-                                 _showRequestDialog(context, service);
+                                               if(offer.isEmpty)Center(
+                                                 child: InkWell(
+                                                   onTap: ()  {
+                                                     // Show the request dialog and await its completion
+                                                     _showRequestDialog(context, service);
 
-                                // Navigate to BottomNavigationbarClient after the dialog is handled
+                                                     // Navigate to BottomNavigationbarClient after the dialog is handled
 
-                              },
-                              child: Container(
-                                margin: EdgeInsets.all(10),
-                                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12), // Matches ButtonStyle padding
-                                decoration: BoxDecoration(
-                                  color: primaryColor, // Replace with your color
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Request Service',
-                                    style: TextStyle(
-                                      color: Colors.white, // Matches ButtonStyle foregroundColor
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                                                   },
+                                                   child: Container(
+                                                     margin: EdgeInsets.all(10),
+                                                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12), // Matches ButtonStyle padding
+                                                     decoration: BoxDecoration(
+                                                       color: primaryColor, // Replace with your color
+                                                       borderRadius: BorderRadius.circular(8),
+                                                     ),
+                                                     child: Center(
+                                                       child: Text(
+                                                         'Request Service',
+                                                         style: TextStyle(
+                                                           color: Colors.white, // Matches ButtonStyle foregroundColor
+                                                           fontWeight: FontWeight.w600,
+                                                         ),
+                                                       ),
+                                                     ),
+                                                   ),
+                                                 ),
+                                               )
+
+                      else if (offer['status']=='rejected')
+                      Center(
+                      child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      decoration: BoxDecoration(
+                      color: redColor,
+                      borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                      child: Text(
+                      'Rejected',
+                      style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      ),
+                      ),
+                      ),
+                      ),
+                      )
+                      else if (offer['status']=='reproposal')
+                      Center(
+                      child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      decoration: BoxDecoration(
+                      color: yellowColor,
+                      borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                      child: Text(
+                      'Reproposal',
+                      style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      ),
+                      ),
+                      ),
+                      ),
+                      )
+                      else if (offer['status']=='active')
+                      Center(
+                      child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                      child: Text(
+                      'Active',
+                      style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      ),
+                      ),
+                      ),
+                      ),
+                      )
+                      else if (offer['status']=='cancelled')
+                      Center(
+                      child: Container(
+                      margin: EdgeInsets.all(10),
+                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                      decoration: BoxDecoration(
+                      color: redColor,
+                      borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                      child: Text(
+                      'Cancelled',
+                      style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      ),
+                      ),
+                      ),
+                      ),
+                      )
+
                                                ],
                           ),
                         ],

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../provider/general_provider.dart';
 import '../../provider/myprofile_controller.dart';
+
 class CreateServiceScreen extends StatefulWidget {
   const CreateServiceScreen({super.key});
 
@@ -24,28 +25,39 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
     final List<dynamic> selectedCategories =
         profileProvider.profileData['lawyerProfile']['expertise'] ?? [];
 
-    final generalProvider=Provider.of<GeneralProvider>(context);
+    final generalProvider = Provider.of<GeneralProvider>(context);
     final filteredCategories = generalProvider.categoriesMap.entries
         .where((entry) => selectedCategories.contains(entry.value['name']))
         .toList();
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 40,right: 20,left: 20),
+            padding: const EdgeInsets.only(top: 40, right: 20, left: 20),
             child: Row(
               children: [
                 InkWell(
-                    child: const Icon(CupertinoIcons.clear),onTap: (){Navigator.of(context).pop();},),
-                SizedBox(width: screenWidth*0.05,),
-                const Text("Which Service do you sell?",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),)
+                  child: const Icon(CupertinoIcons.clear),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                SizedBox(
+                  width: screenWidth * 0.05,
+                ),
+                const Text(
+                  "Which Service do you sell?",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                )
               ],
             ),
-
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -55,23 +67,34 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                   final String url = category.value['url'];
                   final String name = category.value['name'];
                   return InkWell(
-                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateServiceDetailScreen(categoryName: name, categoryUrl:url,)));},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateServiceDetailScreen(
+                                    categoryName: name,
+                                    categoryUrl: url,
+                                  )));
+                    },
                     child: ListTile(
-                      leading:  Container(
-                        height: 35, // Increase the size to make the circular image more visible
+                      leading: Container(
+                        height:
+                            35, // Increase the size to make the circular image more visible
                         width: 35,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: ClipRRect( // Clip the image in a circular shape
-                          borderRadius: BorderRadius.circular(17.5), // Half of the width/height to make it circular
+                        child: ClipRRect(
+                          // Clip the image in a circular shape
+                          borderRadius: BorderRadius.circular(
+                              17.5), // Half of the width/height to make it circular
                           child: CachedNetworkImage(
                             imageUrl: url,
-                            fit: BoxFit.cover, // This will make sure the image covers the entire circular area
+                            fit: BoxFit
+                                .cover, // This will make sure the image covers the entire circular area
                           ),
                         ),
                       ),
-
                       title: Text(name),
                       trailing: const Icon(CupertinoIcons.forward),
                     ),

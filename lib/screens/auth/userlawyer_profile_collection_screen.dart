@@ -19,6 +19,7 @@ import 'package:law_education_app/widgets/custom_scaffold_messanger.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/progress_dialog_widget.dart';
+import 'login_screen.dart';
 
 class UserlawyerProfileCollectionScreen extends StatefulWidget {
   final Map<String, dynamic> basicInfo;
@@ -391,6 +392,11 @@ class _UserlawyerProfileCollectionScreenState
                                   );
                                 });
                                 EasyLoading.dismiss();
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                                      (Route<dynamic> route) => false,
+                                );
                               //  print(portfolios);
                               }
                             })

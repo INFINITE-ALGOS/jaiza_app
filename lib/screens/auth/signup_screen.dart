@@ -71,37 +71,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void pickImage(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Container(
-            child: Wrap(
-              children: <Widget>[
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.cloud_upload),
+                title: const Text('Upload file'),
+                onTap: () {
+                  if (kIsWeb) {
+                    Navigator.of(context).pop(); // Close modal
+                  } else {
+                    Navigator.of(context).pop(); // Close modal first
+                    choseGallery(); // Then choose from gallery
+                  }
+                },
+              ),
+              if (!kIsWeb)
                 ListTile(
-                    leading: const Icon(Icons.cloud_upload),
-                    title: const Text('Upload file'),
-                    onTap: () {
-                      if (kIsWeb)
-                      {
-                        Navigator.of(context).pop();
-                      }
-                      else {
-                        choseGallery();
-                      }
-                    }),
-                if(!kIsWeb)
-                  ListTile(
-                    leading: const Icon(Icons.camera_alt),
-                    title: const Text('Take a photo'),
-                    onTap: () =>
-                    {
-                    Navigator.of(context).pop(),
-                    choseCamera(),
-                    },
-                  ),
-              ],
-            ),
-          );
-        });
+                  leading: const Icon(Icons.camera_alt),
+                  title: const Text('Take a photo'),
+                  onTap: () {
+                    Navigator.of(context).pop(); // Close modal first
+                    choseCamera(); // Then open camera
+                  },
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
    String photoUrl = "";
 
@@ -113,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       firebase_storage.UploadTask uploadTask = firebaseStorageRef.putFile(image);
       firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
       photoUrl = await taskSnapshot.ref.getDownloadURL();
-      print("Upload complete. Photo URL: $photoUrl"); // Debug print
+      //print("Upload complete. Photo URL: $photoUrl"); // Debug print
     } catch (error) {
       CustomScaffoldSnackbar.showSnackbar(context, error.toString());
     }
@@ -346,7 +346,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ),
                                       );
                                     } else {
-                                      //EasyLoading.show(status: "Please wait");
+                                      EasyLoading.show(status: "Please wait");
                                       await uploadImageToFirebase(context, image!).whenComplete(() {
                                         widget.signupWithEmailController.clientSignUpWithEmailMethod(
                                           context: context,
@@ -361,7 +361,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                         );
                                       });
-                                     // EasyLoading.dismiss();
+                                     EasyLoading.dismiss();
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                                              (Route<dynamic> route) => false,);
                                     }
                                   }
                                   else if(formKey.currentState!.validate() && image==null){

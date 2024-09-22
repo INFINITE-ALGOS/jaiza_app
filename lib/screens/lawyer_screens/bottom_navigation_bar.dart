@@ -15,6 +15,7 @@ import '../../provider/general_provider.dart';
 import 'chat_screen.dart';
 import 'home_screen.dart';
 import 'profile_screen(lawyer).dart';
+
 class BottomNavigationLawyer extends StatefulWidget {
   int selectedIndex;
   BottomNavigationLawyer({super.key, required this.selectedIndex});
@@ -24,7 +25,6 @@ class BottomNavigationLawyer extends StatefulWidget {
 }
 
 class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
-
   final List<IconData> iconList = [
     Icons.home_outlined,
     Icons.chat_bubble_outline,
@@ -51,26 +51,31 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
       widget.selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyProfileProvider>(
       builder: (context, profileProvider, child) {
         // Check if profileData is null or empty
         final profileData = profileProvider.profileData;
-        final List<dynamic> fil=profileData['lawyerProfile']['expertise'] ?? [];
+        final List<dynamic> fil =
+            profileData['lawyerProfile']['expertise'] ?? [];
 
         if (profileData.isEmpty) {
-          return const Center(child: CircularProgressIndicator()); // Show loading until data is fetched
+          return const Center(
+              child:
+                  CircularProgressIndicator()); // Show loading until data is fetched
         }
 
         return Scaffold(
           drawer: CustomDrawerLawyer(), // Now, profileData is populated
           appBar: AppBar(
-            title: Text('Hello Lawyer'),
+            title: Text(AppLocalizations.of(context)!.helloLawyer),
             actions: [
               PopupMenuButton<Locale>(
                 onSelected: (Locale locale) {
-                  Provider.of<LanguageProvider>(context, listen: false).setLocale(locale);
+                  Provider.of<LanguageProvider>(context, listen: false)
+                      .setLocale(locale);
                 },
                 icon: const Icon(Icons.language),
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<Locale>>[
@@ -102,7 +107,8 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: AnimatedBottomNavigationBar.builder(
             itemCount: iconList.length,
             tabBuilder: (int index, bool isActive) {

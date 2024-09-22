@@ -24,7 +24,7 @@ class _CreateServiceDetailScreenState extends State<CreateServiceDetailScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
-final key=GlobalKey<FormState>();
+  final key = GlobalKey<FormState>();
   double screenHeight = 0;
   double screenWidth = 0;
   @override
@@ -89,10 +89,11 @@ final key=GlobalKey<FormState>();
                             border: Border.all(color: blackColor)),
                         child: TextFormField(
                           controller: titleController,
-                          validator: (value)=>FieldValidators().validateField(value, "title"),
-
+                          validator: (value) =>
+                              FieldValidators().validateField(value, "title"),
                           decoration: const InputDecoration(
-                              hintText: "Enter Title", border: InputBorder.none),
+                              hintText: "Enter Title",
+                              border: InputBorder.none),
                         ),
                       )
                     ],
@@ -121,8 +122,8 @@ final key=GlobalKey<FormState>();
                             border: Border.all(color: blackColor)),
                         child: TextFormField(
                           controller: descriptionController,
-                          validator: (value)=>FieldValidators().validateField(value, "description"),
-
+                          validator: (value) => FieldValidators()
+                              .validateField(value, "description"),
                           maxLines: null,
                           decoration: const InputDecoration(
                               hintText: "Enter Description",
@@ -154,11 +155,10 @@ final key=GlobalKey<FormState>();
                             border: Border.all(color: blackColor)),
                         child: TextFormField(
                           controller: locationController,
-                          validator: (value)=>FieldValidators().validateField(value, "location"),
-
+                          validator: (value) => FieldValidators()
+                              .validateField(value, "location"),
                           decoration: const InputDecoration(
                               hintText: "Enter Location",
-
                               border: InputBorder.none),
                         ),
                       )
@@ -186,12 +186,13 @@ final key=GlobalKey<FormState>();
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: blackColor)),
                         child: TextFormField(
-                          validator: (value)=>FieldValidators().validateField(value, "price"),
-
+                          validator: (value) =>
+                              FieldValidators().validateField(value, "price"),
                           keyboardType: TextInputType.number,
                           controller: priceController,
                           decoration: const InputDecoration(
-                              hintText: "Enter Price", border: InputBorder.none),
+                              hintText: "Enter Price",
+                              border: InputBorder.none),
                         ),
                       )
                     ],
@@ -203,15 +204,15 @@ final key=GlobalKey<FormState>();
 
                 ElevatedButton(
                     onPressed: () {
-                     if(key.currentState!.validate()){
-                       CreateServiceController().createServiceMethod(
-                           title: titleController.text.trim(),
-                           description: descriptionController.text.trim(),
-                           price: priceController.text.trim(),
-                           location: locationController.text.trim(),
-                           category: widget.categoryName,
-                           context: context);
-                     }
+                      if (key.currentState!.validate()) {
+                        CreateServiceController().createServiceMethod(
+                            title: titleController.text.trim(),
+                            description: descriptionController.text.trim(),
+                            price: priceController.text.trim(),
+                            location: locationController.text.trim(),
+                            category: widget.categoryName,
+                            context: context);
+                      }
                     },
                     style:
                         ElevatedButton.styleFrom(backgroundColor: primaryColor),

@@ -30,11 +30,14 @@ class _CompletedServiceScreenState extends State<CompletedServiceScreen> {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: FutureBuilder<List<dynamic>>(
-          future: Future.wait([_myServiceCheckController.fetchServicesAndRequests(
-            context,
-            ['active', 'deleted'],
-            ['completed'],
-          ),_myServiceCheckController.fetchOffers(['completed'])]),
+          future: Future.wait([
+            _myServiceCheckController.fetchServicesAndRequests(
+              context,
+              ['active', 'deleted'],
+              ['completed'],
+            ),
+            _myServiceCheckController.fetchOffers(['completed'])
+          ]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -44,10 +47,13 @@ class _CompletedServiceScreenState extends State<CompletedServiceScreen> {
             }
             if (snapshot.data == null || snapshot.data!.isEmpty) {
               return const Center(child: Text("No Services Available"));
-            }
-            else {
-              final combinedData=snapshot.data![0]  as List<Map<String, dynamic>>; ;
-              final offersData=snapshot.data![1]  as List<Map<String, dynamic>>; ;
+            } else {
+              final combinedData =
+                  snapshot.data![0] as List<Map<String, dynamic>>;
+              ;
+              final offersData =
+                  snapshot.data![1] as List<Map<String, dynamic>>;
+              ;
               combinedData.addAll(offersData);
               // Create a list to store all cancelled offers
               List<Widget> completedRequestsWidgets = [];
@@ -55,34 +61,44 @@ class _CompletedServiceScreenState extends State<CompletedServiceScreen> {
               // Iterate through each job
               for (var serviceData in combinedData) {
                 final isService = serviceData.containsKey('serviceDetails');
-                if(isService){ final service = serviceData['serviceDetails'] as Map<String, dynamic>;
-                final requests = serviceData['requests'] as List<dynamic>?;
+                if (isService) {
+                  final service =
+                      serviceData['serviceDetails'] as Map<String, dynamic>;
+                  final requests = serviceData['requests'] as List<dynamic>?;
 
-                // Check if there are offers and they are not empty
-                if (requests != null && requests.isNotEmpty) {
-                  for (var request in requests) {
-                    completedRequestsWidgets.add(
-                      JobCard(
-                        service: service,
-                        request: request as Map<String, dynamic>,
-                      ),
-                    );
+                  // Check if there are offers and they are not empty
+                  if (requests != null && requests.isNotEmpty) {
+                    for (var request in requests) {
+                      completedRequestsWidgets.add(
+                        JobCard(
+                          service: service,
+                          request: request as Map<String, dynamic>,
+                        ),
+                      );
+                    }
                   }
-                }}
-                else{
-                  final Map<String, dynamic> jobDetails = serviceData['jobDetails'];
-                  final Map<String, dynamic> clientDetails=serviceData['clientDetails'];
-                  final Map<String, dynamic> offerDetails=serviceData['offerDetails'];
-                  completedRequestsWidgets.add(OfferJobCard(clientDetails: clientDetails, jobDetails: jobDetails, offerDetails: offerDetails)) ;
-
+                } else {
+                  final Map<String, dynamic> jobDetails =
+                      serviceData['jobDetails'];
+                  final Map<String, dynamic> clientDetails =
+                      serviceData['clientDetails'];
+                  final Map<String, dynamic> offerDetails =
+                      serviceData['offerDetails'];
+                  completedRequestsWidgets.add(OfferJobCard(
+                      clientDetails: clientDetails,
+                      jobDetails: jobDetails,
+                      offerDetails: offerDetails));
                 }
-               
               }
 
-              return completedRequestsWidgets.isNotEmpty?ListView(
-                children: completedRequestsWidgets,
-              ):Center(child: Text("No completed Services",));
-
+              return completedRequestsWidgets.isNotEmpty
+                  ? ListView(
+                      children: completedRequestsWidgets,
+                    )
+                  : Center(
+                      child: Text(
+                      "No completed Services",
+                    ));
             }
           },
         ),
@@ -90,18 +106,17 @@ class _CompletedServiceScreenState extends State<CompletedServiceScreen> {
     );
   }
 }
+
 class OfferJobCard extends StatelessWidget {
   final Map<String, dynamic> jobDetails;
   final Map<String, dynamic> clientDetails;
   final Map<String, dynamic> offerDetails;
 
-
-  const OfferJobCard({
-    super.key,
-    required this.clientDetails,
-    required this.jobDetails,
-    required this.offerDetails
-  });
+  const OfferJobCard(
+      {super.key,
+      required this.clientDetails,
+      required this.jobDetails,
+      required this.offerDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -122,13 +137,14 @@ class OfferJobCard extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       Container(
-                         constraints: BoxConstraints(maxWidth: 200),
-                         child: SeeMoreTextCustom(text:  jobDetails['title'] ?? '??',
-                           style: TextStyle(
-                               fontSize: 15, fontWeight: FontWeight.w600),
-                         ),
-                       ),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 200),
+                          child: SeeMoreTextCustom(
+                            text: jobDetails['title'] ?? '??',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600),
+                          ),
+                        ),
                         Spacer(),
                         Container(
                           decoration: BoxDecoration(
@@ -180,13 +196,25 @@ class OfferJobCard extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600),
                           ),
-                          SizedBox(width: 20,),
+                          SizedBox(
+                            width: 20,
+                          ),
                           InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails,)));
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SeeClientProfile(
+                                              client: clientDetails,
+                                            )));
                               },
-                              child: Text("View Profile",style: TextStyle(color: primaryColor,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                              child: Text(
+                                "View Profile",
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: primaryColor),
+                              ))
                         ],
                       ),
                       SizedBox(
@@ -216,7 +244,6 @@ class OfferJobCard extends StatelessWidget {
   }
 }
 
-
 class JobCard extends StatelessWidget {
   final Map<String, dynamic> service;
   final Map<String, dynamic> request;
@@ -229,8 +256,8 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String,dynamic> requestDetails=request['requestDetails'];
-    final Map<String,dynamic> clientDetails=request['clientDetails'];
+    final Map<String, dynamic> requestDetails = request['requestDetails'];
+    final Map<String, dynamic> clientDetails = request['clientDetails'];
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
@@ -245,12 +272,13 @@ class JobCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               Container(
-                 constraints: BoxConstraints(maxWidth: 200),
-                 child: SeeMoreTextCustom(text:                   requestDetails['requestMessage'] ?? '??',
-                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                 ),
-               ),
+                Container(
+                  constraints: BoxConstraints(maxWidth: 200),
+                  child: SeeMoreTextCustom(
+                    text: requestDetails['requestMessage'] ?? '??',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
+                ),
                 Spacer(),
                 Container(
                   decoration: BoxDecoration(
@@ -290,15 +318,28 @@ class JobCard extends StatelessWidget {
                       children: [
                         Text(
                           clientDetails['name'] ?? '??',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: clientDetails,)));
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SeeClientProfile(
+                                            client: clientDetails,
+                                          )));
                             },
-                            child: Text("View Profile",style: TextStyle(color: primaryColor,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                            child: Text(
+                              "View Profile",
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: primaryColor),
+                            ))
                       ],
                     ),
                     SizedBox(height: 10),

@@ -42,9 +42,10 @@ class _ActiveJobsScreenState extends State<ActiveJobsScreen> {
             _myJobsCheckController.fetchJobsAndOffers(
               context,
               ['pending', 'active'],
-              ['active', 'pending','reproposal'],
+              ['active', 'pending', 'reproposal'],
             ),
-            _myJobsCheckController.fetchRequests(['active', 'pending','reproposal'])
+            _myJobsCheckController
+                .fetchRequests(['active', 'pending', 'reproposal'])
           ]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -56,73 +57,77 @@ class _ActiveJobsScreenState extends State<ActiveJobsScreen> {
             if (snapshot.data == null || snapshot.data!.isEmpty) {
               return const Center(child: Text("No Jobs Available"));
             } else {
-
               final combinedList =
                   snapshot.data![0] as List<Map<String, dynamic>>; // Jobs data
               final servicesList = snapshot.data![1]
                   as List<Map<String, dynamic>>; // Services data
               combinedList.addAll(servicesList);
 
-              return combinedList.isNotEmpty? ListView.builder(
-                  itemCount: combinedList.length,
-                  itemBuilder: (context, index) {
-                    final itemData = combinedList[index];
+              return combinedList.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: combinedList.length,
+                      itemBuilder: (context, index) {
+                        final itemData = combinedList[index];
 
-                    // Check if the item is a job or a service
-                    final isJob = itemData.containsKey('jobDetails');
+                        // Check if the item is a job or a service
+                        final isJob = itemData.containsKey('jobDetails');
 
-                    if (isJob) {
-                      final jobs =
-                          itemData['jobDetails'] as Map<String, dynamic>;
-                      final offers =
-                          itemData['offers'] as List<Map<String, dynamic>>?;
+                        if (isJob) {
+                          final jobs =
+                              itemData['jobDetails'] as Map<String, dynamic>;
+                          final offers =
+                              itemData['offers'] as List<Map<String, dynamic>>?;
 
-                      // Check if offers is not null and has at least one item
-                      if (offers != null && offers.isNotEmpty) {
-                        // Safely access the first offer
-                        final firstOffer = offers[0] as Map<String, dynamic>;
-                        final offerStatus =
-                            firstOffer['offerDetails']['status'];
+                          // Check if offers is not null and has at least one item
+                          if (offers != null && offers.isNotEmpty) {
+                            // Safely access the first offer
+                            final firstOffer =
+                                offers[0] as Map<String, dynamic>;
+                            final offerStatus =
+                                firstOffer['offerDetails']['status'];
 
-                        // Check if offerStatus is 'accepted'
-                        if (offerStatus == 'active') {
-                          return ActiveJobCard(
-                            job: jobs,
-                            offer: firstOffer,
-                          );
-                        }
-                      }
-                      // If conditions are not met, display a message or alternative widget
-                      return SearchingJobCard(
-                        job: jobs,
-                        offers: offers,
-                        onViewDetails: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ViewJobDetailsScreen(
+                            // Check if offerStatus is 'accepted'
+                            if (offerStatus == 'active') {
+                              return ActiveJobCard(
                                 job: jobs,
-                                offers: offers,
-                              ),
-                            ),
+                                offer: firstOffer,
+                              );
+                            }
+                          }
+                          // If conditions are not met, display a message or alternative widget
+                          return SearchingJobCard(
+                            job: jobs,
+                            offers: offers,
+                            onViewDetails: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewJobDetailsScreen(
+                                    job: jobs,
+                                    offers: offers,
+                                  ),
+                                ),
+                              );
+                            },
+                            onDelete: () async {
+                              await _myJobsCheckController.deleteJob(
+                                jobs['jobId'],
+                              );
+                              setState(() {});
+                              // Refresh the list after deletion
+                            },
                           );
-                        },
-                        onDelete: () async {
-                          await _myJobsCheckController.deleteJob(
-                            jobs['jobId'],
-                          );
-                          setState(() {});
-                          // Refresh the list after deletion
-                        },
-                      );
-                    } else {
-                      final requestData = itemData;
-                      return ServiceCard(
-                          requestDetails: requestData['requestDetails'],
-                          serviceDetails: requestData['serviceDetails'],
-                          lawyerDetails: requestData['lawyerDetails']);
-                    }
-                  }) : Center(child: Text('No Active Jobs'),);
+                        } else {
+                          final requestData = itemData;
+                          return ServiceCard(
+                              requestDetails: requestData['requestDetails'],
+                              serviceDetails: requestData['serviceDetails'],
+                              lawyerDetails: requestData['lawyerDetails']);
+                        }
+                      })
+                  : Center(
+                      child: Text('No Active Jobs'),
+                    );
             }
           },
         ),
@@ -176,9 +181,11 @@ class ServiceCard extends StatelessWidget {
                         children: [
                           Container(
                             constraints: BoxConstraints(maxWidth: 200),
-                            child: SeeMoreTextCustom(text:requestDetails['requestMessage'] ?? '??',
+                            child: SeeMoreTextCustom(
+                              text: requestDetails['requestMessage'] ?? '??',
                               style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600),),
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
                           ),
                           Spacer(),
                           Container(
@@ -226,128 +233,188 @@ class ServiceCard extends StatelessWidget {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                        Row(
-                          children: [
-                            Text(
-                              lawyerDetails['name'] ?? '??',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600),
-                            ),SizedBox(width: 8,),
-                            InkWell(
-                                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyerDetails)));},
-                                child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: yellowColor,
+                            Row(
+                              children: [
+                                Text(
+                                  lawyerDetails['name'] ?? '??',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SeeLawyerProfile(
+                                                      lawyer: lawyerDetails)));
+                                    },
+                                    child: Text(
+                                      "View Profile",
+                                      style: TextStyle(
+                                          color: primaryColor,
+                                          fontSize: 12,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: primaryColor),
+                                    ))
+                              ],
                             ),
-                            Text(
-                              lawyerDetails['rating'] ?? '0.0',
-                              style: TextStyle(),
+                            SizedBox(
+                              height: 10,
                             ),
-                          ],
-                        ),
-                      ]),
-                      InkWell(onTap: () {}, child:CacheImageCircle(url: lawyerDetails['url']))
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: yellowColor,
+                                ),
+                                Text(
+                                  lawyerDetails['rating'] ?? '0.0',
+                                  style: TextStyle(),
+                                ),
+                              ],
+                            ),
+                          ]),
+                      InkWell(
+                          onTap: () {},
+                          child: CacheImageCircle(url: lawyerDetails['url']))
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
-                requestDetails['status']=='reproposal'? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        final offerController=TextEditingController();
+                SizedBox(
+                  height: 20,
+                ),
+                requestDetails['status'] == 'reproposal'
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              final offerController = TextEditingController();
 
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Give Offer for ${requestDetails["requestMessage"]}'),
-                                content: Container(
-                                  height: 150,
-                                  child: TextField(
-                                    controller: offerController,
-                                    decoration: const InputDecoration(hintText: 'Enter your offer'),
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      final offerAmount = offerController.text;
-                                      if (offerAmount.isNotEmpty && offerController.text.isNotEmpty) {
-                                        FirebaseFirestore.instance.collection('requests').doc(requestDetails['requestId']).update(
-                                            {'status':'pending',
-                                            'requestAmount':offerAmount});
-                                        Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>BottomNavigationbarClient(selectedIndex: 3)), // New screen to navigate to
-                                              (Route<dynamic> route) => false, // Predicate to determine which routes to remove
-                                        );
-                                      }
-                                    },
-                                    child: const Text('Submit'),
-                                  ),
-                                ],
-                              );});},
-
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.green, // Example color
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text(
-                          'Reoffer',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-
-                        showDialog(context: context, builder: (context){
-                          return CustomAlertDialog(title: 'Are you sure you want to reject reproposal', content: '', onConfirm: (){
-                            FirebaseFirestore.instance.collection('requests').doc(requestDetails['requestId']).update({'status':"rejected"});
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) =>BottomNavigationbarClient(selectedIndex: 3)), // New screen to navigate to
-                                  (Route<dynamic> route) => false, // Predicate to determine which routes to remove
-                            );
-
-                          }, onCancel: (){Navigator.of(context).pop();});
-                        });                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.red, // Example color
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text(
-                          'Reject',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ):SizedBox(),
-
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                          'Give Offer for ${requestDetails["requestMessage"]}'),
+                                      content: Container(
+                                        height: 150,
+                                        child: TextField(
+                                          controller: offerController,
+                                          decoration: const InputDecoration(
+                                              hintText: 'Enter your offer'),
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            final offerAmount =
+                                                offerController.text;
+                                            if (offerAmount.isNotEmpty &&
+                                                offerController
+                                                    .text.isNotEmpty) {
+                                              FirebaseFirestore.instance
+                                                  .collection('requests')
+                                                  .doc(requestDetails[
+                                                      'requestId'])
+                                                  .update({
+                                                'status': 'pending',
+                                                'requestAmount': offerAmount
+                                              });
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        BottomNavigationbarClient(
+                                                            selectedIndex:
+                                                                3)), // New screen to navigate to
+                                                (Route<dynamic> route) =>
+                                                    false, // Predicate to determine which routes to remove
+                                              );
+                                            }
+                                          },
+                                          child: const Text('Submit'),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.green, // Example color
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Text(
+                                'Reoffer',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomAlertDialog(
+                                        title:
+                                            'Are you sure you want to reject reproposal',
+                                        content: '',
+                                        onConfirm: () {
+                                          FirebaseFirestore.instance
+                                              .collection('requests')
+                                              .doc(requestDetails['requestId'])
+                                              .update({'status': "rejected"});
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BottomNavigationbarClient(
+                                                        selectedIndex:
+                                                            3)), // New screen to navigate to
+                                            (Route<dynamic> route) =>
+                                                false, // Predicate to determine which routes to remove
+                                          );
+                                        },
+                                        onCancel: () {
+                                          Navigator.of(context).pop();
+                                        });
+                                  });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.red, // Example color
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Text(
+                                'Reject',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
               ],
             )),
       ),
@@ -392,11 +459,15 @@ class ActiveJobCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            job['title'] ?? '??',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600),
+                          Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: SeeMoreTextCustom(
+                              text: job['title'] ?? '??',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
                           ),
                           Spacer(),
                           Container(
@@ -442,10 +513,35 @@ class ActiveJobCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(children: [
-                        Text(
-                          offer['lawyerDetails']['name'] ?? '??',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
+                        Row(
+                          children: [
+                            Text(
+                              offer['lawyerDetails']['name'] ?? '??',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SeeLawyerProfile(
+                                                  lawyer:
+                                                      offer['lawyerDetails'])));
+                                },
+                                child: Text(
+                                  "View Profile",
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: primaryColor),
+                                ))
+                          ],
                         ),
                         SizedBox(
                           height: 10,
@@ -464,7 +560,7 @@ class ActiveJobCard extends StatelessWidget {
                           ],
                         ),
                       ]),
-                      InkWell(onTap: () {}, child: CircleAvatar())
+                      CacheImageCircle(url: offer['lawyerDetails']['url'])
                     ],
                   ),
                 ),
@@ -517,7 +613,9 @@ class SearchingJobCard extends StatelessWidget {
                           Container(
                             constraints: BoxConstraints(maxWidth: 200),
                             child: Text(
-                              job['title'] ?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,
+                              job['title'] ?? '??',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.w600),
                             ),

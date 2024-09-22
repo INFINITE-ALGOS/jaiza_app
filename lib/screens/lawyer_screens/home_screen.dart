@@ -1,10 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:intl/intl.dart';
 import 'package:law_education_app/controllers/my_services_check_controller.dart';
+import 'package:law_education_app/provider/get_clients_provider.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/screens/lawyer_screens/alljobs_realtedto_category.dart';
+import 'package:law_education_app/screens/lawyer_screens/see_client_profile.dart';
 import 'package:provider/provider.dart';
 import '../../conts.dart';
 import '../../provider/general_provider.dart';
@@ -23,6 +28,7 @@ class HomeScreenLawyer extends StatefulWidget {
 class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
   double screenHeight = 0;
   double screenWidth = 0;
+  List<Map<String, dynamic>> initialClients = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +36,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
     final generalProvider = Provider.of<GeneralProvider>(context);
     List<String> crouselUrls = generalProvider.crouselUrlList;
     final profileData = profileProvider.profileData;
+    final clientProvider = Provider.of<GetClientsProvider>(context);
+    initialClients = clientProvider.initialClients;
 
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
@@ -37,21 +45,24 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
     if (profileData == null || profileData['lawyerProfile'] == null) {
       return Scaffold(
         body: Center(
-          child: CircularProgressIndicator(), // Show loading until profileData is fetched
+          child:
+              CircularProgressIndicator(), // Show loading until profileData is fetched
         ),
       );
     }
 
-    final List<dynamic> selectedCategories = profileData['lawyerProfile']['expertise'] ?? [];
+    final List<dynamic> selectedCategories =
+        profileData['lawyerProfile']['expertise'] ?? [];
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.03, right: 20, left: 20),
               child: Container(
-                child: const Row(
+                child:  Row(
                   children: [
                     Icon(
                       CupertinoIcons.location,
@@ -63,11 +74,11 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                     Column(
                       children: [
                         Text(
-                          "Current Location",
+                          AppLocalizations.of(context)!.currentLocation,
                           style: TextStyle(fontSize: 12, color: greyColor),
                         ),
                         Text(
-                          "New York city",
+                          AppLocalizations.of(context)!.newYorkCity,
                           style: TextStyle(fontSize: 12, color: blackColor),
                         ),
                       ],
@@ -79,7 +90,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.03, right: 20, left: 20),
               child: Container(
                 width: screenWidth,
                 height: screenHeight * 0.075,
@@ -97,7 +109,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                       ),
                       const SizedBox(width: 15),
                       Text(
-                        "Search",
+                        AppLocalizations.of(context)!.search,
                         style: TextStyle(color: Colors.black.withOpacity(0.6)),
                       ),
                     ],
@@ -106,37 +118,44 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.03, right: 20, left: 20),
               child: ImageCarousel(crouselUrls: crouselUrls),
             ),
             SizedBox(height: screenHeight * 0.01),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.03, right: 20, left: 20),
             ),
             Container(height: screenHeight * 0.01, color: lightGreyColor),
             SizedBox(height: screenHeight * 0.03),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.03, right: 20, left: 20),
               child: Container(
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          "Jobs",
-                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                         Text(
+                          AppLocalizations.of(context)!.jobs,
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
                         InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const AllJobsScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => const AllJobsScreen()),
                             );
                           },
-                          child: const Text(
-                            "View all >>",
-                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+                          child:  Text(
+                            AppLocalizations.of(context)!.viewAllDoubleArrow,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
@@ -148,8 +167,10 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                         itemCount: generalProvider.categoriesMap.length,
                         itemBuilder: (context, index) {
                           // Get the key and category data
-                          String key = generalProvider.categoriesMap.keys.elementAt(index);
-                          Map<String, dynamic> category = generalProvider.categoriesMap[key];
+                          String key = generalProvider.categoriesMap.keys
+                              .elementAt(index);
+                          Map<String, dynamic> category =
+                              generalProvider.categoriesMap[key];
                           final String url = category['url'];
                           final String name = category['name'];
 
@@ -160,12 +181,15 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => AllJobsRelatedToCategory(name: name, url: url),
+                                    builder: (context) =>
+                                        AllJobsRelatedToCategory(
+                                            name: name, url: url),
                                   ),
                                 );
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 15, right: 15),
+                                padding:
+                                    const EdgeInsets.only(top: 15, right: 15),
                                 child: Container(
                                   child: Column(
                                     children: [
@@ -173,7 +197,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                                         height: screenHeight * 0.12,
                                         width: screenWidth * 0.28,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           border: Border.all(
                                             color: lightGreyColor,
                                             width: 1,
@@ -189,7 +214,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                                       ),
                                       Text(
                                         name,
-                                        style: const TextStyle(fontWeight: FontWeight.w600),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
                                       ),
                                     ],
                                   ),
@@ -209,54 +235,97 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
             Container(height: screenHeight * 0.01, color: lightGreyColor),
             SizedBox(height: screenHeight * 0.03),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.005, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.005, right: 20, left: 20),
               child: Container(
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          "Clients",
-                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                         Text(
+                           AppLocalizations.of(context)!.clients,
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
                         InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const AllClientsScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AllClientsScreen()),
                             );
                           },
-                          child: const Text(
-                            "View all >>",
-                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+                          child:  Text(
+                            AppLocalizations.of(context)!.viewAllDoubleArrow,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
                     ),
                     Container(
-                      height: screenHeight * 0.25,
+                      height: screenHeight * 0.2,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 10,
+                          itemCount: initialClients.length,
                           itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 25, top: 15),
-                              child: Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Placeholder(
-                                      fallbackHeight: screenHeight * 0.12,
-                                      fallbackWidth: screenWidth * 0.2,
-                                    ),
-                                    SizedBox(height: screenHeight * 0.02),
-                                    const Text(
-                                      "name",
-                                      style: TextStyle(fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
+                            final client = initialClients[index];
+                            final String name = initialClients[index]['name'];
+                            final String url = initialClients[index]['url'];
+
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SeeClientProfile(
+                                              client: client,
+                                            )));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15, right: 15),
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                          height: screenHeight * 0.12,
+                                          width: screenWidth * 0.28,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: lightGreyColor,
+                                              width: 1,
+                                            ),
+                                            //shape: BoxShape.circle, // Makes the container circular
+                                          ),
+                                          clipBehavior: Clip
+                                              .hardEdge, // Ensures the image is clipped to the circular border
+                                          child: CachedNetworkImage(
+                                            height: 100, width: double.infinity,
+                                            imageUrl: url,
+                                            placeholder: (context, url) =>
+                                                CupertinoActivityIndicator(), // Loading widget
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
+                                            fit: BoxFit
+                                                .cover, // Fallback when image not found
+                                          )),
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Text(
+                                        name,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -269,27 +338,32 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
             Container(height: screenHeight * 0.01, color: lightGreyColor),
             SizedBox(height: screenHeight * 0.03),
             Padding(
-              padding: EdgeInsets.only(top: screenHeight * 0.03, right: 20, left: 20),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.03, right: 20, left: 20),
               child: Container(
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          "Law Books",
-                          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                         Text(
+                           AppLocalizations.of(context)!.lawBooks,
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold),
                         ),
                         const Spacer(),
                         InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const LawBooksLawyer()),
+                              MaterialPageRoute(
+                                  builder: (context) => const LawBooksLawyer()),
                             );
                           },
-                          child: const Text(
-                            "View all >>",
-                            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+                          child:  Text(
+                            AppLocalizations.of(context)!.viewAllDoubleArrow,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
@@ -301,7 +375,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                           itemCount: 10,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: const EdgeInsets.only(top: 15, right: 15),
+                              padding:
+                                  const EdgeInsets.only(top: 15, right: 15),
                               child: Container(
                                 child: Column(
                                   children: [
@@ -311,7 +386,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                                     ),
                                     Text(
                                       "Book Title",
-                                      style: const TextStyle(fontWeight: FontWeight.w600),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ],
                                 ),
@@ -343,96 +419,95 @@ class _ViewAllMyServiceState extends State<ViewAllMyService> {
     return Scaffold(
       body: Container(
         color: whiteColor,
-       // height: MediaQuery.of(context).size.height * 0.3,
-       //  child: FutureBuilder<List<Map<String, dynamic>>>(
-       //    future: MyServicesCheckController().myServicesCheckMethod(context: context),
-       //    builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-       //      if (snapshot.connectionState == ConnectionState.waiting) {
-       //        return const Center(child: CircularProgressIndicator());
-       //      } else if (snapshot.hasError) {
-       //        return Center(
-       //          child: Text(
-       //            'Error: ${snapshot.error}',
-       //            style: const TextStyle(color: Colors.red, fontSize: 16),
-       //          ),
-       //        );
-       //      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-       //        return const Center(
-       //          child: Text(
-       //            'You have not created any service',
-       //            style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-       //          ),
-       //        );
-       //      } else {
-       //        final List<Map<String, dynamic>> myServices = snapshot.data!;
-       //
-       //        return ListView.builder(
-       //          scrollDirection: Axis.vertical,
-       //          itemCount: myServices.length,
-       //          itemBuilder: (context, index) {
-       //            final Timestamp timestamp = myServices[index]['createdOn'] as Timestamp;
-       //            final DateTime dateTime = timestamp.toDate();
-       //            final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-       //
-       //            return Container(
-       //              color: whiteColor,
-       //              width: MediaQuery.of(context).size.width * 0.6,
-       //              margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-       //              child: Card(
-       //                color: whiteColor,
-       //                elevation: 8.0,
-       //                shape: RoundedRectangleBorder(
-       //                  borderRadius: BorderRadius.circular(10.0),
-       //                ),
-       //                child: Padding(
-       //                  padding: const EdgeInsets.all(16.0),
-       //                  child: Column(
-       //                    crossAxisAlignment: CrossAxisAlignment.start,
-       //                    children: [
-       //                      Text(
-       //                        'Created on: $formattedDate',
-       //                        style: const TextStyle(
-       //                          fontWeight: FontWeight.bold,
-       //                          fontSize: 16,
-       //                        ),
-       //                      ),
-       //                      const SizedBox(height: 8.0),
-       //                      Text(
-       //                        myServices[index]['title'] ?? 'No Title',
-       //                        style: const TextStyle(
-       //                          fontSize: 18,
-       //                          fontWeight: FontWeight.w600,
-       //                        ),
-       //                      ),
-       //                      const SizedBox(height: 4.0),
-       //                      Text(
-       //                        myServices[index]['description'] ?? 'No Description',
-       //                        style: TextStyle(
-       //                          fontSize: 14,
-       //                          color: Colors.grey[700],
-       //                        ),
-       //                      ),
-       //                      const SizedBox(height: 8.0),
-       //                      Text(
-       //                        '\$${myServices[index]['price'] ?? '0.00'}',
-       //                        style: const TextStyle(
-       //                          fontSize: 16,
-       //                          color: Colors.green,
-       //                          fontWeight: FontWeight.bold,
-       //                        ),
-       //                      ),
-       //                    ],
-       //                  ),
-       //                ),
-       //              ),
-       //            );
-       //          },
-       //        );
-       //      }
-       //    },
-       //  ),
+        // height: MediaQuery.of(context).size.height * 0.3,
+        //  child: FutureBuilder<List<Map<String, dynamic>>>(
+        //    future: MyServicesCheckController().myServicesCheckMethod(context: context),
+        //    builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+        //      if (snapshot.connectionState == ConnectionState.waiting) {
+        //        return const Center(child: CircularProgressIndicator());
+        //      } else if (snapshot.hasError) {
+        //        return Center(
+        //          child: Text(
+        //            'Error: ${snapshot.error}',
+        //            style: const TextStyle(color: Colors.red, fontSize: 16),
+        //          ),
+        //        );
+        //      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        //        return const Center(
+        //          child: Text(
+        //            'You have not created any service',
+        //            style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+        //          ),
+        //        );
+        //      } else {
+        //        final List<Map<String, dynamic>> myServices = snapshot.data!;
+        //
+        //        return ListView.builder(
+        //          scrollDirection: Axis.vertical,
+        //          itemCount: myServices.length,
+        //          itemBuilder: (context, index) {
+        //            final Timestamp timestamp = myServices[index]['createdOn'] as Timestamp;
+        //            final DateTime dateTime = timestamp.toDate();
+        //            final String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+        //
+        //            return Container(
+        //              color: whiteColor,
+        //              width: MediaQuery.of(context).size.width * 0.6,
+        //              margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+        //              child: Card(
+        //                color: whiteColor,
+        //                elevation: 8.0,
+        //                shape: RoundedRectangleBorder(
+        //                  borderRadius: BorderRadius.circular(10.0),
+        //                ),
+        //                child: Padding(
+        //                  padding: const EdgeInsets.all(16.0),
+        //                  child: Column(
+        //                    crossAxisAlignment: CrossAxisAlignment.start,
+        //                    children: [
+        //                      Text(
+        //                        'Created on: $formattedDate',
+        //                        style: const TextStyle(
+        //                          fontWeight: FontWeight.bold,
+        //                          fontSize: 16,
+        //                        ),
+        //                      ),
+        //                      const SizedBox(height: 8.0),
+        //                      Text(
+        //                        myServices[index]['title'] ?? 'No Title',
+        //                        style: const TextStyle(
+        //                          fontSize: 18,
+        //                          fontWeight: FontWeight.w600,
+        //                        ),
+        //                      ),
+        //                      const SizedBox(height: 4.0),
+        //                      Text(
+        //                        myServices[index]['description'] ?? 'No Description',
+        //                        style: TextStyle(
+        //                          fontSize: 14,
+        //                          color: Colors.grey[700],
+        //                        ),
+        //                      ),
+        //                      const SizedBox(height: 8.0),
+        //                      Text(
+        //                        '\$${myServices[index]['price'] ?? '0.00'}',
+        //                        style: const TextStyle(
+        //                          fontSize: 16,
+        //                          color: Colors.green,
+        //                          fontWeight: FontWeight.bold,
+        //                        ),
+        //                      ),
+        //                    ],
+        //                  ),
+        //                ),
+        //              ),
+        //            );
+        //          },
+        //        );
+        //      }
+        //    },
+        //  ),
       ),
     );
   }
 }
-

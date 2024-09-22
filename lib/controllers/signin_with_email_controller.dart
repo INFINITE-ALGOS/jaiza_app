@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/provider/get_clients_provider.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
 import 'package:law_education_app/widgets/custom_scaffold_messanger.dart';
 import 'package:provider/provider.dart';
@@ -53,9 +54,14 @@ class LoginController {
               await profileProvider.getProfileData();
               await lawyerProvider.getInitialLawyers();
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0,)),(Route route)=>false);
-            } else if (userType == 'lawyer') {
+            }
+
+            else if (userType == 'lawyer') {
+              final clientProvider = Provider.of<GetClientsProvider>(context, listen: false);
+
               final profileProvider = Provider.of<MyProfileProvider>(context, listen: false);
               await profileProvider.getProfileData();
+              await clientProvider.getInitialClientss();
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer(selectedIndex: 0,)),(Route route)=>false);
             }
             else{

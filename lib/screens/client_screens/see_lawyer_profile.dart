@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/check_already_service_buy.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/widgets/custom_scaffold_messanger.dart';
+import 'package:law_education_app/widgets/see_more_text.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../utils/custom_snackbar.dart';
@@ -175,7 +176,7 @@ class _SeeLawyerProfileState extends State<SeeLawyerProfile> {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  "This is the Portfolio section for ${widget.lawyer['name']}.",
+                  "No Portfolio created by lawyer.",
                   style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
               ),
@@ -407,7 +408,7 @@ class _SeeServicesState extends State<SeeServices> {
                     final service = services[index];
                     final check = CheckAlreadyServiceBuy();
 
-                    return FutureBuilder<bool>(
+                    return FutureBuilder(
                       future: check.checkAlreadyService(widget.lawyer['id'], service['serviceId']),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -428,100 +429,188 @@ class _SeeServicesState extends State<SeeServices> {
                             child: Text('Error: ${snapshot.error}'),
                           );
                         }
-
-                        bool alreadyget = snapshot.data ?? false;
-
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                          child: Container(
-                            padding: const EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  service["title"],
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  service["description"],
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.location_on, size: 16, color: primaryColor),
-                                        const SizedBox(width: 5),
-                                        Text(service["location"], style: const TextStyle(fontSize: 14)),
-                                      ],
-                                    ),
-                                    Text(
-                                      "\$${service["price"]}",
-                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                alreadyget
-                                    ?
-                                     Container(
-                                  margin: EdgeInsets.all(10),
-                                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                                  decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    borderRadius: BorderRadius.circular(8),
+                        if(snapshot.data!=null){
+                            Map<String,dynamic> offer=snapshot.data!;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 6,
+                                    offset: Offset(0, 3),
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      'Requested',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SeeMoreTextCustom(
+                                    text:  service["title"],
+                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                ):Center(
-                                  child: InkWell(
-                                    onTap: () {
-                                      _showRequestDialog(context, service);
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.all(10),
-                                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                                      decoration: BoxDecoration(
-                                        color: primaryColor,
-                                        borderRadius: BorderRadius.circular(8),
+                                  const SizedBox(height: 10),
+                                  SeeMoreTextCustom(
+                                    text:   service["description"],
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Icon(Icons.location_on, size: 16, color: primaryColor),
+                                          const SizedBox(width: 5),
+                                          Container(constraints: BoxConstraints(maxWidth: 200),child: SeeMoreTextCustom(text:  service["location"], style: const TextStyle(fontSize: 14))),
+                                        ],
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          'Request Service',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
+                                      Text(
+                                        "\$${service["price"]}",
+                                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  if(offer.isEmpty)
+                                    Center(
+                                      child: InkWell(
+                                        onTap: () {
+                                          _showRequestDialog(context, service);
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.all(10),
+                                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                          decoration: BoxDecoration(
+                                            color: primaryColor,
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'Request Service',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                    )
+                                  else if (offer['status']=='pending')
+                                    Center(
+                                      child: Container(
+                                        margin: EdgeInsets.all(10),
+                                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                        decoration: BoxDecoration(
+                                          color: yellowColor,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'Requested',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  else if (offer['status']=='rejected')
+                                      Center(
+                                        child: Container(
+                                          margin: EdgeInsets.all(10),
+                                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                          decoration: BoxDecoration(
+                                            color: redColor,
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'Rejected',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    else if (offer['status']=='reproposal')
+                                        Center(
+                                          child: Container(
+                                            margin: EdgeInsets.all(10),
+                                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                            decoration: BoxDecoration(
+                                              color: yellowColor,
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'Reproposal',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      else if (offer['status']=='active')
+                                          Center(
+                                            child: Container(
+                                              margin: EdgeInsets.all(10),
+                                              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  'Active',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        else if (offer['status']=='cancelled')
+                                            Center(
+                                              child: Container(
+                                                margin: EdgeInsets.all(10),
+                                                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                                                decoration: BoxDecoration(
+                                                  color: redColor,
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Cancelled',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
+                        else{
+                          return Text('data');
+                        }
                       },
                     );
                   },
@@ -542,8 +631,10 @@ class _SeeServicesState extends State<SeeServices> {
           builder: (BuildContext context, StateSetter setState) {
             return SingleChildScrollView(
               child: AlertDialog(
-                title: Text('Request Service for ${service["title"]}'),
+                backgroundColor: whiteColor,
+                title: Text('Request Service for ${service["title"]}',maxLines: 4,overflow: TextOverflow.ellipsis,),
                 content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
@@ -568,6 +659,7 @@ class _SeeServicesState extends State<SeeServices> {
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Container(
+                            width: double.infinity,
                             margin: const EdgeInsets.only(top: 12),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             decoration: BoxDecoration(
@@ -617,7 +709,7 @@ class _SeeServicesState extends State<SeeServices> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text('Cancel'),
+                    child: const Text('Cancel',style: TextStyle(color: primaryColor),),
                   ),
                   TextButton(
                     onPressed: () {
@@ -641,7 +733,7 @@ class _SeeServicesState extends State<SeeServices> {
                         CustomSnackbar.showError(context: context, title: "Error sending request", message: "PLease fill all the fields");
                       }
                     },
-                    child: const Text('Submit'),
+                    child: const Text('Submit',style: TextStyle(color: primaryColor)),
                   ),
                 ],
               ),

@@ -94,7 +94,7 @@ class _EditProfileScreenLawyerState extends State<EditProfileScreenLawyer> {
           .ref()
           .child('uploads/${FirebaseAuth.instance.currentUser!.uid}');
       firebase_storage.UploadTask uploadTask =
-      firebaseStorageRef.putFile(image);
+          firebaseStorageRef.putFile(image);
       firebase_storage.TaskSnapshot taskSnapshot = await uploadTask;
       photoUrl = await taskSnapshot.ref.getDownloadURL();
       // ProgressDialogWidget.hide(context);
@@ -110,7 +110,7 @@ class _EditProfileScreenLawyerState extends State<EditProfileScreenLawyer> {
     _phoneController.text = widget.profileData['phone'];
     _addressController.text = widget.profileData['address'];
     photoUrl = widget.profileData[
-    'url']; // Assuming 'url' is the field for the profile picture
+        'url']; // Assuming 'url' is the field for the profile picture
   }
 
   @override
@@ -200,7 +200,8 @@ class _EditProfileScreenLawyerState extends State<EditProfileScreenLawyer> {
                           EasyLoading.show(status: "Please wait");
 
                           // Only upload the image if a new one is selected
-                          await uploadImageToFirebase(context, image!).whenComplete(() {
+                          await uploadImageToFirebase(context, image!)
+                              .whenComplete(() {
                             profileProvider.updateProfileData({
                               'name': _nameController.text.trim(),
                               'phone': _phoneController.text.trim(),
@@ -209,7 +210,6 @@ class _EditProfileScreenLawyerState extends State<EditProfileScreenLawyer> {
                             });
                           });
                           EasyLoading.dismiss();
-
                         } else {
                           EasyLoading.show(status: "Please wait");
                           // If no new image is selected, just update other fields with the current photo URL
@@ -223,13 +223,17 @@ class _EditProfileScreenLawyerState extends State<EditProfileScreenLawyer> {
                         }
 
                         // Navigate back to the profile screen
-                        Navigator.pushAndRemoveUntil(context, (MaterialPageRoute(builder: (context)=>ProfileScreenClient())), (Route<dynamic> route)=>route.isFirst);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            (MaterialPageRoute(
+                                builder: (context) => ProfileScreenClient())),
+                            (Route<dynamic> route) => route.isFirst);
                       } else {
-                        CustomScaffoldSnackbar.showSnackbar(context, "Please select a profile picture.");
+                        CustomScaffoldSnackbar.showSnackbar(
+                            context, "Please select a profile picture.");
                       }
                     }
                   },
-
                   child: const Text(
                     'Update Profile',
                     style: TextStyle(color: whiteColor),

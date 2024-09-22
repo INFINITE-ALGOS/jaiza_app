@@ -43,7 +43,7 @@ class SignupWithEmailController {
           phone: userPhoneNo,
           isActive: true,
           createdOn: DateTime.now(),
-          rating: '0.0',
+          rating: 0.0,
           type: selectedRole,
           isVerified: false,
           url: url, // Check if this is null
@@ -53,13 +53,7 @@ class SignupWithEmailController {
         await _firestore.collection("users").doc(user.uid).set(clientModel.toMap());
 
         // Navigate to the login screen after successful signup
-        if (context.mounted) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-                (Route<dynamic> route) => false,
-          );
-        }
+
       } catch (e) {
         print("Error: ${e.toString()}"); // Debug print
         if (context.mounted) {
@@ -107,7 +101,7 @@ class SignupWithEmailController {
           phone: userPhoneNo,
           isActive: true,
           createdOn: DateTime.now(),
-          rating: '0.0',
+          rating: 0.0,
           portfolio: portfolio,
           lawyerProfile: {
             'bio': bio,
@@ -121,16 +115,7 @@ class SignupWithEmailController {
         );
 
         await _firestore.collection("users").doc(user.uid).set(lawyerModel.toMap());
-        print("danish yes");
-        // Navigate to the login screen after successful signup
-        if (context.mounted) {
-          print("danish");
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-                (Route<dynamic> route) => false,
-          );
-        }
+
       } catch (e) {
         // General error handling
         if (context.mounted) {

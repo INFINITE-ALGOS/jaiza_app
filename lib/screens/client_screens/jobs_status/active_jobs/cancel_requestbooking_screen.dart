@@ -5,6 +5,7 @@ import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import the custom alert dialog component
 import '../../../../conts.dart';
+import '../../see_lawyer_profile.dart';
 
 // Define a StarRating widget
 class StarRating extends StatefulWidget {
@@ -152,9 +153,18 @@ class _CancelRequestBookingScreenState extends State<CancelRequestBookingScreen>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                widget.lawyerDetails['name'] ?? '??',
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                              Row(
+                                children: [
+                                  Text(
+                                    widget.lawyerDetails['name'] ?? '??',
+                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(width: 20,),
+                                  InkWell(
+                                      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: widget.lawyerDetails)));},
+                                      child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
+
+                                ],
                               ),
                               SizedBox(height: 10),
                               Row(
