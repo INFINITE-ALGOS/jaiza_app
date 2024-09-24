@@ -43,7 +43,6 @@ class _AllLawyersScreensState extends State<AllLawyersScreens> {
         final expertiseList = lawyer['lawyerProfile']['expertise'] as List<dynamic>?;
         // Check if name contains the search term
         final nameMatches = name.contains(searchTerm);
-        print(nameMatches);
 
         // Check if any of the expertise items matches the search term
         bool expertiseMatches = false;
@@ -117,7 +116,7 @@ class _AllLawyersScreensState extends State<AllLawyersScreens> {
                       return _buildGridView();// Initially, show all lawyers
                     }
                     if (filteredLawyers.isEmpty && result==false) {
-                      filteredLawyers = allLawyers;
+                      //filteredLawyers = allLawyers;
                       return Center(child: Text("No matching result found"),);// Initially, show all lawyers
                     }
                     else{

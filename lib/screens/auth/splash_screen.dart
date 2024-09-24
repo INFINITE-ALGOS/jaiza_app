@@ -4,11 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:law_education_app/controllers/user_provider.dart';
 import 'package:law_education_app/conts.dart';
+import 'package:law_education_app/provider/get_clients_provider.dart';
+import 'package:law_education_app/provider/get_lawyers_provider.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/screens/auth/login_screen.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
+
+import '../../controllers/book_controller.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -49,9 +53,17 @@ class _SplashScreenState extends State<SplashScreen> {
       await profileProvider.getProfileData();
       final Map<String,dynamic> profileData=profileProvider.profileData;
       if(profileData['type']=='lawyer'){
+        final getInitialClients=Provider.of<GetClientsProvider>(context,listen: false
+        );
+        final lawBooksProvider = Provider.of<BookController>(context, listen: false);
+        await lawBooksProvider.fetchBooks();
+        await getInitialClients.getInitialClientss();
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer(selectedIndex: 0)), (Route route)=>false);
       }
       else if(profileData['type']=='client'){
+        final getInitialLawyers=Provider.of<GetLawyersProvider>(context,listen: false);
+        final lawBooksProvider = Provider.of<BookController>(context, listen: false);
+        await lawBooksProvider.fetchBooks();await getInitialLawyers.getInitialLawyers();
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0)), (Route route)=>false);
 
       }}

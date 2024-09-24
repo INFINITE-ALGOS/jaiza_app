@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_job_detail_screen.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_service_detail_screen.dart';
@@ -254,7 +256,7 @@ class ServiceCard extends StatelessWidget {
                                                       lawyer: lawyerDetails)));
                                     },
                                     child: Text(
-                                      "View Profile",
+                                     AppLocalizations.of(context)!.viewProfile,
                                       style: TextStyle(
                                           color: primaryColor,
                                           fontSize: 12,
@@ -302,13 +304,13 @@ class ServiceCard extends StatelessWidget {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text(
-                                          'Give Offer for ${requestDetails["requestMessage"]}'),
+                                          '${ AppLocalizations.of(context)!.giveOfferFor} ${requestDetails["requestMessage"]}'),
                                       content: Container(
                                         height: 150,
                                         child: TextField(
                                           controller: offerController,
-                                          decoration: const InputDecoration(
-                                              hintText: 'Enter your offer'),
+                                          decoration:  InputDecoration(
+                                              hintText: AppLocalizations.of(context)!.enterYourOffer),
                                           keyboardType: TextInputType.number,
                                         ),
                                       ),
@@ -317,7 +319,7 @@ class ServiceCard extends StatelessWidget {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: const Text('Cancel'),
+                                          child:  Text( AppLocalizations.of(context)!.cancel),
                                         ),
                                         TextButton(
                                           onPressed: () {
@@ -346,7 +348,7 @@ class ServiceCard extends StatelessWidget {
                                               );
                                             }
                                           },
-                                          child: const Text('Submit'),
+                                          child:  Text( AppLocalizations.of(context)!.submit),
                                         ),
                                       ],
                                     );
@@ -359,8 +361,8 @@ class ServiceCard extends StatelessWidget {
                                 color: Colors.green, // Example color
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const Text(
-                                'Reoffer',
+                              child:  Text(
+                                AppLocalizations.of(context)!.reoffer,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -374,7 +376,7 @@ class ServiceCard extends StatelessWidget {
                                   builder: (context) {
                                     return CustomAlertDialog(
                                         title:
-                                            'Are you sure you want to reject reproposal',
+                                        AppLocalizations.of(context)!.areYouSureYouWantToRejectReproposal,
                                         content: '',
                                         onConfirm: () {
                                           FirebaseFirestore.instance
@@ -404,8 +406,8 @@ class ServiceCard extends StatelessWidget {
                                 color: Colors.red, // Example color
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const Text(
-                                'Reject',
+                              child:  Text(
+                                AppLocalizations.of(context)!.reject,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -534,7 +536,7 @@ class ActiveJobCard extends StatelessWidget {
                                                       offer['lawyerDetails'])));
                                 },
                                 child: Text(
-                                  "View Profile",
+                                  AppLocalizations.of(context)!.viewProfile,
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,

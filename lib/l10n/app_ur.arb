@@ -144,8 +144,8 @@
   "servicesForColon": "خدمات:",
   "servicesCompleted": "مکمل خدمات",
   "noCompletedServicesAvailable": "کوئی مکمل شدہ خدمات دستیاب نہیں ہیں",
-  "helloLawyer": " ہیلو لاائر"
-
-
-
+  "helloLawyer": " ہیلو لاائر",
+  "clients": " گاہک",
+  "jobs": " ملازمتیں",
+  "requestPrice": " قیمت درخواست کی گئی"
 }

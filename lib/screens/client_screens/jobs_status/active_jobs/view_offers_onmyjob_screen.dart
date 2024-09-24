@@ -5,6 +5,7 @@ import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../conts.dart';
 

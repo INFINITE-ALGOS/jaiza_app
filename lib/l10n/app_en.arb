@@ -167,5 +167,7 @@
   "yes": "Yes",
   "no": "No",
   "seeMore": "See More",
-  "seeLess": "See Less"
+  "seeLess": "See Less",
+  "requestPrice": "Request Price: "
+
 }

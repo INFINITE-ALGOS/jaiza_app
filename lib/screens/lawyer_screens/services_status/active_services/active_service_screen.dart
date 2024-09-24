@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:law_education_app/controllers/my_services_check_controller.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs/view_active_job_detail_screen.dart';
@@ -52,7 +54,7 @@ class _ActiveServiceScreenLawyerState extends State<ActiveServiceScreenLawyer> {
               return Center(child: Text("Error: ${snapshot.error.toString()}"));
             }
             if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return const Center(child: Text("No Service Available"));
+              return  Center(child: Text(AppLocalizations.of(context)!.noServicesAvailable));
             } else {
               final combinedData =
                   snapshot.data![0] as List<Map<String, dynamic>>;
@@ -94,7 +96,7 @@ class _ActiveServiceScreenLawyerState extends State<ActiveServiceScreenLawyer> {
                         }
                       })
                   : Center(
-                      child: Text("No active services"),
+                      child: Text(AppLocalizations.of(context)!.noActiveServices),
                     );
             }
           },

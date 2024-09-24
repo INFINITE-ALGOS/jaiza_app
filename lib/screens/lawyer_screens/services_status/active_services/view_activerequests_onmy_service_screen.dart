@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/see_more_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../conts.dart';
 import '../../see_client_profile.dart';
@@ -22,7 +23,7 @@ class _ViewActiverequestsOnmyServiceScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Active Requests'),
+        title: Text(AppLocalizations.of(context)!.activeRequests),
         backgroundColor: Colors.transparent,
       ),
       body: widget.activeRequests.isNotEmpty
@@ -37,7 +38,7 @@ class _ViewActiverequestsOnmyServiceScreenState
                   }),
             )
           : Center(
-              child: Text("No Active Requests Found"),
+              child: Text(AppLocalizations.of(context)!.noActiveRequestsFound),
             ),
     );
   }
@@ -150,7 +151,7 @@ class ActiveServiceCard extends StatelessWidget {
                                               )));
                                 },
                                 child: Text(
-                                  "View Profile",
+                                  AppLocalizations.of(context)!.viewProfile,
                                   style: TextStyle(
                                       color: primaryColor,
                                       decorationColor: primaryColor,

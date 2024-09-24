@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:law_education_app/controllers/book_controller.dart';
 import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/provider/get_clients_provider.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
@@ -51,6 +52,8 @@ class LoginController {
             if (userType == 'client') {
               final lawyerProvider = Provider.of<GetLawyersProvider>(context, listen: false);
               final profileProvider = Provider.of<MyProfileProvider>(context, listen: false);
+              final lawBooksProvider = Provider.of<BookController>(context, listen: false);
+await lawBooksProvider.fetchBooks();
               await profileProvider.getProfileData();
               await lawyerProvider.getInitialLawyers();
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0,)),(Route route)=>false);
@@ -60,6 +63,8 @@ class LoginController {
               final clientProvider = Provider.of<GetClientsProvider>(context, listen: false);
 
               final profileProvider = Provider.of<MyProfileProvider>(context, listen: false);
+              final lawBooksProvider = Provider.of<BookController>(context, listen: false);
+              await lawBooksProvider.fetchBooks();
               await profileProvider.getProfileData();
               await clientProvider.getInitialClientss();
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer(selectedIndex: 0,)),(Route route)=>false);

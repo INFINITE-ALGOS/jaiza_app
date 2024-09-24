@@ -5,6 +5,7 @@ import 'package:law_education_app/provider/get_clients_provider.dart';
 import 'package:law_education_app/screens/lawyer_screens/see_client_profile.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../conts.dart';
 
@@ -76,7 +77,7 @@ class _AllClientsScreenState extends State<AllClientsScreen> {
                     child: TextField(
                       controller: searchController,
                       decoration: InputDecoration(
-                        hintText: "Search by name...",
+                        hintText: AppLocalizations.of(context)!.searchByName,
                         border: InputBorder.none,
                         icon:
                             const Icon(CupertinoIcons.search, color: greyColor),

@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,20 +33,13 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
   double screenWidth = 0;
   List<Map<String, dynamic>> initialClients = [];
 
-  Future<List<Books>>? books;
-
-  final bookController = BookController(); // Instance of BookController.
-
-  @override
-  void initState() {
-    super.initState();
-    books = bookController.fetchBooks(); // Fetch the list of books.
-  }
 
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<MyProfileProvider>(context);
     final generalProvider = Provider.of<GeneralProvider>(context);
+    final booksProvider = Provider.of<BookController>(context);
+    List<Map<String,dynamic>> books=booksProvider.books;
     List<String> crouselUrls = generalProvider.crouselUrlList;
     final profileData = profileProvider.profileData;
     final clientProvider = Provider.of<GetClientsProvider>(context);
@@ -358,8 +350,9 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                   // Title Row with 'View all' button
                   Row(
                     children: [
-                      const Text(
-                        "Law Books",
+                       Text(
+                         // "Law Books"
+                        AppLocalizations.of(context)!.lawBooks,
                         style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),
@@ -370,8 +363,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                               MaterialPageRoute(
                                   builder: (context) => const LawBooks()));
                         },
-                        child: const Text(
-                          "View all >>",
+                        child:  Text(
+AppLocalizations.of(context)!.viewAllDoubleArrow,
                           style: TextStyle(
                               color: primaryColor, fontWeight: FontWeight.w600),
                         ),
@@ -380,18 +373,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                   ),
 
                   // FutureBuilder for fetching and displaying books in a horizontal slider
-                  FutureBuilder<List<Books>>(
-                    future: books,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(child: Text('No books found'));
-                      } else {
-                        final books = snapshot.data!;
-                        return SizedBox(
+                   SizedBox(
                           height: screenHeight * 0.25,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -404,8 +386,8 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => PdfViewerScreen(
-                                        fileUrl: book.fileUrl,
-                                        title: book.title,
+                                        fileUrl: book['fileUrl'],
+                                        title: book['title'],
                                       ),
                                     ),
                                   );
@@ -422,13 +404,13 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                                           border: Border.all(color: lightGreyColor, width: 1),
                                         ),
                                         child: Image.network(
-                                          book.cover,
+                                          book['cover'],
                                           fit: BoxFit.cover,
                                         ),
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
-                                        book.title,
+                                        book['title'],
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600),
                                         overflow: TextOverflow.ellipsis,
@@ -440,10 +422,7 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                               );
                             },
                           ),
-                        );
-                      }
-                    },
-                  ),
+                        )
                 ],
               ),
             ),

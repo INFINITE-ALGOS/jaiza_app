@@ -7,6 +7,7 @@ import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import t
 import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../../conts.dart';
 import '../../see_lawyer_profile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Define a StarRating widget
 class StarRating extends StatefulWidget {
@@ -58,7 +59,8 @@ class CancelBookingScreen extends StatefulWidget {
   final Map<String, dynamic> job;
   final Map<String, dynamic> offer;
 
-  const CancelBookingScreen({super.key, required this.job, required this.offer});
+  const CancelBookingScreen(
+      {super.key, required this.job, required this.offer});
 
   @override
   _CancelBookingScreenState createState() => _CancelBookingScreenState();
@@ -87,7 +89,8 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+      body: SingleChildScrollView(
+        // Wrap with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -111,8 +114,9 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                           Container(
                             constraints: BoxConstraints(maxWidth: 200),
                             child: SeeMoreTextCustom(
-                             text:  widget.job['title'] ?? '??',
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                              text: widget.job['title'] ?? '??',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Spacer(),
@@ -136,7 +140,8 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(widget.job['duration'] ?? '', style: TextStyle()),
+                              Text(widget.job['duration'] ?? '',
+                                  style: TextStyle()),
                             ],
                           ),
                           Text(
@@ -155,15 +160,35 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                               Row(
                                 children: [
                                   Text(
-                                    widget.offer['lawyerDetails']['name'] ?? '??',
-                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                    widget.offer['lawyerDetails']['name'] ??
+                                        '??',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
                                   ),
-                                  SizedBox(width: 20,),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
                                   InkWell(
-                                      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: widget.offer['lawyerDetails'])));},
-                                      child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
-
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SeeLawyerProfile(
+                                                        lawyer: widget.offer[
+                                                            'lawyerDetails'])));
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .viewProfile,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor: primaryColor),
+                                      ))
                                 ],
                               ),
                               SizedBox(height: 10),
@@ -171,12 +196,16 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.star, color: yellowColor),
-                                  Text(widget.offer['lawyerDetails']['rating'] ?? '0.0', style: TextStyle()),
+                                  Text(
+                                      widget.offer['lawyerDetails']['rating'] ??
+                                          '0.0',
+                                      style: TextStyle()),
                                 ],
                               ),
                             ],
                           ),
-                          CacheImageCircle(url: widget.offer['lawyerDetails']['url']),
+                          CacheImageCircle(
+                              url: widget.offer['lawyerDetails']['url']),
                         ],
                       ),
                     ],
@@ -202,14 +231,15 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Your Rating',
+                          AppLocalizations.of(context)!.yourRating,
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(5.0),
@@ -238,18 +268,18 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
               ),
 
               Container(
-                margin:EdgeInsets.all(15.0),
+                margin: EdgeInsets.all(15.0),
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18.0),
-                  border: Border.all(color: lightGreyColor,width: 2),
+                  border: Border.all(color: lightGreyColor, width: 2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Drop a Review',
+                      AppLocalizations.of(context)!.dropAReview,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -258,28 +288,28 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                     ),
                     SizedBox(height: 5.0),
                     TextField(
-                      decoration: InputDecoration(hintText: "Write a review",border: InputBorder.none),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.writeAReview, border: InputBorder.none),
                     ),
                     SizedBox(height: 5.0),
-
                   ],
                 ),
               ),
 
               SizedBox(height: 16.0),
               Container(
-                margin:EdgeInsets.all(15.0),
+                margin: EdgeInsets.all(15.0),
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18.0),
-                  border: Border.all(color: lightGreyColor,width: 2),
+                  border: Border.all(color: lightGreyColor, width: 2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Reason for cancellation',
+                      AppLocalizations.of(context)!.reasonForCancellation,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -288,24 +318,30 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                     ),
                     SizedBox(height: 5.0),
                     TextField(
-                      decoration: InputDecoration(hintText: "Please write a valid reason",border: InputBorder.none),
+                      decoration: InputDecoration(
+                          hintText:AppLocalizations.of(context)!.pleaseWriteAValidReason,
+                          border: InputBorder.none),
                     ),
                     SizedBox(height: 5.0),
-
                   ],
                 ),
               ),
 
               SizedBox(height: 16.0),
               Text(
-                'Job Summary',
+                AppLocalizations.of(context)!.jobSummary,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
-              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}'),
-              OrderSummaryRow(label: 'Est. Tax', amount: 'PKR 0.0'),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.subtotal,
+                  amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}'),
+              OrderSummaryRow(label: AppLocalizations.of(context)!.estTax, amount: 'PKR 0.0'),
               Divider(),
-              OrderSummaryRow(label: 'Total', amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}', isTotal: true),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.total,
+                  amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}',
+                  isTotal: true),
 
               SizedBox(height: 20), // Replace Spacer with SizedBox
               Center(
@@ -313,27 +349,39 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     side: BorderSide(color: redColor),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                   onPressed: () {
-                    EasyLoading.show(status: "PLease wait");
-                    FirebaseFirestore.instance.collection('jobs').doc(widget.job['jobId']).update({'status':'pending'});
-                    FirebaseFirestore.instance.collection('offers').doc(widget.offer['offerDetails']['offerId']).update({'status':'cancelled'});
+                    EasyLoading.show(status: AppLocalizations.of(context)!.pleaseWait);
+                    FirebaseFirestore.instance
+                        .collection('jobs')
+                        .doc(widget.job['jobId'])
+                        .update({'status': 'pending'});
+                    FirebaseFirestore.instance
+                        .collection('offers')
+                        .doc(widget.offer['offerDetails']['offerId'])
+                        .update({'status': 'cancelled'});
                     EasyLoading.dismiss();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 3)),  (Route<dynamic> route) => false,);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BottomNavigationbarClient(selectedIndex: 3)),
+                      (Route<dynamic> route) => false,
+                    );
                     // Handle complete booking action
                   },
                   child: Text(
-                    'Cancel Booking',
+                    AppLocalizations.of(context)!.cancelBooking,
                     style: TextStyle(color: redColor),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-
             ],
           ),
         ),
@@ -363,11 +411,15 @@ class OrderSummaryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: isTotal ? 18.0 : 14.0, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontSize: isTotal ? 18.0 : 14.0,
+                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
           ),
           Text(
             amount,
-            style: TextStyle(fontSize: isTotal ? 18.0 : 14.0, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontSize: isTotal ? 18.0 : 14.0,
+                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
           ),
         ],
       ),

@@ -6,6 +6,7 @@ import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/screens/client_screens/bottom_nav.dart';
 import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../see_client_profile.dart';
 
@@ -18,13 +19,13 @@ class ViewPendingRequestsOnMyServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Pending Requests"),
+      appBar: AppBar(title:  Text(AppLocalizations.of(context)!.pendingRequests),
       backgroundColor: Colors.transparent,),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: pendingRequests!.isNotEmpty? ListView.builder(itemCount:pendingRequests!.length ,itemBuilder: (context,index){
           return OfferCard(request: pendingRequests![index]['requestDetails'], client: pendingRequests![index]['clientDetails']);
-        }): const Center(child: Text("No Requests Given By Clients"),),
+        }):  Center(child: Text(AppLocalizations.of(context)!.noRequestsGivenByClients),),
       ),
     );
   }
@@ -76,7 +77,7 @@ class OfferCard extends StatelessWidget {
                               SizedBox(width: 20,),
                               InkWell(
                                   onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeClientProfile(client: client,)));},
-                                  child: Text("View Profile",style: TextStyle(color: primaryColor,decorationColor: primaryColor,decoration: TextDecoration.underline),))
+                                  child: Text(AppLocalizations.of(context)!.viewProfile,style: TextStyle(color: primaryColor,decorationColor: primaryColor,decoration: TextDecoration.underline),))
 
                             ],
                           ),
@@ -109,8 +110,8 @@ class OfferCard extends StatelessWidget {
           RichText(
             text: TextSpan(
               children: [
-                const TextSpan(
-                  text: "Message: ",
+                 TextSpan(
+                  text: AppLocalizations.of(context)!.message,
                   style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(
@@ -124,8 +125,8 @@ class OfferCard extends StatelessWidget {
           RichText(
             text: TextSpan(
               children: [
-                const TextSpan(
-                  text: "Request Price: ",
+                 TextSpan(
+                  text: '',
                   style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
                 ),
                 TextSpan(

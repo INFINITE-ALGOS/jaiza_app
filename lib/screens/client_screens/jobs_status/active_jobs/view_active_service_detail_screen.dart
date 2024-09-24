@@ -7,6 +7,7 @@ import 'package:law_education_app/screens/lawyer_screens/services_status/cancell
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 import 'package:law_education_app/widgets/see_more_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../conts.dart';
 import '../../see_lawyer_profile.dart';
@@ -72,9 +73,9 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
                                       constraints:
                                           BoxConstraints(maxWidth: 200),
                                       child: SeeMoreTextCustom(
-                                        text:requestDetails['requestMessage'] ??
-                                            '??',
-
+                                        text:
+                                            requestDetails['requestMessage'] ??
+                                                '??',
                                         style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600),
@@ -134,11 +135,28 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    SizedBox(width: 20,),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
                                     InkWell(
-                                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyerDetails)));},
-                                        child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SeeLawyerProfile(
+                                                          lawyer:
+                                                              lawyerDetails)));
+                                        },
+                                        child: Text(
+                                          AppLocalizations.of(context)!.viewProfile,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationColor: primaryColor),
+                                        ))
                                   ],
                                 ),
                                 SizedBox(
@@ -176,8 +194,7 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Cancellation Policy\n\nIf you cancel less than 24 hours before your booking, you may be charged a cancellation fee up to the full amount of the services booked.',
-                  style: TextStyle(color: Colors.red),
+                    AppLocalizations.of(context)!.cancellationPolicy,                  style: TextStyle(color: Colors.red),
                 ),
               ),
 
@@ -185,17 +202,17 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
 
               // Order Summary
               Text(
-                'Job Summary',
+                AppLocalizations.of(context)!.jobSummary,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
               OrderSummaryRow(
-                  label: 'Subtotal',
+                  label: AppLocalizations.of(context)!.subtotal,
                   amount: 'PKR ${requestDetails['requestAmount']}'),
-              OrderSummaryRow(label: 'Est. Tax', amount: 'PKR 0.0'),
+              OrderSummaryRow(label: AppLocalizations.of(context)!.estTax, amount: 'PKR 0.0'),
               Divider(),
               OrderSummaryRow(
-                  label: 'Total',
+                  label: AppLocalizations.of(context)!.total,
                   amount: 'PKR ${requestDetails['requestAmount']}',
                   isTotal: true),
               SizedBox(
@@ -224,7 +241,7 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
                                 )));
                   },
                   child: Text(
-                    'Complete Booking',
+                    AppLocalizations.of(context)!.completeBooking,
                     style: TextStyle(color: primaryColor),
                   ),
                 ),
@@ -254,7 +271,7 @@ class ViewActiveServiceDetailScreen extends StatelessWidget {
                                 serviceDetails: serviceDetails)));
                   },
                   child: Text(
-                    'Cancel Booking',
+                    AppLocalizations.of(context)!.cancelBooking,
                     style: TextStyle(color: redColor),
                   ),
                 ),

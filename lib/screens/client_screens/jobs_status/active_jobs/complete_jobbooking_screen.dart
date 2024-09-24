@@ -6,6 +6,7 @@ import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import the custom alert dialog component
 import '../../../../conts.dart';
 import '../../see_lawyer_profile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Define a StarRating widget
 class StarRating extends StatefulWidget {
@@ -57,7 +58,8 @@ class AcceptBookingScreen extends StatefulWidget {
   final Map<String, dynamic> job;
   final Map<String, dynamic> offer;
 
-  const AcceptBookingScreen({super.key, required this.job, required this.offer});
+  const AcceptBookingScreen(
+      {super.key, required this.job, required this.offer});
 
   @override
   _AcceptBookingScreenState createState() => _AcceptBookingScreenState();
@@ -86,7 +88,8 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+      body: SingleChildScrollView(
+        // Wrap with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -113,7 +116,10 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                               constraints: BoxConstraints(maxWidth: 200),
                               child: Text(
                                 widget.job['title'] ?? '??',
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),maxLines: 1,overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w600),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Spacer(),
@@ -125,7 +131,8 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                               padding: EdgeInsets.all(5),
                               child: Text(
                                 '${widget.job['status'] ?? ''}'.toUpperCase(),
-                                style: TextStyle(color: whiteColor, fontSize: 9),
+                                style:
+                                    TextStyle(color: whiteColor, fontSize: 9),
                               ),
                             ),
                           ],
@@ -137,7 +144,8 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(widget.job['duration'] ?? '', style: TextStyle()),
+                                Text(widget.job['duration'] ?? '',
+                                    style: TextStyle()),
                               ],
                             ),
                             Text(
@@ -156,14 +164,35 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      widget.offer['lawyerDetails']['name'] ?? '??',
-                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                      widget.offer['lawyerDetails']['name'] ??
+                                          '??',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600),
                                     ),
-                                    SizedBox(width: 20,),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
                                     InkWell(
-                                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: widget.offer['lawyerDetails'])));},
-                                        child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SeeLawyerProfile(
+                                                          lawyer: widget.offer[
+                                                              'lawyerDetails'])));
+                                        },
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .viewProfile,
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 12,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              decorationColor: primaryColor),
+                                        ))
                                   ],
                                 ),
                                 SizedBox(height: 10),
@@ -171,12 +200,17 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(Icons.star, color: yellowColor),
-                                    Text(widget.offer['lawyerDetails']['rating'] ?? '0.0', style: TextStyle()),
+                                    Text(
+                                        widget.offer['lawyerDetails']
+                                                ['rating'] ??
+                                            '0.0',
+                                        style: TextStyle()),
                                   ],
                                 ),
                               ],
                             ),
-                            CacheImageCircle(url: widget.offer['lawyerDetails']['url']),
+                            CacheImageCircle(
+                                url: widget.offer['lawyerDetails']['url']),
                           ],
                         ),
                       ],
@@ -203,14 +237,15 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Your Rating',
+                          AppLocalizations.of(context)!.yourRating,
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(5.0),
@@ -239,18 +274,18 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
               ),
 
               Container(
-                margin:EdgeInsets.all(15.0),
+                margin: EdgeInsets.all(15.0),
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18.0),
-                  border: Border.all(color: lightGreyColor,width: 2),
+                  border: Border.all(color: lightGreyColor, width: 2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Drop a Review',
+                      AppLocalizations.of(context)!.dropAReview,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -259,24 +294,32 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                     ),
                     SizedBox(height: 5.0),
                     TextField(
-                      decoration: InputDecoration(hintText: "Write a review",border: InputBorder.none),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.writeAReview,
+                          border: InputBorder.none),
                     ),
                     SizedBox(height: 5.0),
-
                   ],
                 ),
               ),
 
               SizedBox(height: 16.0),
               Text(
-                'Job Summary',
+                AppLocalizations.of(context)!.jobSummary,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
-              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}'),
-              OrderSummaryRow(label: 'Est. Tax', amount: 'PKR 0.0'),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.subtotal,
+                  amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}'),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.estTax,
+                  amount: 'PKR 0.0'),
               Divider(),
-              OrderSummaryRow(label: 'Total', amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}', isTotal: true),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.total,
+                  amount: 'PKR ${widget.offer['offerDetails']['offerAmount']}',
+                  isTotal: true),
 
               SizedBox(height: 20), // Replace Spacer with SizedBox
               Center(
@@ -284,27 +327,39 @@ class _AcceptBookingScreenState extends State<AcceptBookingScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     side: BorderSide(color: primaryColor),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  onPressed: ()async {
-                    EasyLoading.show(status: "PLease wait");
-                  await  FirebaseFirestore.instance.collection('jobs').doc(widget.job['jobId']).update({'status':'completed'});
-                  await  FirebaseFirestore.instance.collection('offers').doc(widget.offer['offerDetails']['offerId']).update({'status':'completed'});
+                  onPressed: () async {
+                    EasyLoading.show(status:  AppLocalizations.of(context)!.pleaseWait);
+                    await FirebaseFirestore.instance
+                        .collection('jobs')
+                        .doc(widget.job['jobId'])
+                        .update({'status': 'completed'});
+                    await FirebaseFirestore.instance
+                        .collection('offers')
+                        .doc(widget.offer['offerDetails']['offerId'])
+                        .update({'status': 'completed'});
                     EasyLoading.dismiss();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 3)),  (Route<dynamic> route) => false,);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BottomNavigationbarClient(selectedIndex: 3)),
+                      (Route<dynamic> route) => false,
+                    );
                     // Handle complete booking action
                   },
                   child: Text(
-                    'Complete Booking',
+                    AppLocalizations.of(context)!.completeBooking,
                     style: TextStyle(color: primaryColor),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-
             ],
           ),
         ),
@@ -334,11 +389,15 @@ class OrderSummaryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: isTotal ? 18.0 : 14.0, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontSize: isTotal ? 18.0 : 14.0,
+                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
           ),
           Text(
             amount,
-            style: TextStyle(fontSize: isTotal ? 18.0 : 14.0, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontSize: isTotal ? 18.0 : 14.0,
+                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
           ),
         ],
       ),

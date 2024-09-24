@@ -39,13 +39,13 @@ class _BottomNavigationLawyerState extends State<BottomNavigationLawyer> {
     const HomeScreenLawyer(),
     const MyChats(),
     const AllClientsScreen(),
-    ServiceStatusScreenLawyer(), 
+    const ServiceStatusScreenLawyer(),
   ];
 
   final List<String> labelText = [
     'Home',
     'Chat',
-    'Jobs',
+    'AI Bot',
     'All Services',
   ];
 

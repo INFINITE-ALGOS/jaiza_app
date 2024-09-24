@@ -6,6 +6,7 @@ import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/custom_alert_dialog.dart'; // Import the custom alert dialog component
 import '../../../../conts.dart';
 import '../../see_lawyer_profile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Define a StarRating widget
 class StarRating extends StatefulWidget {
@@ -58,13 +59,19 @@ class CompleteRequestBookingScreen extends StatefulWidget {
   final Map<String, dynamic> serviceDetails;
   final Map<String, dynamic> lawyerDetails;
 
-  const CompleteRequestBookingScreen({super.key, required this.requestDetails, required this.lawyerDetails,required this.serviceDetails});
+  const CompleteRequestBookingScreen(
+      {super.key,
+      required this.requestDetails,
+      required this.lawyerDetails,
+      required this.serviceDetails});
 
   @override
-  _CompleteRequestBookingScreenState createState() => _CompleteRequestBookingScreenState();
+  _CompleteRequestBookingScreenState createState() =>
+      _CompleteRequestBookingScreenState();
 }
 
-class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScreen> {
+class _CompleteRequestBookingScreenState
+    extends State<CompleteRequestBookingScreen> {
   double _rating = 3.0; // Default rating
 
   @override
@@ -87,7 +94,8 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
           ),
         ],
       ),
-      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+      body: SingleChildScrollView(
+        // Wrap with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -109,10 +117,12 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                         children: [
                           Container(
                             constraints: BoxConstraints(maxWidth: 200),
-
                             child: Text(
-                              widget.requestDetails['requestMessage'] ?? '??',maxLines: 1,overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                              widget.requestDetails['requestMessage'] ?? '??',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Spacer(),
@@ -123,7 +133,8 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                             ),
                             padding: EdgeInsets.all(5),
                             child: Text(
-                              '${widget.requestDetails['status'] ?? ''}'.toUpperCase(),
+                              '${widget.requestDetails['status'] ?? ''}'
+                                  .toUpperCase(),
                               style: TextStyle(color: whiteColor, fontSize: 9),
                             ),
                           ),
@@ -136,7 +147,8 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(widget.requestDetails['duration'] ?? '', style: TextStyle()),
+                              Text(widget.requestDetails['duration'] ?? '',
+                                  style: TextStyle()),
                             ],
                           ),
                           Text(
@@ -156,13 +168,32 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                                 children: [
                                   Text(
                                     widget.lawyerDetails['name'] ?? '??',
-                                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600),
                                   ),
-                                  SizedBox(width: 20,),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
                                   InkWell(
-                                      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: widget.lawyerDetails)));},
-                                      child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SeeLawyerProfile(
+                                                        lawyer: widget
+                                                            .lawyerDetails)));
+                                      },
+                                      child: Text(
+                                        AppLocalizations.of(context)!.viewProfile,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor: primaryColor),
+                                      ))
                                 ],
                               ),
                               SizedBox(height: 10),
@@ -170,7 +201,8 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.star, color: yellowColor),
-                                  Text(widget.lawyerDetails['rating'] ?? '0.0', style: TextStyle()),
+                                  Text(widget.lawyerDetails['rating'] ?? '0.0',
+                                      style: TextStyle()),
                                 ],
                               ),
                             ],
@@ -201,14 +233,15 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Your Rating',
+                          AppLocalizations.of(context)!.yourRating,
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(5.0),
@@ -237,18 +270,18 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
               ),
 
               Container(
-                margin:EdgeInsets.all(15.0),
+                margin: EdgeInsets.all(15.0),
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18.0),
-                  border: Border.all(color: lightGreyColor,width: 2),
+                  border: Border.all(color: lightGreyColor, width: 2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Drop a Review',
+                      AppLocalizations.of(context)!.dropAReview,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -257,24 +290,29 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                     ),
                     SizedBox(height: 5.0),
                     TextField(
-                      decoration: InputDecoration(hintText: "Write a review",border: InputBorder.none),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.writeAReview, border: InputBorder.none),
                     ),
                     SizedBox(height: 5.0),
-
                   ],
                 ),
               ),
 
               SizedBox(height: 16.0),
               Text(
-                'Job Summary',
+                AppLocalizations.of(context)!.jobSummary,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
-              OrderSummaryRow(label: 'Subtotal', amount: 'PKR ${widget.requestDetails['requestAmount']}'),
-              OrderSummaryRow(label: 'Est. Tax', amount: 'PKR 0.0'),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.subtotal,
+                  amount: 'PKR ${widget.requestDetails['requestAmount']}'),
+              OrderSummaryRow(label: AppLocalizations.of(context)!.estTax, amount: 'PKR 0.0'),
               Divider(),
-              OrderSummaryRow(label: 'Total', amount: 'PKR ${widget.requestDetails['requestAmount']}', isTotal: true),
+              OrderSummaryRow(
+                  label: AppLocalizations.of(context)!.total,
+                  amount: 'PKR ${widget.requestDetails['requestAmount']}',
+                  isTotal: true),
 
               SizedBox(height: 20), // Replace Spacer with SizedBox
               Center(
@@ -282,27 +320,35 @@ class _CompleteRequestBookingScreenState extends State<CompleteRequestBookingScr
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     side: BorderSide(color: primaryColor),
-                    padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  onPressed: ()async{
-                    EasyLoading.show(status: "Please wait");
-                    await FirebaseFirestore.instance.collection('requests').doc(widget.requestDetails['requestId']).update(
-                        {'status':'completed'});
-                   EasyLoading.dismiss();
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 3)),  (Route<dynamic> route) => false,);
+                  onPressed: () async {
+                    EasyLoading.show(status: AppLocalizations.of(context)!.pleaseWait);
+                    await FirebaseFirestore.instance
+                        .collection('requests')
+                        .doc(widget.requestDetails['requestId'])
+                        .update({'status': 'completed'});
+                    EasyLoading.dismiss();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BottomNavigationbarClient(selectedIndex: 3)),
+                      (Route<dynamic> route) => false,
+                    );
                     // Handle complete booking action
                   },
                   child: Text(
-                    'Complete Booking',
+                    AppLocalizations.of(context)!.completeBooking,
                     style: TextStyle(color: primaryColor),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-
             ],
           ),
         ),
@@ -332,11 +378,15 @@ class OrderSummaryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: isTotal ? 18.0 : 14.0, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontSize: isTotal ? 18.0 : 14.0,
+                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
           ),
           Text(
             amount,
-            style: TextStyle(fontSize: isTotal ? 18.0 : 14.0, fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(
+                fontSize: isTotal ? 18.0 : 14.0,
+                fontWeight: isTotal ? FontWeight.bold : FontWeight.normal),
           ),
         ],
       ),
