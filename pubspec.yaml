@@ -27,7 +27,8 @@ dependencies:
   http:
   firebase_app_check:
   dio:
-
+  geolocator:
+  geocoding:
   url_launcher:
   lottie:
   readmore:

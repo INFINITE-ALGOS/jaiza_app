@@ -1,0 +1,1 @@
+C:\Users\a\Documents\GitHub\law_education_app\android\app\src\main\kotlin\com\danish\law_education_app\MainActivity.kt

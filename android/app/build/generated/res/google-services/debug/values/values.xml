@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">393793136670</string>
+    <string name="google_api_key" translatable="false">AIzaSyCfa6k9MaXpUSwogalu4-xhFJK-5iycMF0</string>
+    <string name="google_app_id" translatable="false">1:393793136670:android:55eea96a350a9d5823e60f</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCfa6k9MaXpUSwogalu4-xhFJK-5iycMF0</string>
+    <string name="google_storage_bucket" translatable="false">laweducationapp.appspot.com</string>
+    <string name="project_id" translatable="false">laweducationapp</string>
+</resources>

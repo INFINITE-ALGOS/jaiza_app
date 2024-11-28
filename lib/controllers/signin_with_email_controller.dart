@@ -15,6 +15,7 @@ import '../provider/myprofile_controller.dart';
 
 
 class LoginController {
+  bool freshLogin=true;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // Method to sign in user
@@ -56,7 +57,7 @@ class LoginController {
 await lawBooksProvider.fetchBooks();
               await profileProvider.getProfileData();
               await lawyerProvider.getInitialLawyers();
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0,)),(Route route)=>false);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationbarClient(selectedIndex: 0,freshLogin: true,)),(Route route)=>false);
             }
 
             else if (userType == 'lawyer') {
@@ -67,7 +68,7 @@ await lawBooksProvider.fetchBooks();
               await lawBooksProvider.fetchBooks();
               await profileProvider.getProfileData();
               await clientProvider.getInitialClientss();
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer(selectedIndex: 0,)),(Route route)=>false);
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationLawyer(selectedIndex: 0,freshLogin: true,)),(Route route)=>false);
             }
             else{
               return CustomScaffoldSnackbar.showSnackbar(context,"An unexpected error occur,please try again",backgroundColor: redColor);

@@ -14,12 +14,14 @@ class LawyerModel{
   final Map<String,dynamic> lawyerProfile;
   final List<Map<String,dynamic>> portfolio;
   String address;
+  Map<String,dynamic> location;
 
 
 
   LawyerModel({
     required this.name,
     required this.email,
+    required this.location,
     required this.id,
     required this.address,
     required this.phone,
@@ -39,6 +41,7 @@ class LawyerModel{
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'location':location,
       'email': email,
       'address':address,
       'id':id,
@@ -61,6 +64,7 @@ class LawyerModel{
   factory LawyerModel.fromMap(Map<String, dynamic> json) {
     return LawyerModel(
         name: json['name'],
+        location: json['location'],
         id:json['id'],
         portfolio: json['portfolio'],
         lawyerProfile: json['lawyerProfile'],

@@ -5,11 +5,14 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:geocoding/geocoding.dart';
 
 class MyProfileProvider extends ChangeNotifier {
   Map<String, dynamic> profileData = {};
+  String userLocation="No Location";
   String? imageUrl;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -36,5 +39,4 @@ class MyProfileProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
- }
+}

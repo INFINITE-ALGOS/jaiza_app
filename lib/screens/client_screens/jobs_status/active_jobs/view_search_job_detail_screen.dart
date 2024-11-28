@@ -10,12 +10,7 @@ import 'package:law_education_app/screens/client_screens/jobs_status/active_jobs
 import 'package:law_education_app/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 import '../../../../provider/general_provider.dart';
-
-import 'package:flutter/material.dart';
-import 'package:law_education_app/conts.dart';
-import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart';
-import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ViewJobDetailsScreen extends StatefulWidget {
   final Map<String, dynamic> job;
@@ -42,7 +37,7 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Job Details"),
+        title:  Text(AppLocalizations.of(context)!.jobDetails),
         backgroundColor: primaryColor,
         elevation: 0,
         actions: [
@@ -71,8 +66,8 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                 context: context,
                 builder: (context) {
                   return CustomAlertDialog(
-                    title: 'Delete my Job',
-                    content: 'Are you sure you want to delete your job?',
+                    title: AppLocalizations.of(context)!.deleteMyJob,
+                    content: AppLocalizations.of(context)!.areYouSureYouWantToDeleteThisJobPosting,
                     onConfirm: () {
                       FirebaseFirestore.instance
                           .collection('jobs')
@@ -135,8 +130,8 @@ class _ViewJobDetailsScreenState extends State<ViewJobDetailsScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: const Text(
-                    "View Offers",
+                  child:  Text(
+                    AppLocalizations.of(context)!.viewOffers,
                     style: TextStyle(color: whiteColor, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -248,8 +243,8 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
               child: const Icon(CupertinoIcons.back),
             ),
             SizedBox(width: screenWidth * 0.07),
-            const Text(
-              "Edit Job Details",
+             Text(
+             AppLocalizations.of(context)!.editJobDetails,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
           ],
@@ -264,8 +259,8 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
             child: Column(
               children: [
                 _buildDropdownField(
-                  title: "Category",
-                  hintText: "Select Category",
+                  title:  AppLocalizations.of(context)!.category,
+                  hintText: AppLocalizations.of(context)!.selectCategory,
                   value: category,
                   items: categoriesOptions,
                   onChanged: (value) {
@@ -276,35 +271,35 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 _buildTextField(
-                  title: "Service Title",
+                  title:  AppLocalizations.of(context)!.serviceTitle,
                   controller: titleController,
-                  hintText: "Enter Title",
+                  hintText:  AppLocalizations.of(context)!.enterTitle,
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 _buildTextField(
-                  title: "Description",
+                  title:  AppLocalizations.of(context)!.description,
                   controller: descriptionController,
-                  hintText: "Enter Description",
+                  hintText: AppLocalizations.of(context)!.enterDescription,
                   maxLines: null,
                   height: screenHeight * 0.2,
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 _buildTextField(
-                  title: "Location",
+                  title:  AppLocalizations.of(context)!.location,
                   controller: locationController,
-                  hintText: "Enter Location",
+                  hintText:  AppLocalizations.of(context)!.enterLocation,
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 _buildTextField(
-                  title: "Price",
+                  title:  AppLocalizations.of(context)!.price,
                   controller: priceController,
-                  hintText: "Enter Price",
+                  hintText:  AppLocalizations.of(context)!.enterPrice,
                   keyboardType: TextInputType.number,
                 ),
                 SizedBox(height: screenHeight * 0.05),
                 _buildDropdownField(
-                  title: "Duration",
-                  hintText: "Select Duration",
+                  title:  AppLocalizations.of(context)!.duration,
+                  hintText:  AppLocalizations.of(context)!.selectDuration,
                   value: selectedDuration,
                   items: durationOptions,
                   onChanged: (value) {
@@ -319,16 +314,16 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                 if (selectedDuration == "Custom") ...[
                   SizedBox(height: screenHeight * 0.02),
                   _buildTextField(
-                    title: "Custom Duration",
+                    title:  AppLocalizations.of(context)!.customDuration,
                     controller: customDurationController,
-                    hintText: "Enter Custom Duration",
+                    hintText:  AppLocalizations.of(context)!.enterCustomDuration,
                   ),
                 ],
                 SizedBox(height: screenHeight * 0.05),
                 InkWell(
                   onTap: () {
                     if (key.currentState!.validate()) {
-                      EasyLoading.show(status: "Please wait");
+                      EasyLoading.show(status:  AppLocalizations.of(context)!.pleaseWait);
                       String duration = selectedDuration == "Custom"
                           ? customDurationController.text.trim()
                           : selectedDuration ?? "";
@@ -368,8 +363,8 @@ class _EditJobDetailScreenState extends State<EditJobDetailScreen> {
                       borderRadius: BorderRadius.circular(12),
                       color: primaryColor,
                     ),
-                    child: const Text(
-                      "Done",
+                    child:  Text(
+                      AppLocalizations.of(context)!.done,
                       style: TextStyle(
                         color: whiteColor,
                         fontWeight: FontWeight.w600,

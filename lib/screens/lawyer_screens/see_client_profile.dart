@@ -9,7 +9,7 @@ import 'package:law_education_app/screens/lawyer_screens/bottom_navigation_bar.d
 import 'package:law_education_app/widgets/see_more_text.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../conts.dart';
 import '../../utils/custom_snackbar.dart';
 import '../../widgets/custom_scaffold_messanger.dart';
@@ -88,9 +88,9 @@ class _SeeClientProfileState extends State<SeeClientProfile> {
                                         client: widget.client,
                                         categoryList: categoryList)));
                           },
-                          child: const Center(
+                          child:  Center(
                             child: Text(
-                              "Book",
+                              AppLocalizations.of(context)!.book,
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -127,8 +127,8 @@ class _SeeClientProfileState extends State<SeeClientProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Information',
+          Text(
+            AppLocalizations.of(context)!.information,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -136,9 +136,9 @@ class _SeeClientProfileState extends State<SeeClientProfile> {
             ),
           ),
           const SizedBox(height: 10),
-          _buildInfoRow('Phone', client['phone']),
-          _buildInfoRow('Email', client['email']),
-          _buildInfoRow('Address', client['address']),
+          _buildInfoRow(AppLocalizations.of(context)!.phoneNo, client['phone']),
+          _buildInfoRow(AppLocalizations.of(context)!.email, client['email']),
+          _buildInfoRow(AppLocalizations.of(context)!.address, client['address']),
           const SizedBox(height: 20),
         ],
       ),
@@ -314,7 +314,7 @@ class _SeeJobsState extends State<SeeJobs> {
             }
 
             if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return Center(child: Text("No Jobs Found"));
+              return Center(child: Text(AppLocalizations.of(context)!.noJobsFound));
             } else {
               List<Map<String, dynamic>> jobs = snapshot.data!;
               return Column(
@@ -432,7 +432,7 @@ class _SeeJobsState extends State<SeeJobs> {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                'Request Job',
+                                                AppLocalizations.of(context)!.requestJob,
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w600,
@@ -455,7 +455,7 @@ class _SeeJobsState extends State<SeeJobs> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Rejected',
+                                              AppLocalizations.of(context)!.rejected,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w600,
@@ -477,7 +477,7 @@ class _SeeJobsState extends State<SeeJobs> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Reproposal',
+                                              AppLocalizations.of(context)!.reproposal,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w600,
@@ -499,7 +499,7 @@ class _SeeJobsState extends State<SeeJobs> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Active',
+                                              AppLocalizations.of(context)!.active,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w600,
@@ -521,7 +521,7 @@ class _SeeJobsState extends State<SeeJobs> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              'Cancelled',
+                                              AppLocalizations.of(context)!.cancelled,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w600,
@@ -565,15 +565,15 @@ class _SeeJobsState extends State<SeeJobs> {
                   children: [
                     TextField(
                       controller: requestController,
-                      decoration: const InputDecoration(
-                          hintText: 'Enter your offer details'),
+                      decoration:  InputDecoration(
+                          hintText: AppLocalizations.of(context)!.enterYourOfferDetails),
                     ),
                     SizedBox(height: 10),
                     TextField(
                       keyboardType: TextInputType.number,
                       controller: priceController,
-                      decoration: const InputDecoration(
-                          hintText: 'Enter your offered price'),
+                      decoration:  InputDecoration(
+                          hintText: AppLocalizations.of(context)!.enterYourOfferedPrice),
                     ),
                     SizedBox(height: 10),
                   ],
@@ -583,8 +583,8 @@ class _SeeJobsState extends State<SeeJobs> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      'Cancel',
+                    child:  Text(
+                      AppLocalizations.of(context)!.cancel,
                       style: TextStyle(color: primaryColor),
                     ),
                   ),
@@ -606,11 +606,11 @@ class _SeeJobsState extends State<SeeJobs> {
                       } else {
                         CustomSnackbar.showError(
                             context: context,
-                            title: "Error sending request",
-                            message: "PLease fill all the fields");
+                            title: AppLocalizations.of(context)!.errorSendingRequest,
+                            message: AppLocalizations.of(context)!.pleaseFillAllTheFields);
                       }
                     },
-                    child: const Text('Submit',
+                    child:  Text(AppLocalizations.of(context)!.submit,
                         style: TextStyle(color: primaryColor)),
                   ),
                 ],

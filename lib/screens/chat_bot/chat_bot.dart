@@ -39,59 +39,61 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      body: Container(
 
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-                child: ListView.builder(itemCount:_messages.length,itemBuilder: (context,index){
-                  final message = _messages[index];
-                  return Messages(isUser: message.isUser, message: message.message, date: DateFormat('HH:mm').format(message.date));
-                })
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 15,
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: TextFormField(
-                        style: TextStyle(color: blackColor),
-                        controller: _userInput,
-                        decoration: InputDecoration(
-                          labelText: 'Enter Your Message',
-                          labelStyle: TextStyle(color: primaryColor), // Set label text color to primaryColor
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: primaryColor), // Primary color for enabled border
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: primaryColor, width: 2.0), // Primary color for focused border
-                            borderRadius: BorderRadius.circular(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                  child: ListView.builder(itemCount:_messages.length,itemBuilder: (context,index){
+                    final message = _messages[index];
+                    return Messages(isUser: message.isUser, message: message.message, date: DateFormat('HH:mm').format(message.date));
+                  })
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 15,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: TextFormField(
+                          style: TextStyle(color: blackColor),
+                          controller: _userInput,
+                          decoration: InputDecoration(
+                            labelText: 'Enter Your Message',
+                            labelStyle: TextStyle(color: primaryColor), // Set label text color to primaryColor
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor), // Primary color for enabled border
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor, width: 2.0), // Primary color for focused border
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
-                      ),
 
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  IconButton(
-                      padding: EdgeInsets.all(12),
-                      iconSize: 30,
-                      onPressed: (){
-                        sendMessage();
-                        _userInput.clear();
-                      },
-                      icon: Icon(Icons.send,color: primaryColor,))
-                ],
-              ),
-            )
-          ],
+                    Spacer(),
+                    IconButton(
+                        padding: EdgeInsets.all(12),
+                        iconSize: 30,
+                        onPressed: (){
+                          sendMessage();
+                          _userInput.clear();
+                        },
+                        icon: Icon(Icons.send,color: primaryColor,))
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
-      );
+    );
   }
 }
 

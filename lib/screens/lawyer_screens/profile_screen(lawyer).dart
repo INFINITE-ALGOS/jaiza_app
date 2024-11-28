@@ -3,6 +3,7 @@ import 'package:law_education_app/conts.dart';
 import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/screens/client_screens/edit_profile_screen_client.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../lawyer_screens/edit_profile_lawyer_screen.dart';
 
@@ -80,7 +81,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                     children: [
                       SizedBox(height: 30),
                       Text(
-                        'Other Information',
+                        AppLocalizations.of(context)!.otherInformation,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25),
                       ),
@@ -94,7 +95,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                           ),
                         ),
                         child: Text(
-                          "Name: ${_profileData?['name'] ?? ""}",
+                          "${AppLocalizations.of(context)!.nameColon} ${_profileData?['name'] ?? ""}",
                           style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
@@ -108,7 +109,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                           ),
                         ),
                         child: Text(
-                          'Phone: ${_profileData?['phone'] ?? ""}',
+                          '${AppLocalizations.of(context)!.phoneColon} ${_profileData?['phone'] ?? ""}',
                           style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
@@ -122,7 +123,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                           ),
                         ),
                         child: Text(
-                          'Rating: ${_profileData?['rating'] ?? ""}',
+                          '${AppLocalizations.of(context)!.ratingColon} ${_profileData?['rating'] ?? ""}',
                           style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
@@ -136,7 +137,21 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                           ),
                         ),
                         child: Text(
-                          'Address: ${_profileData?['address'] ?? ""}',
+                          '${AppLocalizations.of(context)!.addressColon} ${_profileData?['address'] ?? ""}',
+                          style: TextStyle(fontSize: 17, color: Colors.grey),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                                color: Colors.grey.shade300, width: 1),
+                          ),
+                        ),
+                        child: Text(
+                          '${AppLocalizations.of(context)!.location} ${profileProvider.userLocation}',
                           style: TextStyle(fontSize: 17, color: Colors.grey),
                         ),
                       ),
@@ -156,7 +171,7 @@ class _ProfileScreenLawyerState extends State<ProfileScreenLawyer> {
                             // _fetchProfileData();
                           },
                           child: Text(
-                            'Edit Info',
+                           AppLocalizations.of(context)!.editInfoSingleQuote,
                             style: TextStyle(color: whiteColor),
                           ),
                           style: ElevatedButton.styleFrom(

@@ -392,7 +392,7 @@ class _AllJobsRelatedToCategoryState extends State<AllJobsRelatedToCategory> {
                                           color: yellowColor,
                                         ),
                                         Text(
-                                          client['rating'] ?? '0.0',
+                                          client['rating'].toString() ?? '0.0',
                                           style: TextStyle(),
                                         ),
                                       ],

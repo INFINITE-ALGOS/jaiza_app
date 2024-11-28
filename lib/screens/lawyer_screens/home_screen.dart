@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:intl/intl.dart';
 import 'package:law_education_app/controllers/my_services_check_controller.dart';
 import 'package:law_education_app/provider/get_clients_provider.dart';
@@ -78,19 +77,27 @@ class _HomeScreenLawyerState extends State<HomeScreenLawyer> {
                       width: 10,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           AppLocalizations.of(context)!.currentLocation,
                           style: TextStyle(fontSize: 12, color: greyColor),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.newYorkCity,
-                          style: TextStyle(fontSize: 12, color: blackColor),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: screenWidth*0.78),
+                          child: Consumer<MyProfileProvider>(
+                              builder: (context,myProfile,child){
+                                return Text(
+                                  profileProvider.profileData['address'],overflow: TextOverflow.ellipsis,maxLines:1,
+                                  style: TextStyle(fontSize: 12, color: blackColor),
+                                )
+                                ;}
+                          ),
                         ),
+
+
                       ],
                     ),
-                    Spacer(),
-                    Icon(CupertinoIcons.bell),
                   ],
                 ),
               ),

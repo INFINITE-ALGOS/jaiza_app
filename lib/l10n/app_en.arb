@@ -168,6 +168,11 @@
   "no": "No",
   "seeMore": "See More",
   "seeLess": "See Less",
-  "requestPrice": "Request Price: "
-
+  "requestPrice": "Request Price: ",
+  "offers": "Offers",
+  "noOffersGivenByLawyer": "No Offers Given By Lawyer",
+  "areYouSureYouWantToAcceptTheOffer":"Are You Sure You Want To Accept The Offer",
+  "areYouSureYouWantToRejectTheOffer":"Are You Sure You Want To Reject The Offer",
+  "viewOffers":"View Offers",
+  "searchByTitleOrDescription":"Search By Title Or Description"
 }

@@ -4,6 +4,7 @@ import 'package:law_education_app/screens/client_screens/see_lawyer_profile.dart
 import 'package:law_education_app/widgets/cache_image_circle.dart';
 import 'package:law_education_app/widgets/see_more_text.dart';
 import '../../../controllers/my_jobs_check_contoller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CancelledJobsScreen extends StatefulWidget {
   const CancelledJobsScreen({super.key});
@@ -28,11 +29,8 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
         padding: const EdgeInsets.all(12.0),
         child: FutureBuilder<List<dynamic>>(
           future: Future.wait([
-            _myJobsCheckController.fetchJobsAndOffers(
-                context,
-                ['pending','deleted','completed','active'],
-                ['cancelled']
-            ),
+            _myJobsCheckController.fetchJobsAndOffers(context,
+                ['pending', 'deleted', 'completed', 'active'], ['cancelled']),
             _myJobsCheckController.fetchRequests(['cancelled'])
           ]),
           builder: (context, snapshot) {
@@ -43,10 +41,14 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
               return Center(child: Text("Error: ${snapshot.error.toString()}"));
             }
             if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return const Center(child: Text("No Cancelled Jobs Available"));
+              return Center(
+                  child: Text(
+                      AppLocalizations.of(context)!.noCancelledJobsAvailable));
             } else {
-              final combinedList = snapshot.data![0] as List<Map<String, dynamic>>; // Jobs data
-              final servicesList = snapshot.data![1] as List<Map<String, dynamic>>; // Services data
+              final combinedList =
+                  snapshot.data![0] as List<Map<String, dynamic>>; // Jobs data
+              final servicesList = snapshot.data![1]
+                  as List<Map<String, dynamic>>; // Services data
               combinedList.addAll(servicesList);
 
               // Use cancelledOffersWidgets to hold all cancelled jobs and services
@@ -58,7 +60,8 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
 
                 if (isJob) {
                   final jobs = itemData['jobDetails'] as Map<String, dynamic>;
-                  final offers = itemData['offers'] as List<Map<String, dynamic>>?;
+                  final offers =
+                      itemData['offers'] as List<Map<String, dynamic>>?;
 
                   if (offers != null && offers.isNotEmpty) {
                     for (var offer in offers) {
@@ -70,8 +73,7 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
                       );
                     }
                   }
-                }
-                else {
+                } else {
                   final requestData = itemData;
                   cancelledOffersWidgets.add(
                     ServiceCard(
@@ -86,11 +88,12 @@ class _CancelledJobsScreenState extends State<CancelledJobsScreen> {
               // Return ListView with all cancelled offers
               return cancelledOffersWidgets.isNotEmpty
                   ? ListView(
-                children: cancelledOffersWidgets,
-              )
-                  : const Center(
-                child: Text('No cancelled jobs'),
-              );
+                      children: cancelledOffersWidgets,
+                    )
+                  : Center(
+                      child:
+                          Text(AppLocalizations.of(context)!.noCancelledJobs),
+                    );
             }
           },
         ),
@@ -128,8 +131,9 @@ class JobCard extends StatelessWidget {
                 Container(
                   constraints: BoxConstraints(maxWidth: 200),
                   child: SeeMoreTextCustom(
-                   text:  job['title'] ?? '??',
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    text: job['title'] ?? '??',
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w600),
                   ),
                 ),
                 const Spacer(),
@@ -171,13 +175,28 @@ class JobCard extends StatelessWidget {
                       children: [
                         Text(
                           offer['lawyerDetails']['name'] ?? '??',
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         InkWell(
-                            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: offer['lawyerDetails'])));},
-                            child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SeeLawyerProfile(
+                                          lawyer: offer['lawyerDetails'])));
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.viewProfile,
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 12,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: primaryColor),
+                            ))
                       ],
                     ),
                     const SizedBox(height: 10),
@@ -233,8 +252,9 @@ class ServiceCard extends StatelessWidget {
                 Container(
                   constraints: BoxConstraints(maxWidth: 200),
                   child: SeeMoreTextCustom(
-                   text:  requestDetails['requestMessage'] ?? '??',
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    text: requestDetails['requestMessage'] ?? '??',
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w600),
                   ),
                 ),
                 const Spacer(),
@@ -276,13 +296,28 @@ class ServiceCard extends StatelessWidget {
                       children: [
                         Text(
                           lawyerDetails['name'] ?? '??',
-                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(width: 20,),
+                        SizedBox(
+                          width: 20,
+                        ),
                         InkWell(
-                            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SeeLawyerProfile(lawyer: lawyerDetails)));},
-                            child: Text("View Profile",style: TextStyle(color: primaryColor,fontSize: 12,decoration: TextDecoration.underline,decorationColor: primaryColor),))
-
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SeeLawyerProfile(
+                                          lawyer: lawyerDetails)));
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.viewProfile,
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 12,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: primaryColor),
+                            ))
                       ],
                     ),
                     const SizedBox(height: 10),

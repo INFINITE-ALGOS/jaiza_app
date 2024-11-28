@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:law_education_app/controllers/general+admin_task.dart';
 import 'package:law_education_app/provider/get_lawyers_provider.dart';
+import 'package:law_education_app/provider/myprofile_controller.dart';
 import 'package:law_education_app/screens/client_screens/all_lawyers_screens.dart';
 import 'package:law_education_app/screens/client_screens/all_services_screen.dart';
 import 'package:law_education_app/screens/client_screens/pdf_viewer_screen.dart';
@@ -43,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
     initialLawyers=lawyerProvider.initialLawyers;
 
     final generalProvider = Provider.of<GeneralProvider>(context);
+    final profileProvider = Provider.of<MyProfileProvider>(context,listen: false);
+
     final booksProvider = Provider.of<BookController>(context);
 List<Map<String,dynamic>> books=booksProvider.books;
     List<String> crouselUrls=generalProvider.crouselUrlList ;
@@ -57,34 +60,36 @@ List<Map<String,dynamic>> books=booksProvider.books;
               child: Container(
                 child:  Row(
                   children: [
-                    InkWell(
-                      child: Icon(
-                        CupertinoIcons.location,
-                        color: greyColor,
-                      ),
-                      onTap:(){
-                       // print(FirebaseAuth.instance.currentUser!.uid);
-                       // GeneralAdmiinTaskController().getCategoriesUrl('general/categories/tax.jpg', 'tax');
-                        //CrouserSliderController().fetchAndSaveUrls('general/crouselImages');
-                      },
+                    Icon(
+                      CupertinoIcons.location,
+                      color: greyColor,
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           AppLocalizations.of(context)!.currentLocation,
                           style: TextStyle(fontSize: 12, color: greyColor),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.newYorkCity,
-                          style: TextStyle(fontSize: 12, color: blackColor),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: screenWidth*0.78),
+                          child: Consumer<MyProfileProvider>(
+                            builder: (context,myProfile,child){
+                              return Text(
+                                profileProvider.profileData['address'],overflow: TextOverflow.ellipsis,maxLines:1,
+                                style: TextStyle(fontSize: 12, color: blackColor),
+                              )
+                              ;}
+                          ),
                         ),
+
+
                       ],
                     ),
-                    Spacer(),
-                    Icon(CupertinoIcons.bell)
+
                   ],
                 ),
               ),
@@ -336,7 +341,7 @@ List<Map<String,dynamic>> books=booksProvider.books;
                                         )
                                       ),
                                       Text(
-                                        name,
+                                        name,overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w600),
                                       )

@@ -57,11 +57,14 @@ class _UserlawyerProfileCollectionScreenState
     '3 years',
     '4 years',
     '5 years',
-    '5+ years',
-    '10+ years'
+    '7 years',
+    '10 years',
+    '15 years',
+    '20 years'
   ];
   String? selectedExpertise;
   String? selectedExperience;
+  int selectedExperienceInt=0;
   Future<void> uploadImageToFirebase(BuildContext context, File image) async {
     try {
       firebase_storage.Reference firebaseStorageRef = firebase_storage.FirebaseStorage.instance
@@ -366,7 +369,8 @@ class _UserlawyerProfileCollectionScreenState
                             text: "Signup",
                             onPress: () async {
                               if (formKey.currentState!.validate()) {
-
+                                String selExp=selectedExperience!;
+                                selectedExperienceInt=int.parse(selExp.split(' ')[0]);
                                 final emailSignupController =
                                 SignupWithEmailController();
                                 EasyLoading.show(status: "Please wait");
@@ -385,7 +389,7 @@ class _UserlawyerProfileCollectionScreenState
                                     bio: bioController.text.trim(),
                                     designation:
                                     designationController.text.trim(),
-                                    selectedExperience: selectedExperience!,
+                                    selectedExperience: selectedExperienceInt,
                                     selectedExpertise: selectedCategoriesList,
                                     url: photoUrl,
                                     portfolio: portfolios,

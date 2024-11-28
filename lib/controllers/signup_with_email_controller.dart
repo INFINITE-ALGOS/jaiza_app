@@ -79,7 +79,7 @@ class SignupWithEmailController {
     required String userPhoneNo,
     required String bio,
     required String designation,
-    required String selectedExperience,
+    required int selectedExperience,
     required List selectedExpertise,
     required String url,
     required List<Map<String, dynamic>> portfolio,
@@ -112,6 +112,7 @@ class SignupWithEmailController {
           isVerified: false,
           type: 'lawyer',
           url: url,
+          location: {}
         );
 
         await _firestore.collection("users").doc(user.uid).set(lawyerModel.toMap());
@@ -119,7 +120,6 @@ class SignupWithEmailController {
       } catch (e) {
         // General error handling
         if (context.mounted) {
-          print("danish no");
           CustomScaffoldSnackbar.showSnackbar(
             context,
             e.toString(),

@@ -18,6 +18,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to display nearby lawyers.</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
